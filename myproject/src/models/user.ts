@@ -3,7 +3,8 @@ import mongoose,{Schema,Document} from "mongoose";
 interface User extends Document{
     username:string,
     email:string,
-    password:string
+    password?:string,
+    role:string,
 }
 
 interface Form extends Document{
@@ -28,7 +29,10 @@ const UserSchema:Schema<User>=new Schema({
     },
     password:{
         type:String,
-        required:[true,"password is required"]
+    },
+    role:{
+        type:String,
+        default:'user'
     }
 })
 
