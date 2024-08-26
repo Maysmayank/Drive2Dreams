@@ -4,6 +4,7 @@ import "../../app/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/context/Authprovider";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,9 +22,10 @@ export default function RootLayout({
       <body className={inter.className}>
       <AuthProvider>
       <Navbar></Navbar>
-      {children}
-      <Footer/>
       </AuthProvider>
+      {children}
+      <Toaster></Toaster>
+      <Footer/>
       </body>
     </html>
   );

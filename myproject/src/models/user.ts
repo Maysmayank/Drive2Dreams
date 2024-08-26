@@ -10,9 +10,9 @@ interface User extends Document{
 interface Form extends Document{
     username:string,
     email:string,
-    course:string,
-    phone_number:number,
-    location:string,
+    program:string,
+    phone_number:string,
+
 }
 
 const UserSchema:Schema<User>=new Schema({
@@ -45,16 +45,12 @@ const FormSchema:Schema<Form>=new Schema({
         type:String,
         required:[true,"email is required"],
     },
-    course:{
+    program:{
         type:String,
         required:true,
     },
-    location:{
-        type:String,
-        required:true
-    },
     phone_number:{
-        type:Number,
+        type:String,
         required:true,
     }
 })
