@@ -43,6 +43,7 @@ function AdminNavBar() {
             <Image
               src={session.user.image}
               alt={session.user.name || "Profile"}
+              height={50} width={50}
               className="w-10 h-10 bg-white rounded-full"
             />
             <button onClick={()=>{signOut({callbackUrl:'/login'})}} className=" hover:bg-red-600 rounded-sm p-2 text-white transition duration-200 delay-75 ease-in">Logout</button>
