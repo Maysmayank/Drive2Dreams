@@ -4,6 +4,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { LoaderCircle } from 'lucide-react';
+
 import React, { useEffect, useState } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
 import { Input } from '@/components/ui/input';
@@ -22,7 +24,7 @@ function ManageAdmins() {
   const [list, setList] = useState<User[]>([]);
   const [isDropdownOpen, setIsDropDownOpen] = useState(false)
   const [users, setUsers] = useState<User[]>([]);
-
+  const [isLoading,setIsLoading]=useState(false)
   let [role,setRole]=useState("");
 
   const { toast } = useToast()
@@ -53,7 +55,7 @@ function ManageAdmins() {
   async function FetchUser(searchName: string) {
     try {
       // console.log(searchName);
-
+      setIsLoading(true)
       const response = await axios.get(`/api/get-admin?searchName=${searchName}`);
 
       if (response.data && Array.isArray(response.data.user)) {
@@ -66,6 +68,8 @@ function ManageAdmins() {
 
     } catch (error) {
       console.log(error);
+    }finally{
+      setIsLoading(false)
     }
   }
 
@@ -117,6 +121,12 @@ function ManageAdmins() {
 
   return (
     <div className='flex flex-col w-full bg-gray-900 h-screen text-white p-10'>
+      {isLoading && (
+        <div className='absolute inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50'>
+          <LoaderCircle className="animate-spin h-20 w-20"></LoaderCircle>
+        </div>
+      )}
+
       <div className='flex w-full'>
         <h1 className='font-medium text-3xl mb-5'>Manage Admins</h1>
       </div>
@@ -160,6 +170,7 @@ function ManageAdmins() {
                     <Button onClick={()=>handleChangeRole(user)}>
                       yes
                     </Button>
+                    <Button >No</Button>
                   </PopoverContent>
                   
                   </Popover>
