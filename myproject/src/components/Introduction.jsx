@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image';
 export default function Introduction() {
   const router = useRouter();
   return (
@@ -14,7 +15,7 @@ export default function Introduction() {
       </div>
 
       <div className='h-[300px] max-w-[600px] md:h-[300px] md:w-[800px]  ' style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
-        <img className='object-cover w-full h-full rounded-md' src="/home.jpg"  alt="homeimage" />
+        <Image className='object-cover w-full h-full rounded-md' src="/home.jpg"  alt="homeimage" />
       </div>
     
     </div>

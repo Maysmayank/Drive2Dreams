@@ -16,10 +16,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import Loader2 from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
-const contact = () => {
+const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast()
@@ -88,7 +87,7 @@ const contact = () => {
             <span className='font-semibold text-7xl'>contact us</span> 
             
             <span className='text-center '>
-            "Have questions, comments, or need expert advice? We're here to help! Whether you're seeking guidance, looking for more information, or just want to start a conversation, don’t hesitate to reach out. Fill out the form below, and our team will get back to you as soon as possible."
+            &quot;Have questions, comments, or need expert advice? We&apos;re here to help! Whether you&apos;re seeking guidance, looking for more information, or just want to start a conversation, don’t hesitate to reach out. Fill out the form below, and our team will get back to you as soon as possible.&quot;
             </span>
           </div>
 
@@ -112,7 +111,7 @@ const contact = () => {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>FullName *</FormLabel>
+                    <FormLabel>FullName </FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your Fullname" {...field} />
                     </FormControl>
@@ -128,7 +127,7 @@ const contact = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email *</FormLabel>
+                    <FormLabel>Email </FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your Email" {...field} />
                     </FormControl>
@@ -144,7 +143,7 @@ const contact = () => {
                 name="phone_number"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone Number *</FormLabel>
+                    <FormLabel>Phone Number </FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your phone number" {...field} />
                     </FormControl>
@@ -160,7 +159,7 @@ const contact = () => {
                 name="program"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Program *</FormLabel>
+                    <FormLabel>Program </FormLabel>
                     <FormControl>
                       <select {...field} className=" w-full border p-2 rounded ">
                         <option value="" disabled>Select program</option>
@@ -205,4 +204,4 @@ const contact = () => {
   )
 }
 
-export default contact
+export default Contact

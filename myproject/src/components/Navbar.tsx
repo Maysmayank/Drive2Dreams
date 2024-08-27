@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import {PopoverDemo} from '@/components/PopoverDemo'
+import Image from "next/image";
 
 const Navbar = () => {
   const pathname = usePathname()
@@ -22,7 +23,7 @@ const Navbar = () => {
     <div className="fixed z-50 flex min-w-full bg-black h-[100px] text-white px-10 items-center justify-between">
       
       <div className="h-[130px] w-[100px] ">
-        <img src="/originalLogo.png" className=" object-cover h-full w-full" alt="" />
+        <Image src="/originalLogo.png" className=" object-cover h-full w-full" alt="" />
       </div>
       
       <div className="hidden md:flex">
@@ -52,7 +53,7 @@ const Navbar = () => {
             element={
              <div className="flex items-center">
                {session.user?.image ? (
-                 <img
+                 <Image
                    src={session.user.image}
                    alt={session.user.name || "Profile"}
                    className="w-10 h-10 bg-white rounded-full"
@@ -81,7 +82,7 @@ const Navbar = () => {
       
       <div className="md:hidden">
         <button onClick={toggleMenu}>
-          <img src="/menu.svg" alt="menu" width={38} className="bg-slate-100"/>
+          <Image src="/menu.svg" alt="menu" width={38} className="bg-slate-100"/>
         </button>
       </div>
       
@@ -110,7 +111,7 @@ const Navbar = () => {
 
           {session?.user?.image ? (
             <div>
-            <img
+            <Image
               src={session.user.image}
               alt={session.user.name || "Profile"}
               className="w-10 h-10 bg-white rounded-full"

@@ -30,7 +30,7 @@ export const PopoverDemo: React.FC<PopoverProps> = ({ element }) => {
                     session?.user.role==="admin" ?(
                     <div className="flex flex-col gap-2">
                     <Button onClick={handleNavigate('/admin/dashboard')} className="w-full">Dashboard</Button>                
-                    <Button onClick={handleNavigate('/manage-admin')} className="w-full">Manage Admin</Button>                
+                    <Button onClick={handleNavigate('/admin/manage-admins')} className="w-full">Manage Admin</Button>                
 
                     </div>
                     ):('')

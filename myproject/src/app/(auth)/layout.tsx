@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] });
-export default function ({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
