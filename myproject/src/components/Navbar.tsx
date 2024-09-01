@@ -16,11 +16,11 @@ const Navbar = () => {
   };
   
   const { data: session } = useSession()
-  console.log(session);
+  // console.log(session);
 
   
   return (
-    <div className="fixed z-50 flex min-w-full bg-black h-[100px] text-white px-10 items-center justify-between">
+    <div className=" fixed z-50 flex min-w-full bg-black h-[100px] text-white px-10 items-center justify-between">
       
       <div className="h-[130px] w-[100px] ">
         <Image src="/originalLogo.png" height={80} width={80} className=" object-cover h-full w-full" alt="" />
@@ -53,7 +53,7 @@ const Navbar = () => {
             element={
              <div className="flex items-center">
                {session.user?.image ? (
-                 <img
+                 <Image
                    src={session.user.image}
                    alt={session.user.name || "Profile"}
                    height={20} width={20}
@@ -83,7 +83,7 @@ const Navbar = () => {
       
       <div className="md:hidden">
         <button onClick={toggleMenu}>
-          <Image src="/menu.svg" alt="menu" width={38} height={40} className="bg-slate-100"/>
+          <Image src="/menu.svg" alt="menu" width={38} height={40} className="bg-slate-100 w-[50px] h-[50px]"/>
         </button>
       </div>
       

@@ -15,14 +15,17 @@ function AdminNavBar() {
  
   return (
     <div className='flex flex-col justify-between py-10 items-center bg-black p-5 h-screen fixed'>
-      <div className="flex flex-col justify-between gap-2 text-white h-[48%]">
+      <div className="flex flex-col  justify-between gap-2 text-white h-[60%]">
 
         <div className='logo mt-2'>
           <h1 className='text-white font-bold text-3xl'>Drive2Dreams</h1>
         </div>
 
         <ul className=" flex flex-col gap-10  text-white ">
-          
+          <li>
+            <Link className={pathname==='/' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/'>Home</Link>          
+          </li>
+
           <li >
             <Link className={pathname==='/admin/dashboard'?'active rounded p-2  bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/dashboard'>Dashboard</Link>
           </li>
@@ -32,11 +35,14 @@ function AdminNavBar() {
           </li>
 
           <li>
-            <Link className={pathname==='/contact' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/contact'>Contact us</Link>          
+            <Link className={pathname==='/admin/post-courseinfo' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/post-courseinfo'>Add Courses</Link>          
           </li>
+          
+          
+
         </ul>
       </div>
- 
+       
       <div>
       {session?.user?.image ? (
             <div className='flex gap-2'>

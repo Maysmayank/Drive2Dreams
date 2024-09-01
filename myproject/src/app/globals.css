@@ -67,3 +67,39 @@
     @apply bg-background text-foreground;
   }
 }
+.text-content {
+  --max-lines: 5;
+  --line-height: 1.6;
+  max-height: calc(var(--max-lines) * 1rem * var(--line-height));
+  overflow: hidden;
+  line-height: var(--line-height);
+  position: relative;
+  transition: max-height 0.5s ease-in-out; /* Smooth transition */
+}
+
+.text-content::before {
+  content: "";
+  position: absolute;
+  height: calc(1em * var(--line-height));
+  width: 100%;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, white);
+  transition: opacity 0.5s ease-in-out; /* Smooth transition */
+}
+
+.text-content:hover {
+  transition: 1s ease-in; /* Smooth transition */
+  max-height: 1000px; /* Increase to a large value to reveal all content */
+}
+
+.text-content:hover::before {
+  opacity: 0; /* Fade out the gradient */
+}
+.courseCardContainer{
+  box-Shadow: rgba(99, 99, 99, 0.2) 0px 2px 5px 0px
+}
+.courseCardContainer:hover{
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 10px 15px;
+  border: 4px;
+}
