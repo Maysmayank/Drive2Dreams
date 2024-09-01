@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Introduction from '@/components/Introduction'
 import OurCourses from '@/components/OurCourses'
 import axios from 'axios'
@@ -13,29 +13,31 @@ type CourseData={
   syllabus?: string; // Optional field for storing file path or URL to PDF
 }
 
-
-async function  getServerSideProps():Promise<CourseData[]>{
-  try {
-    const res = await axios.get(`${process.env.NEXTAUTH_URL}/api/get-courseinfo`);
-    const courseData: CourseData[] = res.data.courseData; // Extract courseData from API response
-    
-    return courseData;
-  } catch (error) {
-    console.error('Error fetching course data:', error);
-    return[]
-  }
+type HomeProps = {
+  courseData: CourseData[]; // Type for the props that Home will receive
 };
 
-export  default async function Home() {
+// Fetch data using a server-side function
+async function fetchCourseData(): Promise<CourseData[]> {
+  try {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/get-courseinfo`, { cache: 'no-store' });
+    const data = await res.json();
+    return data.courseData; // Extract courseData from API response
+  } catch (error) {
+    console.error('Error fetching course data:', error);
+    return []; // Return an empty array in case of error
+  }
+}
 
-  const courseData=await getServerSideProps();
+export default async function Home() {
+  const courseData = await fetchCourseData();
+
   return (
-  <>
-  <div className='w-full'>
-    <Introduction/>
-    <OurCourses courseData={courseData}/>
-  </div>
-  
-  </>
-  )
+    <>
+      <div className="w-full">
+        <Introduction />
+        <OurCourses courseData={courseData} />
+      </div>
+    </>
+  );
 }
