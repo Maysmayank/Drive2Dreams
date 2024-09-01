@@ -32,15 +32,17 @@ export default function Introduction() {
       </div>
       {
         showContact && (
-          <div className='absolute  flex items-center justify-center animate-jump-in animate-delay-1000  opacity-96 z-10 p-2 top-[10%] w-full md:top-[16%] md:p-0  '>
+          <div className='absolute bg-black flex items-center justify-center animate-jump-in animate-delay-1000  opacity-96 z-10 p-2 top-[10%] w-full md:top-[16%] md:p-0  '>
 
-            <div className='absolute  py-10 bg-white  flex flex-col items-center top-[0%] md:w-[40%] md:top-[50%]'>
-            <Button className='absolute top-5 right-5' onClick={HandleClick}>X</Button>
+            <div className='absolute  pt-16 bg-white  flex flex-col items-center top-[15%] md:w-[40%] md:top-[50%]'>
+              
+              <Button className='absolute top-7 right-4' onClick={HandleClick}>X</Button>
 
-              <div className="flex flex-col items-center">
+              <div className="flex px-2 flex-col items-center">
                 <h1>Connect With Us</h1>
                 <span>Fill in Your Details to Receive Expert Advice</span>
               </div>
+
               <div className='w-full flex justify-center'>
                 <FormComponent />
               </div>

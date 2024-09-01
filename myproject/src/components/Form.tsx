@@ -79,7 +79,7 @@ export default function FormComponent() {
 
     return (
 
-        <div className='form-container p-4 bg-bla min-w-[370px] md:min-w-[500px] min-h-[500px]'>
+        <div className='form-container p-4 bg-bla min-w-full md:min-w-[500px] min-h-[500px]'>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <FormField
@@ -153,7 +153,7 @@ export default function FormComponent() {
                         )}
                     />
 
-                    <Button type="submit" disabled={isSubmitting} className='min-w-[400px] flex items-center m-auto'>
+                    <Button type="submit" disabled={isSubmitting} className='min-w-full flex items-center m-auto'>
                         {
                             isSubmitting ? (
                                 <>
