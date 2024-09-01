@@ -5,7 +5,7 @@ import '../globals.css'
 import AdminNavbar from '@/components/admin/AdminNavBar'
 import { Toaster } from '@/components/ui/toaster'
 import { useState } from 'react'
-
+import Image from 'next/image'
 export default function RootLayout({
   children,
 }: {
@@ -47,7 +47,7 @@ export default function RootLayout({
                 className="absolute right-10 top-6 md:hidden"
                 aria-label="Open Menu"
               >
-                <img className="h-10 w-10 bg-white" src="../menu.svg" alt="Menu" />
+                <Image className="h-10 w-10 bg-white" height={100} width={100} src="../menu.svg" alt="Menu" />
               </button>
               {children}
               <Toaster />

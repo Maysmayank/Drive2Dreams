@@ -105,7 +105,7 @@ function AddCourseInfo() {
                     <Input placeholder="Give the Course OverView" {...field} />
                   </FormControl>
                   <FormDescription>
-                    provide overview of the course in brief as it helps in seo. Don't exceed more than 15 lines 
+                    provide overview of the course in brief as it helps in seo. Do nott exceed more than 15 lines 
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -141,7 +141,7 @@ function AddCourseInfo() {
                     <Input disabled placeholder="Enter all the course Modules or roadmap just topics(optional) " {...field} />
                   </FormControl>
                   <FormDescription className='text-red-600'>
-                  It's is not supported yet
+                  It is is not supported yet
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -157,7 +157,7 @@ function AddCourseInfo() {
                     <Input disabled placeholder="Enter the syllabus in pdf (optional)" {...field} />
                   </FormControl>
                   <FormDescription className='text-red-600'>
-                  It's is not supported yet
+                  It is is not supported yet
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
