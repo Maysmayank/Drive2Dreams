@@ -18,7 +18,7 @@ export default function DynamicCourseCardinfo({
         <div className="absolute inset-0 bg-yellow-200 opacity-50"></div>
         <div className="absolute flex flex-col gap-5 top-[30%] left-[10%]"> 
         <h1 className= " font-semibold text-6xl">{title}</h1>
-        <button className="  p-2 bg-blue-700 rounded-md text-white">
+        <button className="  p-2 w-[100px] bg-blue-700 rounded-md text-white">
           Enroll Now
         </button>
         </div>

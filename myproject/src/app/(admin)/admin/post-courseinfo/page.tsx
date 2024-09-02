@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
 import { courseInfoSchema } from '@/schema/CourseinfoSchema';
+import { revalidateCourseData } from '@/lib/action';
 
 function AddCourseInfo() {
   const { toast } = useToast();
@@ -43,6 +44,8 @@ function AddCourseInfo() {
     try {
       const response=await axios.post("/api/post/courseinfo",data)
       if(response.data?.success){
+        await revalidateCourseData();
+
         toast({
           title:"Course Added SuccessFully",
         })

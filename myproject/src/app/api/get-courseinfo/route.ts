@@ -13,6 +13,7 @@ export async function GET(request: Request) {
     try {
         await dbConnect();
         const courseData=await CourseInfoModel.find({});
+        
         if(courseData.length>0){
             return Response.json({
                 success: true,
@@ -34,7 +35,6 @@ export async function GET(request: Request) {
         
     }
     catch(error){
-        console.log("here");
         
         console.error("Error fetching course data:", error);
 

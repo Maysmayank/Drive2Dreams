@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import {CourseInfoModel} from "@/models/courseInfo";
+import { NextResponse } from "next/server";
 
 interface CourseInfo{
     university: string; // Name of the university or college
@@ -11,7 +12,7 @@ interface CourseInfo{
     syllabus?: string; // Optional field for storing file path or URL to PDF
 }
 
-export async function POST(request: Request) {
+export async function POST(request: Request,response:NextResponse) {
     await dbConnect();
     try {
         const{university,title,duration,courseInfo,courseContent,syllabus,courseOverview}=await request.json();
