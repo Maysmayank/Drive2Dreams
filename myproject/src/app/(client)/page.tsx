@@ -2,8 +2,11 @@ import React from 'react'
 import Introduction from '@/components/Introduction'
 import OurCourses from '@/components/OurCourses'
 import axios from 'axios'
-
+import dbConnect from '@/lib/dbConnect'
+import { CourseInfoModel } from '@/models/courseInfo'
+import { revalidateTag } from 'next/cache'
 type CourseData={
+  _id:string;
   university: string; // Name of the university or college
   title: string; // Title of the course
   courseInfo: string; // Detailed information about the course
@@ -14,30 +17,31 @@ type CourseData={
 }
 
 
-
-// Fetch data using a server-side function
 async function fetchCourseData(): Promise<CourseData[]> {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/get-courseinfo`, {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    'Cache-Control': 'no-cache',
-  },
-});
-    if(!res.ok){
-      console.log("Failed to fetch the data");
-      
-    }
-    const data=await res.json();
+    await dbConnect(); // Connect to the database
+    const fetchedcourseData = await CourseInfoModel.find({})
+    const totalCourses=await CourseInfoModel.countDocuments();
     
-    return data.courseData; // Extract courseData from API response
+    
+    const courseData = fetchedcourseData.map((course) => ({                        //Only plain objects can be passed to Client Components from Server Components.
+      _id: course._id.toString(), // Convert MongoDB ObjectId to string
+      university: course.university,
+      title: course.title,
+      courseInfo: course.courseInfo,
+      courseOverview: course.courseOverview,
+      courseContent: course.courseContent,
+      duration: course.duration,
+      syllabus: course.syllabus,
+    }));
+    
+    return courseData;
+
   } catch (error) {
     console.error('Error fetching course data:', error);
-    return []; // Return an empty array in case of error
+    return []
   }
 }
-// export const revalidate=10
 
 export default async function Home() {
   const courseData = await fetchCourseData();
@@ -46,7 +50,7 @@ export default async function Home() {
   
       <div className="w-full">
         <Introduction />
-        <OurCourses courseData={courseData} />
+        <OurCourses courseData={courseData}/>
       </div>
     
   );

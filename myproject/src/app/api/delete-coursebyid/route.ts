@@ -9,38 +9,40 @@ type CourseData={
     syllabus?: string; // Optional field for storing file path or URL to PDF
 }
   
-export async function GET(request: Request) {
+export async function DELETE(request: Request) {
     try {
         await dbConnect();
-        const courseData=await CourseInfoModel.find({});
-        
-        if(courseData.length>0){
+        const {searchParams}=new URL(request.url);
+        // console.log(searchParam);
+        const queryParam={
+            id:searchParams.get('id')
+        }
+        const deleteId=queryParam.id
+        const isDeleted= await CourseInfoModel.deleteOne({_id:deleteId})
+        if(isDeleted){
             return Response.json({
                 success: true,
-                message: "Fetched all the course data successfully",
-                courseData:courseData
+                message: "The course has been Deleted"
             }, {
                 status: 200,
             })
-        }
-        else{
-            
+        }else{
             return Response.json({
                 success: false,
-                message: " CourseData Fetching failed"
+                message: "Error Occured while Deleting the Course Try Again"
             }, {
-                status: 400,
+                status: 201,
             })
         }
         
     }
     catch(error){
         
-        console.error("Error fetching course data:", error);
+        console.error("Error Deleting course data:", error);
 
         return Response.json({
             success: false,
-            message: "Error while getting Coursedata from database"
+            message: "Error while Deleting from database"
         }, {
             status: 500,
         })

@@ -50,7 +50,7 @@ export default function FormComponent() {
 
             if (response.data.success) {
                 setIsSubmitted(true);
-
+                await axios.post('/api/post/update-submitcount') // update the submission count by 1 and is showed to admin in dashboard
                 toast({
                     title: "Response Submitted",
                     description: "Your response has been successfully submitted!",

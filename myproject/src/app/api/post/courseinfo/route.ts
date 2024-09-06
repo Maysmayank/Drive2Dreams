@@ -16,23 +16,36 @@ export async function POST(request: Request,response:NextResponse) {
     await dbConnect();
     try {
         const{university,title,duration,courseInfo,courseContent,syllabus,courseOverview}=await request.json();
+        const isCourseExisted=await CourseInfoModel.find({title:title})
+        // console.log(isCourseExisted);  // give [] if not found 
         
-        const newCourse=new CourseInfoModel({
-            university,
-            title,
-            duration,
-            courseOverview,
-            courseContent,
-            courseInfo,
-            syllabus
-        })
-        await newCourse.save();
-        return Response.json({
-            success: true,
-            message: "New Course successfully added",
-        }, {
-            status: 201,
-        })
+        if(isCourseExisted.length>0){
+            
+            return Response.json({
+                success: false,
+                message: "The Course with this Title already Exists ",
+            }, {
+                status: 201,
+            })
+        }else{
+            const newCourse=new CourseInfoModel({
+                university,
+                title,
+                duration,
+                courseOverview,
+                courseContent,
+                courseInfo,
+                syllabus
+            })
+            await newCourse.save();
+            return Response.json({
+                success: true,
+                message: "New Course successfully added",
+            }, {
+                status: 201,
+            })
+        }
+       
 
     } catch (error) {
         // console.log(error);

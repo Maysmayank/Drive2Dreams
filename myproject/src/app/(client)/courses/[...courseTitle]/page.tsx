@@ -1,4 +1,3 @@
-// src/app/courses/[courseTitle]/page.tsx
 
 import DynamicCourseCardinfo from '@/components/DynamicCourseCardinfo';
 import dbConnect  from '@/lib/dbConnect'; // Adjust the path as needed
@@ -14,11 +13,9 @@ type CourseData = {
   syllabus?: string;
 };
 
-// Fetch course data server-side
+// Fetch course data static side 
 async function fetchCourseData(courseTitle: string): Promise<CourseData[]> {
-  try {
-    console.log(courseTitle);
-    
+  try {    
     await dbConnect(); // Connect to the database
     const courseData = await CourseInfoModel.find({ title: courseTitle }).exec();
     return courseData;
@@ -30,7 +27,10 @@ async function fetchCourseData(courseTitle: string): Promise<CourseData[]> {
 
 export default async function CoursePage({ params }: { params: { courseTitle: string } }) {
   const { courseTitle } = params;
-  const courseData = await fetchCourseData(courseTitle);
+  
+  const decodedCourseTitle = decodeURIComponent(courseTitle);  
+  
+  const courseData = await fetchCourseData(decodedCourseTitle);
 
   return (
     <div className="pt-[100px]">

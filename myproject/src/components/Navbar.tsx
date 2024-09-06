@@ -16,7 +16,7 @@ const Navbar = () => {
   };
   
   const { data: session } = useSession()
-  // console.log(session);
+  console.log(session);
 
   
   return (
@@ -96,7 +96,14 @@ const Navbar = () => {
             <li >
             <Link className={pathname==='/'?'active rounded p-2  bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/' onClick={toggleMenu}>Home</Link>
             </li>
-          
+
+            {session?.user.role==='admin'&&(
+                <li>
+                <Link className={pathname==='/admin/dashboard' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/dashboard' onClick={toggleMenu}>DashBoard</Link>          
+                </li>
+            )}
+            
+
             <li>
             <Link className={pathname==='/about'?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black rounded p-2 transition duration-200 delay-75 ease-in'} href='/about' onClick={toggleMenu}>About</Link>
             </li>
@@ -108,6 +115,12 @@ const Navbar = () => {
             <li>
             <Link className={pathname==='/contact' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/contact' onClick={toggleMenu}>Contact us</Link>          
             </li>
+
+            <li>
+            <Link className={pathname==='/contact' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/contact' onClick={toggleMenu}>Contact us</Link>          
+            </li>
+
+            
           </ul>
 
           {session?.user?.image ? (
