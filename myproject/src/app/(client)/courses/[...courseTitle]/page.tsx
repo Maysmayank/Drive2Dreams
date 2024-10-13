@@ -28,8 +28,10 @@ type CourseData = {
  async function fetchCourseData(courseTitle: string): Promise<CourseData[]> {
   try {    
     await dbConnect(); // Connect to the database
-    const courseData = await CourseInfoModel.find({ title: courseTitle }).populate('university').exec();
-    return courseData;
+    const courseData = await CourseInfoModel.find({ title: courseTitle }).populate('university').lean().exec();
+    console.log('Fetched Course Data:', courseData);
+
+    return courseData as CourseData[];
 
   } catch (error) {
     console.error('Error fetching course data:', error);
