@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import {CourseInfoModel} from "@/models/courseInfo";
+import { UniversityInfoModel } from "@/models/UniversityModel";
 import { NextResponse } from "next/server";
 
 interface CourseInfo{
@@ -16,9 +17,17 @@ export async function POST(request: Request,response:NextResponse) {
     await dbConnect();
     try {
         const{university,title,duration,courseInfo,courseContent,syllabus,courseOverview}=await request.json();
-        const isCourseExisted=await CourseInfoModel.find({title:title})
-        // console.log(isCourseExisted);  // give [] if not found 
-        
+        const isCourseExisted=await CourseInfoModel.find({title:title}) 
+
+        let isUniversityExists= await UniversityInfoModel.findOne({universityName:university}) // cehck if university exists for the course to add
+        if(!isUniversityExists){
+            return Response.json({
+                success: false,
+                message: "University Not Found. Please Register University First then try again ",
+            }, {
+                status: 201,
+            })
+        }
         if(isCourseExisted.length>0){
             
             return Response.json({
@@ -29,7 +38,7 @@ export async function POST(request: Request,response:NextResponse) {
             })
         }else{
             const newCourse=new CourseInfoModel({
-                university,
+                university:isUniversityExists._id,
                 title,
                 duration,
                 courseOverview,
@@ -38,6 +47,8 @@ export async function POST(request: Request,response:NextResponse) {
                 syllabus
             })
             await newCourse.save();
+            await CourseInfoModel.findById(newCourse._id)
+
             return Response.json({
                 success: true,
                 message: "New Course successfully added",
@@ -48,7 +59,7 @@ export async function POST(request: Request,response:NextResponse) {
        
 
     } catch (error) {
-        // console.log(error);
+        console.log(error);
         
         return Response.json({
             success: false,

@@ -4,42 +4,46 @@ import OurCourses from '@/components/OurCourses'
 import dbConnect from '@/lib/dbConnect'
 import { CourseInfoModel } from '@/models/courseInfo'
 import PartneredUniversities from '@/components/PartneredUniversities'
-type CourseData={
-  _id:string;
-  university: string; // Name of the university or college
-  title: string; // Title of the course
-  courseInfo: string; // Detailed information about the course
-  courseOverview:string;
-  courseContent?: string[]; // Optional array of strings for course content like syllabus
-  duration?: string; // Duration of the course
-  syllabus?: string; // Optional field for storing file path or URL to PDF
+type UniversityData = {
+  _id: string;
+  universityName: string;
+  aboutUniversity: string;
+  admissionProcess: string;
+  cutoffs: string;
+  cloudinaryImageUrl?: string;
+  cloudinaryImageName?: string;
+}
+
+type CourseData = {
+  _id: string;
+  university: UniversityData; // Full university object
+  title: string;
+  courseInfo: string;
+  courseOverview: string;
+  courseContent?: string[];
+  duration?: string;
+  syllabus?: string;
 }
 
 
 async function fetchCourseData(): Promise<CourseData[]> {
   try {
     await dbConnect(); // Connect to the database
-    const fetchedcourseData = await CourseInfoModel.find({})
     
+    const fetchedCourseData = await CourseInfoModel.find({})
+      .populate('university') // Populate the university reference
+      .lean().exec(); // Convert Mongoose documents to plain JavaScript objects    
+
+    let courseData=  JSON.parse(JSON.stringify(fetchedCourseData))
     
-    const courseData = fetchedcourseData.map((course) => ({                        //Only plain objects can be passed to Client Components from Server Components.
-      _id: course._id.toString(), // Convert MongoDB ObjectId to string
-      university: course.university,
-      title: course.title,
-      courseInfo: course.courseInfo,
-      courseOverview: course.courseOverview,
-      courseContent: course.courseContent,
-      duration: course.duration,
-      syllabus: course.syllabus,
-    }));
     
     return courseData;
-
   } catch (error) {
     console.error('Error fetching course data:', error);
-    return []
+    return [];
   }
 }
+
 
 export default async function Home() {
   const courseData = await fetchCourseData();

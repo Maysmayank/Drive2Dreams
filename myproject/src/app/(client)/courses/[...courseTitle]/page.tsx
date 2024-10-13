@@ -3,22 +3,34 @@ import DynamicCourseCardinfo from '@/components/DynamicCourseCardinfo';
 import dbConnect  from '@/lib/dbConnect'; // Adjust the path as needed
 import { CourseInfoModel } from '@/models/courseInfo'; // Adjust the path as needed
 
+type UniversityData = {
+  _id: string;
+  universityName: string;
+  aboutUniversity: string;
+  admissionProcess: string;
+  cutoffs: string;
+  cloudinaryImageUrl?: string;
+  cloudinaryImageName?: string;
+}
+
+// Define the course data interface, where university is now of type UniversityData
 type CourseData = {
-  university: string;
+  _id: string;
+  university: UniversityData; // Full university object
   title: string;
   courseInfo: string;
   courseOverview: string;
   courseContent?: string[];
   duration?: string;
   syllabus?: string;
-};
+}
 
-// Fetch course data static side 
-async function fetchCourseData(courseTitle: string): Promise<CourseData[]> {
+ async function fetchCourseData(courseTitle: string): Promise<CourseData[]> {
   try {    
     await dbConnect(); // Connect to the database
-    const courseData = await CourseInfoModel.find({ title: courseTitle }).exec();
+    const courseData = await CourseInfoModel.find({ title: courseTitle }).populate('university').exec();
     return courseData;
+
   } catch (error) {
     console.error('Error fetching course data:', error);
     return [];
@@ -43,6 +55,7 @@ export default async function CoursePage({ params }: { params: { courseTitle: st
             title={course.title}
             courseOverview={course.courseOverview}
             courseContent={course.courseInfo}
+            image={course.university.cloudinaryImageUrl}
           />
         ))
       )}

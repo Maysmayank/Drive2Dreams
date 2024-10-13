@@ -4,13 +4,14 @@ import Image from "next/image";
 export default function DynamicCourseCardinfo({
   courseOverview,
   courseContent,
-  title
+  title,
+  image
 }: any) {
   return (
     <>
       <div className="bg-gray-600 h-[400px] w-full relative">
         <Image
-          src="/home.jpg"
+          src={image}
           alt="image"
           layout="fill"
           objectFit="cover"
