@@ -15,7 +15,8 @@ function AdminNavBar() {
  
   return (
     <div className='flex flex-col justify-between py-10 items-center bg-black p-5 h-screen fixed'>
-      <div className="flex flex-col  justify-between gap-2 text-white h-[60%]">
+      
+      <div className="flex flex-col  justify-between gap-2 text-white h-[70%]">
 
         <div className='logo mt-2'>
           <h1 className='text-white font-bold text-3xl'>Drive2Dreams</h1>
@@ -38,6 +39,9 @@ function AdminNavBar() {
             <Link className={pathname==='/admin/post-courseinfo' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/post-courseinfo'>Add Courses</Link>          
           </li>
           
+          <li>
+            <Link className={pathname==='/admin/post-unoversityinfo' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/post-universityinfo'>Add University</Link>          
+          </li>
           
 
         </ul>

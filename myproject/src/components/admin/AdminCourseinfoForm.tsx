@@ -112,10 +112,12 @@ function AdminCourseinfoFormComponent({id}:any) {    // got id  from EDitCourseI
           setIsLoading(false)
         }
       }
+
   return (
     <div className='form h-full'>
-        {id}
-        {courseData?<p className='text-black'>Updating....</p>:<p className='text-black'>Adding... </p>}
+        {/* {id} */}
+        
+        {courseData?<p className='text-black'>Updating....</p>:<p className='text-white'>Status : Adding Course</p>}
         <Form  {...form}>
           <form  onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField

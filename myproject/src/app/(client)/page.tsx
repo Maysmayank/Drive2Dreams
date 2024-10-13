@@ -1,10 +1,9 @@
 import React from 'react'
 import Introduction from '@/components/Introduction'
 import OurCourses from '@/components/OurCourses'
-import axios from 'axios'
 import dbConnect from '@/lib/dbConnect'
 import { CourseInfoModel } from '@/models/courseInfo'
-import { revalidateTag } from 'next/cache'
+import PartneredUniversities from '@/components/PartneredUniversities'
 type CourseData={
   _id:string;
   university: string; // Name of the university or college
@@ -21,7 +20,6 @@ async function fetchCourseData(): Promise<CourseData[]> {
   try {
     await dbConnect(); // Connect to the database
     const fetchedcourseData = await CourseInfoModel.find({})
-    const totalCourses=await CourseInfoModel.countDocuments();
     
     
     const courseData = fetchedcourseData.map((course) => ({                        //Only plain objects can be passed to Client Components from Server Components.
@@ -50,7 +48,10 @@ export default async function Home() {
   
       <div className="w-full">
         <Introduction />
+
         <OurCourses courseData={courseData}/>
+
+        <PartneredUniversities/>
       </div>
     
   );

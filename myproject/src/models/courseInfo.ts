@@ -1,12 +1,13 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 
 // Define the TypeScript interface for the CourseInfo document
 interface CourseInfo extends Document {
-    university: string; // Name of the university or college
+    university: Types.ObjectId;
     title: string; // Title of the course
     courseOverview:string; // give overview to show on CourseCard 
     courseInfo: string; // Detailed information about the course
+    eligibilityCriteria:string;
     courseContent?: string[]; // Optional array of strings for course content like syllabus
     duration?: string; // Duration of the course
     syllabus?: string; // Optional field for storing file path or URL to PDF
@@ -15,7 +16,8 @@ interface CourseInfo extends Document {
 
 const CourseInfoSchema: Schema = new Schema<CourseInfo>({
     university: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref:"UniversityInfo",
         required: true,
     },
     title: {
@@ -32,6 +34,9 @@ const CourseInfoSchema: Schema = new Schema<CourseInfo>({
     },
     courseContent: {
         type: [String], // Array of strings for multiple lines of course content
+    },
+    eligibilityCriteria:{
+        type:String,
     },
     duration: {
         type: String,

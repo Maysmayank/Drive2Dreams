@@ -35,7 +35,7 @@ export default async function CoursePage({ params }: { params: { courseTitle: st
   return (
     <div className="pt-[100px]">
       {courseData.length === 0 ? (
-        "No course here"
+        "No course inforamation available"
       ) : (
         courseData.map((course, index) => (
           <DynamicCourseCardinfo

@@ -21,7 +21,7 @@ const LIMIT=2
 
 export default function OurCourses({ courseData }: CourseDataProps,) {
   const [pageNumber,setpageNumber]=useState(1);
-  const [allcoursesdata,setallCoursesData]=useState<CourseData[]>(courseData);
+  const [allcoursesdata]=useState<CourseData[]>(courseData);
   const [paginatedData,setPaginatedData]=useState<CourseData[]>([])
   const [totalCourses]=useState(courseData.length)
   useEffect(()=>{
