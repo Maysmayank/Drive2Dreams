@@ -77,9 +77,10 @@ export default async function handleUpload(formData: FormData) {
                 };
             }
         }
-    } catch (err) {
-        console.log("error :",error);
-        
+    } catch (error:any) {
+        console.log("Error message:", error.message);
+        console.log("Error stack:", error.stack);
+        console.log("Full Error:", JSON.stringify(error, Object.getOwnPropertyNames(error)));        
         return {
             success: false,
             message: "Something went wrong",
