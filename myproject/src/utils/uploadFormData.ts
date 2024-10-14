@@ -3,6 +3,7 @@
 import dbConnect from "@/lib/dbConnect";
 import { cloudinary } from "./cloudinary";
 import { UniversityInfoModel } from "@/models/UniversityModel";
+import { error } from "console";
 
 export default async function handleUpload(formData: FormData) {
     try {
@@ -14,6 +15,8 @@ export default async function handleUpload(formData: FormData) {
                 success: false,
                 message: "Form Error: Image Required",
             };
+
+
         } else {
 
 
@@ -75,6 +78,8 @@ export default async function handleUpload(formData: FormData) {
             }
         }
     } catch (err) {
+        console.log("error :",error);
+        
         return {
             success: false,
             message: "Something went wrong",
