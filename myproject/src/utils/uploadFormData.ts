@@ -34,10 +34,8 @@ export default async function handleUpload(formData: FormData) {
 
             } else {
                 const arrayBuffer = await image.arrayBuffer();
-                console.log(arrayBuffer);
                 
                 const buffer = new Uint8Array(arrayBuffer);  
-                console.log(buffer);
                 
                 let res: any= await new Promise((resolve, reject) => {
                     cloudinary.uploader
@@ -50,7 +48,7 @@ export default async function handleUpload(formData: FormData) {
                         })
                         .end(buffer);
                 });
-
+                
 
                 let cloudImageUrl=res.secure_url;
                 let cloudImageName=res.display_name;
@@ -65,10 +63,11 @@ export default async function handleUpload(formData: FormData) {
                 });
 
 
-                // console.log(newUniversity);
+                console.log(newUniversity);
                 
 
                 await newUniversity.save();
+
                 return {
                     success: true,
                     message: "University Info Added successfully",
@@ -78,6 +77,8 @@ export default async function handleUpload(formData: FormData) {
     } catch (err) {
         return {
             success: false,
+            message: "Something went wrong",
+
         };
     }
 

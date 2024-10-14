@@ -47,16 +47,23 @@ function AdminUniversityinfoFormComponent() {
       // const formDataObj = Object.fromEntries(formData.entries());
       // console.log("obj",formDataObj);
       // let response = await axios.post("/api/post/universityinfo", formData);
-      let response =await handleUpload(formData);
 
+
+      let response =await handleUpload(formData);
+      console.log(response);
+      
       if (response.success) {
+
         revalidateCourseData();
+
         toast({
           title: "Success",
           variant: "constructive",
           description: response.message,
         });
+
       } else {
+
         toast({
           title: "Form Error",
           variant: "destructive",
