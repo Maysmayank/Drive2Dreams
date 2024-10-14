@@ -2,10 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import { UniversityInfoModel } from "@/models/UniversityModel";
 import { cloudinary } from "@/utils/cloudinary";
 import { NextResponse } from "next/server";
-interface CloudinaryResponse {
-    secure_url: string;
-    display_name:string;
-}
+
 
 export async function POST(request: Request, response: NextResponse) {
     await dbConnect();

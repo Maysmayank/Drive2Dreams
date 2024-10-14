@@ -39,7 +39,7 @@ export default async function handleUpload(formData: FormData) {
                 const arrayBuffer = await image.arrayBuffer();
                 
                 const buffer = new Uint8Array(arrayBuffer);  
-                console.log("here 1----");
+                // console.log("here 1----");
                 
                 let res: any= await new Promise((resolve, reject) => {
                     cloudinary.uploader
@@ -53,7 +53,7 @@ export default async function handleUpload(formData: FormData) {
                         .end(buffer);
                 });
                 
-                console.log("here2");
+                // console.log("here2");
                 
                 let cloudImageUrl=res.secure_url;
                 let cloudImageName=res.display_name;
@@ -68,7 +68,6 @@ export default async function handleUpload(formData: FormData) {
                 });
 
 
-                console.log(newUniversity);
                 
 
                 await newUniversity.save();
