@@ -29,7 +29,6 @@ type CourseData = {
   try {    
     await dbConnect(); // Connect to the database
     const courseData = await CourseInfoModel.find({ title: courseTitle }).populate('university').lean().exec();
-    console.log('Fetched Course Data:', courseData);
 
     return courseData as CourseData[];
 

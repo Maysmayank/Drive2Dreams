@@ -22,6 +22,7 @@ import { Loader2 } from "lucide-react";
 import { cloudinary } from "@/utils/cloudinary";
 import axios from "axios";
 import { revalidateCourseData } from "@/lib/action";
+import handleUpload from "@/utils/uploadFormData";
 
 function AdminUniversityinfoFormComponent() {
   const { toast } = useToast();
@@ -45,27 +46,28 @@ function AdminUniversityinfoFormComponent() {
 
       // const formDataObj = Object.fromEntries(formData.entries());
       // console.log("obj",formDataObj);
-      let response = await axios.post("/api/post/universityinfo", formData);
+      // let response = await axios.post("/api/post/universityinfo", formData);
+      let response =await handleUpload(formData);
 
-      if (response.data.success) {
+      if (response.success) {
         revalidateCourseData();
         toast({
           title: "Success",
           variant: "constructive",
-          description: response.data.message,
+          description: response.message,
         });
       } else {
         toast({
           title: "Form Error",
           variant: "destructive",
-          description: response.data.message,
+          description: response.message,
         });
       }
     } catch (error: any) {
       toast({
         title: "error Occure",
         variant: "destructive",
-        description: error.response.data.message,
+        description: error.response.message,
       });
     } finally {
       setIsLoading(false);
