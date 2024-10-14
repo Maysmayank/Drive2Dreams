@@ -46,20 +46,20 @@ function AdminUniversityinfoFormComponent() {
 
       // const formDataObj = Object.fromEntries(formData.entries());
       // console.log("obj",formDataObj);
-      // let response = await axios.post("/api/post/universityinfo", formData);
+      let response = await axios.post("/api/post/universityinfo", formData);
 
 
-      let response =await handleUpload(formData);
+      // let response =await handleUpload(formData);
       console.log(response);
       
-      if (response.success) {
+      if (response.data.success) {
 
         revalidateCourseData();
 
         toast({
           title: "Success",
           variant: "constructive",
-          description: response.message,
+          description: response.data.message,
         });
 
       } else {
@@ -67,17 +67,21 @@ function AdminUniversityinfoFormComponent() {
         toast({
           title: "Form Error",
           variant: "destructive",
-          description: response.message,
+          description: response.data.message,
         });
       }
     } catch (error: any) {
+
       toast({
         title: "error Occure",
         variant: "destructive",
-        description: error.response.message,
+        description: error.response.data.message,
       });
+
     } finally {
+
       setIsLoading(false);
+      
     }
   }
 
