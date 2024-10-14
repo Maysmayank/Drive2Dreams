@@ -1,7 +1,7 @@
 "use server";
 
 import dbConnect from "@/lib/dbConnect";
-import { cloudinary } from "./cloudinary";
+import { cloudinary } from "../utils/cloudinary";
 import { UniversityInfoModel } from "@/models/UniversityModel";
 import { error } from "console";
 
@@ -39,6 +39,7 @@ export default async function handleUpload(formData: FormData) {
                 const arrayBuffer = await image.arrayBuffer();
                 
                 const buffer = new Uint8Array(arrayBuffer);  
+                console.log("here 1----");
                 
                 let res: any= await new Promise((resolve, reject) => {
                     cloudinary.uploader
@@ -52,7 +53,8 @@ export default async function handleUpload(formData: FormData) {
                         .end(buffer);
                 });
                 
-
+                console.log("here2");
+                
                 let cloudImageUrl=res.secure_url;
                 let cloudImageName=res.display_name;
                 const newUniversity = new UniversityInfoModel({
