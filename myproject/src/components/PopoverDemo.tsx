@@ -16,7 +16,8 @@ type PopoverProps={
 export const PopoverDemo: React.FC<PopoverProps> = ({ element }) => {
     const router=useRouter();
     const { data: session } = useSession();
-    console.log(session?.user.role)
+    
+    // console.log(session?.user.role)
     const handleNavigate = (path: string) => () => {
         router.push(path);
     };

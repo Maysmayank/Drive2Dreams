@@ -11,16 +11,16 @@ const Pagination = ({totalCourses, limit ,pageNumber,setpageNumber}) => {
  
   
   return (
-    <div>
+    <div className="mt-16">
       
-      <Button disabled={pageNumber===1}>Prev</Button>
-      {
+{     totalPages===limit&& <Button disabled={pageNumber===1}>Prev</Button>
+}      { totalPages===limit&&
         [...Array(totalPages)].map((_,index)=>(
           <Button key={index+1} disabled={pageNumber===index+1} onClick={()=>setpageNumber(index+1)} >{index+1}</Button>
         ))
       }
-      <Button disabled={pageNumber===totalPages}>Next</Button>
-
+{  totalPages===limit&&<Button disabled={pageNumber===totalPages}>Next</Button>
+}
     </div>
   )
   };

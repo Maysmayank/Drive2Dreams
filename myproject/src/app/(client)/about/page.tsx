@@ -1,9 +1,31 @@
 'use client';
+import FormComponent from '@/components/Form';
 import React from 'react'
 
-export default function About(){
+export default function About() {
   return (
-    <div className=" pt-[100px] "><p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Obcaecati possimus nam tempora laudantium fugit, aliquam laboriosam facere omnis vel ex nisi quos placeat reiciendis consectetur distinctio quia corrupti quo qui dignissimos alias eos dolorem accusamus rem. Quidem totam ipsa laborum sapiente ab voluptates quae ut dolor voluptate fugiat veniam qui ipsam, magnam cumque nisi illo reiciendis a aut, nesciunt laboriosam iusto tempore quis assumenda. Numquam aliquid deserunt sequi in alias laboriosam cum aspernatur omnis ut hic similique iure qui distinctio reprehenderit illo temporibus eveniet minus asperiores, odio fuga laborum. Distinctio suscipit, tenetur ex in ut totam magni, accusamus accusantium dolorum quia optio odit placeat, consectetur blanditiis tempore maiores reprehenderit et. Doloribus, autem illum similique odit provident nisi rerum commodi hic delectus quia tempora voluptas modi illo neque deserunt, temporibus voluptate et! Recusandae totam aliquam consequuntur aspernatur, ullam mollitia odit tempora ut quisquam temporibus dolore corrupti! Modi iure nisi illum commodi accusamus ducimus sequi consectetur iusto maiores sint aut adipisci, debitis soluta esse, cumque dicta laborum labore error laudantium dolores deleniti! Qui in tenetur dicta voluptates commodi sed voluptatum, magnam porro incidunt ipsa dolorum accusantium debitis hic consequuntur amet sint ducimus reprehenderit excepturi modi recusandae quidem dignissimos inventore necessitatibus quos. Veritatis!</p>
+    <div className=" pt-[100px] ">
+      <div className='flex flex-col'>
+        <div className='  md:ml-28 flex items-center flex-col gap-10 p-10 '>
+          <h1 className='text-8xl font-bold  md:mt-8 md:px-2 bg-[#F2E5BF]'>WHO WE ARE ?</h1>
+          <p className='md:w-[92%]  nunito-para text-center'>
+            At Drive2Dreams, we believe in the power of education to unlock potential and transform lives. Our mission is to guide and support students on their journey to finding the perfect university or college that aligns with their goals and aspirations. Whether you &apos;re dreaming of a career in engineering, medicine, business, or the arts, we&apos;re dedicated to helping you make informed decisions and take confident steps toward a brighter future.
+
+            We partner with leading institutions to provide you with the best options, personalized guidance, and up-to-date information. Our team of experts is passionate about helping you navigate the complex world of higher education, ensuring that you are equipped with the tools and knowledge to succeed.
+
+            Let us help you turn your dreams into reality, one step at a time.
+          </p>
+
+        </div>
+        <div className='mt-10'>
+          <h1 className='text-4xl text-center font-bold md:text-6xl'>Let us Help You to guide</h1>
+          <div className='mt-8 flex flex-col items-center justify-center w-[90%] md:w-[50%] m-auto'>
+            <FormComponent />
+          </div>
+        </div>
+
+      </div>
+
     </div>
   )
 }

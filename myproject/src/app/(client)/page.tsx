@@ -2,6 +2,7 @@ import React from 'react'
 import Introduction from '@/components/Introduction'
 import OurCourses from '@/components/OurCourses'
 import dbConnect from '@/lib/dbConnect'
+import StayConnected from '@/components/StayConnected'
 import { CourseInfoModel } from '@/models/courseInfo'
 import PartneredUniversities from '@/components/PartneredUniversities'
 type UniversityData = {
@@ -50,12 +51,14 @@ export default async function Home() {
   
   return (
   
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-10">
         <Introduction />
 
         <OurCourses courseData={courseData}/>
 
         <PartneredUniversities/>
+        
+        <StayConnected/>
       </div>
     
   );

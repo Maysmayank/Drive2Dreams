@@ -53,8 +53,8 @@ export default function OurCourses({ courseData }: CourseDataProps,) {
   
   return (
     <div className='relative'>
-      <div className='mt-10 flex flex-col items-center pb-10 px-3'>
-        <h1 className='font-bold text-4xl mb-8'>Our Courses</h1>
+      <div className='mt-2 flex flex-col items-center pb-10 px-3'>
+        <h1 className='font-bold mb-12 text-3xl md:rubik-homepage-title md:text-5xl'>Our Courses</h1>
 
         {/* Grid for courses */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
@@ -67,7 +67,7 @@ export default function OurCourses({ courseData }: CourseDataProps,) {
                 key={course.title}
                 image={course.university.cloudinaryImageUrl}
                 title={course.title}
-                text={course.courseOverview}
+                text={course.courseInfo}
                 duration={course.duration}
                 universityName={course.university.universityName}
               />
@@ -78,8 +78,8 @@ export default function OurCourses({ courseData }: CourseDataProps,) {
           {/* {pageNumber} */}
         {courseData&&<div>
           <Pagination  totalCourses={totalCourses} limit={LIMIT} pageNumber={pageNumber} setpageNumber={setpageNumber}/> 
-
-        </div>}
+        </div>
+        }
       </div>
     </div>
   );

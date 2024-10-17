@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -17,26 +17,48 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { UniversityInfoSchema } from "@/schema/UniversityinfoSchema";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { cloudinary } from "@/utils/cloudinary";
 import axios from "axios";
 import { revalidateCourseData } from "@/lib/action";
-import handleUpload from "@/utils/uploadFormData";
 
-function AdminUniversityinfoFormComponent() {
+type universityInfo={
+  universityName:string;
+  aboutUniversity:string;
+  admissionProcess:string;
+  cutoffs:string,
+  cloudinaryImageUrl?:string,
+  cloudinaryImageName?:string
+}
+function AdminUniversityinfoFormComponent({id}:any) {
   const { toast } = useToast();
 
-  const router = useRouter();
   const [Loading, setIsLoading] = useState(false);
+  const [universityData,setUniversityData]=useState<universityInfo|null>(null)
+  const[imagename,setimagename]=useState("")
   const form = useForm<z.infer<typeof UniversityInfoSchema>>({
     resolver: zodResolver(UniversityInfoSchema),
   });
 
+  useEffect(()=>{
+    async function fetchUniversityData() {
+      const response=await axios.get(`/api/update-universitybyid?id=${id}`)
+      if(response.data.success){
+        const parsedData = JSON.parse(response.data.message); // Parse the JSON string to a JS object
+        setUniversityData(parsedData); // Set the parsed object in state
+        setimagename(parsedData.cloudinaryImageName);
+        form.reset(parsedData);  // setting the form field with its info (prefilling) 
+        
+      }
+    }
+    if(id){
+      fetchUniversityData();
+    }
+},[]);
+
   async function onSubmit(data: z.infer<typeof UniversityInfoSchema>) {
     try {
       setIsLoading(true);
-      const formData = new FormData();
+      const formData = new FormData();     // using formdata to send the files  like image in object format
 
       formData.append("universityName", data.universityName);
       formData.append("aboutUniversity", data.aboutUniversity);
@@ -46,15 +68,18 @@ function AdminUniversityinfoFormComponent() {
 
       // const formDataObj = Object.fromEntries(formData.entries());
       // console.log("obj",formDataObj);
-      let response = await axios.post("/api/post/universityinfo", formData);
-
-
-      // let response =await handleUpload(formData);
-      console.log(response);
       
+      let response;
+      if(id){
+        response = await axios.patch(`/api/update-universitybyid?id=${id}`, formData);  //updating
+
+      }else{
+         response = await axios.post("/api/post/universityinfo", formData); 
+
+      }
       if (response.data.success) {
 
-        revalidateCourseData();
+        revalidateCourseData();  // reflecting changes to the paths
 
         toast({
           title: "Success",
@@ -81,7 +106,7 @@ function AdminUniversityinfoFormComponent() {
     } finally {
 
       setIsLoading(false);
-      
+
     }
   }
 
@@ -177,8 +202,9 @@ function AdminUniversityinfoFormComponent() {
                       onChange(event.target.files && event.target.files[0])
                     }
                   />
+
                 </FormControl>
-                <FormDescription></FormDescription>
+                <FormDescription> {id?`in use image :   ${imagename}`:""}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

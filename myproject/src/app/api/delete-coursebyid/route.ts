@@ -13,7 +13,7 @@ export async function DELETE(request: Request) {
     try {
         await dbConnect();
         const {searchParams}=new URL(request.url);
-        // console.log(searchParam);
+        // console.log(searchParams);
         const queryParam={
             id:searchParams.get('id')
         }

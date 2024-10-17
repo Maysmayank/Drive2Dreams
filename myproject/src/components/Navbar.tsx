@@ -16,14 +16,21 @@ const Navbar = () => {
   };
   
   const { data: session } = useSession()
-  console.log(session);
+  // console.log(session);
 
   
   return (
-    <div className=" fixed z-50 flex min-w-full bg-black h-[100px] text-white px-10 items-center justify-between">
+    <div className=" fixed z-50 flex min-w-full bg-black h-[85px] text-white px-5 md:px-10 items-center justify-between">
       
-      <div className="h-[130px] w-[100px] ">
-        <Image src="/originalLogo.png" height={80} width={80} className=" object-cover h-full w-full" alt="" />
+      <div className="flex items-center gap-3" >
+        <div className="rounded-full h-18 w-[60px] flex gap-4 items-center justify-center">
+        <Image src="/LOGOFINAL.png" height={100} width={100} alt="" />
+
+        </div>
+        <div className="flex flex-col opacity-80 ">
+          <p className="font-bold  text-xl md:text-2xl">Drive2Dreams</p>
+          <span>tagline</span>
+        </div>
       </div>
       
       <div className="hidden md:flex">
@@ -83,7 +90,7 @@ const Navbar = () => {
       
       <div className="md:hidden">
         <button onClick={toggleMenu}>
-          <Image src="/menu.svg" alt="menu" width={38} height={40} className="bg-slate-100 w-[50px] h-[50px]"/>
+          <Image src="/menu.svg" alt="menu" width={38} height={40} className="bg-slate-100 w-[40px] h-[40px]"/>
         </button>
       </div>
       

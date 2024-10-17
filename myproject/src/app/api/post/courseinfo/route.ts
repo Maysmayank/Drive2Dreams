@@ -7,7 +7,6 @@ interface CourseInfo{
     university: string; // Name of the university or college
     title: string; // Title of the course
     courseInfo: string; // Detailed information about the course
-    courseOverview:string,
     courseContent?: string[]; // Optional array of strings for course content like syllabus
     duration?: string; // Duration of the course
     syllabus?: string; // Optional field for storing file path or URL to PDF
@@ -16,10 +15,13 @@ interface CourseInfo{
 export async function POST(request: Request,response:NextResponse) {
     await dbConnect();
     try {
-        const{university,title,duration,courseInfo,courseContent,syllabus,courseOverview}=await request.json();
+        const{universityName,title,duration,courseInfo,courseContent,syllabus,eligibilityCriteria}=await request.json();
+        
+        
         const isCourseExisted=await CourseInfoModel.find({title:title}) 
-
-        let isUniversityExists= await UniversityInfoModel.findOne({universityName:university}) // cehck if university exists for the course to add
+        
+        let isUniversityExists= await UniversityInfoModel.findOne({universityName:universityName}) // cehck if university exists for the course to add
+        
         if(!isUniversityExists){
             return Response.json({
                 success: false,
@@ -41,12 +43,15 @@ export async function POST(request: Request,response:NextResponse) {
                 university:isUniversityExists._id,
                 title,
                 duration,
-                courseOverview,
                 courseContent,
                 courseInfo,
-                syllabus
+                syllabus,
+                eligibilityCriteria // array of string
+            
             })
             await newCourse.save();
+            // console.log(newCourse);
+            
             await CourseInfoModel.findById(newCourse._id)
 
             return Response.json({

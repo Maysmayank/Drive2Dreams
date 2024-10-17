@@ -13,5 +13,5 @@ export const UniversityInfoSchema = z.object({
     admissionProcess:z.string(),
     cutoffs:z.string(),
     image: z.any()
-        .refine(files => {return Array.from(files).every(file => file instanceof File)}, { message: "Expected a file" })
+        .refine(files => {return Array.from(files).every(file => file instanceof File)}, { message: "Expected a file" }).optional()
 })

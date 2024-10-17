@@ -5,8 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/context/Authprovider";
 import { Toaster } from "@/components/ui/toaster";
-import Contact from "./contact/page";
-import FormComponent from "@/components/Form";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

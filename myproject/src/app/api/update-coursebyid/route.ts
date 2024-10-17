@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { CourseInfoModel } from "@/models/courseInfo";
-import { log } from "console";
+
 type CourseData = {
     courseOverview:string;
     university: string; // Name of the university or college
@@ -8,12 +8,12 @@ type CourseData = {
     courseInfo: string; // Detailed information about the course
     courseContent?: string[]; // Optional array of strings for course content like syllabus
     duration?: string; // Duration of the course
+    eligibilityCriteria:string[];
     syllabus?: string; // Optional field for storing file path or URL to PDF
 }
 
 export async function PATCH(request: Request) {
     try {
-        console.log("in route ")
         await dbConnect();
         const { searchParams } = new URL(request.url);
         const queryParam = {
@@ -21,7 +21,7 @@ export async function PATCH(request: Request) {
         }
         const updateId = queryParam.id
         
-        const { university, title, courseOverview,courseInfo, courseContent, duration, syllabus } = await request.json()
+        const { university, title, courseOverview,courseInfo, courseContent, duration, syllabus,eligibilityCriteria } = await request.json()
         
         const isUpdated = await CourseInfoModel.updateOne(
             { _id: updateId },
@@ -33,7 +33,8 @@ export async function PATCH(request: Request) {
                     courseContent,
                     duration,
                     syllabus,
-                    courseOverview
+                    courseOverview,
+                    eligibilityCriteria //aaray of strings
                 }
             }
         )
@@ -78,8 +79,16 @@ export async function GET(request: Request) {
         }
         const id = queryParam.id
         
-        const data=await CourseInfoModel.findOne({_id:id});
-        let newData=JSON.stringify(data)
+        const data=await CourseInfoModel.findOne({_id:id}).populate("university","universityName");
+        let {universityName}=data.university;
+
+        let payload={
+            universityName,...data._doc    // geeting universityName from university object and pushing rest data to the payload 
+        }        
+        let pay=delete payload.university   /// removing the university object {} containg all univerdsty info
+        console.log("payload" ,payload);
+        
+        let newData=JSON.stringify(payload)
         
         if(data){
             return Response.json({

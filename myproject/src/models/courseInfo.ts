@@ -5,12 +5,12 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 interface CourseInfo extends Document {
     university: Types.ObjectId;
     title: string; // Title of the course
-    courseOverview:string; // give overview to show on CourseCard 
     courseInfo: string; // Detailed information about the course
-    eligibilityCriteria:string;
+    eligibilityCriteria:string[];
     courseContent?: string[]; // Optional array of strings for course content like syllabus
     duration?: string; // Duration of the course
     syllabus?: string; // Optional field for storing file path or URL to PDF
+    
 }
 
 
@@ -24,10 +24,6 @@ const CourseInfoSchema: Schema = new Schema<CourseInfo>({
         type: String,
         required: true,
     },
-    courseOverview:{
-        type:String,
-        required:true
-    },
     courseInfo: {
         type: String,
         required: true,
@@ -35,9 +31,13 @@ const CourseInfoSchema: Schema = new Schema<CourseInfo>({
     courseContent: {
         type: [String], // Array of strings for multiple lines of course content
     },
+
     eligibilityCriteria:{
-        type:String,
+        type:[String],
+        required: true,
+        default:[""]
     },
+
     duration: {
         type: String,
     },

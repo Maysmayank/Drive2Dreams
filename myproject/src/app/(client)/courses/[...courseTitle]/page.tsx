@@ -22,6 +22,7 @@ type CourseData = {
   courseOverview: string;
   courseContent?: string[];
   duration?: string;
+  eligibilityCriteria:string[];
   syllabus?: string;
 }
 
@@ -44,9 +45,9 @@ export default async function CoursePage({ params }: { params: { courseTitle: st
   const decodedCourseTitle = decodeURIComponent(courseTitle);  
   
   const courseData = await fetchCourseData(decodedCourseTitle);
-
+  
   return (
-    <div className="pt-[100px]">
+    <div className="">
       {courseData.length === 0 ? (
         "No course inforamation available"
       ) : (
@@ -54,9 +55,12 @@ export default async function CoursePage({ params }: { params: { courseTitle: st
           <DynamicCourseCardinfo
             key={index}
             title={course.title}
-            courseOverview={course.courseOverview}
+            courseInfo={course.courseInfo}
             courseContent={course.courseInfo}
+            eligibilityCriteria={course.eligibilityCriteria}
             image={course.university.cloudinaryImageUrl}
+            aboutUniversity={course.university.aboutUniversity}
+            syllabus={course.syllabus}
           />
         ))
       )}
