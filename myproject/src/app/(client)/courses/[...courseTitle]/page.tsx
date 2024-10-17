@@ -2,6 +2,7 @@
 import DynamicCourseCardinfo from '@/components/DynamicCourseCardinfo';
 import dbConnect  from '@/lib/dbConnect'; // Adjust the path as needed
 import { CourseInfoModel } from '@/models/courseInfo'; // Adjust the path as needed
+import { Loader2 } from 'lucide-react';
 
 type UniversityData = {
   _id: string;
@@ -29,10 +30,11 @@ type CourseData = {
  async function fetchCourseData(courseTitle: string): Promise<CourseData[]> {
   try {    
     await dbConnect(); // Connect to the database
-    const courseData = await CourseInfoModel.find({ title: courseTitle }).populate('university').lean().exec();
+    const courseData = await CourseInfoModel.find({ title: courseTitle }).populate('university').lean();
+    console.log("coursedaa :: ",courseData);
 
     return courseData as CourseData[];
-
+    
   } catch (error) {
     console.error('Error fetching course data:', error);
     return [];
@@ -45,11 +47,13 @@ export default async function CoursePage({ params }: { params: { courseTitle: st
   const decodedCourseTitle = decodeURIComponent(courseTitle);  
   
   const courseData = await fetchCourseData(decodedCourseTitle);
-  
   return (
-    <div className="">
+    <div className=" min-h-[100vh]">
       {courseData.length === 0 ? (
-        "No course inforamation available"
+        <div className='flex items-center min-h-[100vh] justify-center '>
+        <Loader2 height={50} width={50} className='mr-2 animate-spin'/>
+
+      </div>
       ) : (
         courseData.map((course, index) => (
           <DynamicCourseCardinfo
