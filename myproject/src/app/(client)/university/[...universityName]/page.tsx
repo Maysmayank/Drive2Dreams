@@ -1,3 +1,4 @@
+'use client';
 import DynamicCourseCardinfo from '@/components/DynamicCourseCardinfo';
 import DynamicUniversityCardinfo from '@/components/DynamicUniversityCardinfo';
 import dbConnect from '@/lib/dbConnect';

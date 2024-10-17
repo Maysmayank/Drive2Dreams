@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import Image from "next/image";
 import FormComponent from "./Form";
@@ -12,8 +13,7 @@ export default function DynamicCourseCardinfo({
 }: any) {
 
   return (
-    <div className="pt-[85px]">
-
+    <div className="pt-[85px] min-h-[100vh]">
       <div className="w-full pt-16 md:pt-10 relative min-h-[370px] md:min-h-[400px]">
         <Image
           src={image}
@@ -94,6 +94,7 @@ export default function DynamicCourseCardinfo({
           </div>
         </div>
       </div>
+      
     </div>
   );
 }
