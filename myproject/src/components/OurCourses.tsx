@@ -48,7 +48,7 @@ export default function OurCourses({ courseData }: CourseDataProps,) {
     
     paginationCalculation()
 
-  },[pageNumber,LIMIT,courseData])
+  },[pageNumber,LIMIT,courseData,allcoursesdata])
   
   
   return (

@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-
+import { UniversityInfoModel } from "./UniversityModel";
 // Define the TypeScript interface for the CourseInfo document
 interface CourseInfo extends Document {
     university: Types.ObjectId;

@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { CourseInfoModel } from "@/models/courseInfo";
-
+import { UniversityInfoModel } from "@/models/UniversityModel";
 export async function POST(request: Request) {
     
     try {
@@ -28,7 +28,6 @@ export async function POST(request: Request) {
         }
 
     }catch(error){  
-        console.log("error  occured Detected: ",error);
          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     const errorStack = error instanceof Error ? error.stack : null;
         return Response.json({
