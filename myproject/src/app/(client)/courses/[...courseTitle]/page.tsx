@@ -1,8 +1,9 @@
+'use client';
 
 import DynamicCourseCardinfo from '@/components/DynamicCourseCardinfo';
-import dbConnect  from '@/lib/dbConnect'; // Adjust the path as needed
-import { CourseInfoModel } from '@/models/courseInfo'; // Adjust the path as needed
+import axios from 'axios';
 import { Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 type UniversityData = {
   _id: string;
@@ -12,9 +13,8 @@ type UniversityData = {
   cutoffs: string;
   cloudinaryImageUrl?: string;
   cloudinaryImageName?: string;
-}
+};
 
-// Define the course data interface, where university is now of type UniversityData
 type CourseData = {
   _id: string;
   university: UniversityData; // Full university object
@@ -23,44 +23,51 @@ type CourseData = {
   courseOverview: string;
   courseContent?: string[];
   duration?: string;
-  eligibilityCriteria:string[];
+  eligibilityCriteria: string[];
   syllabus?: string;
-}
+};
 
- async function fetchCourseData(courseTitle: string): Promise<CourseData[]> {
-  try {    
-    await dbConnect(); // Connect to the database
-    const courseData = await CourseInfoModel.find({ title: courseTitle }).populate('university').lean();
-    console.log("coursedaa :: ",courseData);
-
-    return courseData as CourseData[];
-    
-  } catch (error) {
-    console.error('Error fetching course data:', error);
-    return [];
-  }
-}
-
-export default async function CoursePage({ params }: { params: { courseTitle: string } }) {
+export default function CoursePage({ params }: { params: { courseTitle: string } }) {
   const { courseTitle } = params;
-  
-  const decodedCourseTitle = decodeURIComponent(courseTitle);  
-  
-  const courseData = await fetchCourseData(decodedCourseTitle);
-  return (
-    <div className=" min-h-[100vh]">
-      {courseData.length === 0 ? (
-        <div className='flex items-center min-h-[100vh] justify-center '>
-        <Loader2 height={50} width={50} className='mr-2 animate-spin'/>
+  const [loading, setLoading] = useState(true); // Initialize loading as true
+  const [courseData, setCourseData] = useState<CourseData[]>([]); // Initialize state for course data
 
-      </div>
+  const decodedCourseTitle = decodeURIComponent(courseTitle);
+
+  useEffect(() => {
+    console.log('Fetching data');
+
+    async function fetchdataCourse() {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/get-courseinfo?title=${decodedCourseTitle}`);
+        
+        setCourseData(response.data.courseData); // Assuming response.data.course contains the course array
+        console.log(courseData);
+        
+      } catch (error) {
+        console.error('Error fetching course data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchdataCourse(); // Call the function to fetch data
+  }, [decodedCourseTitle]); // Add decodedCourseTitle to the dependency array
+
+  return (
+    <div className="min-h-[100vh]">
+      {loading ? (
+        <div className="flex items-center min-h-[100vh] justify-center">
+          <Loader2 height={50} width={50} className="mr-2 animate-spin" />
+        </div>
       ) : (
         courseData.map((course, index) => (
           <DynamicCourseCardinfo
             key={index}
             title={course.title}
             courseInfo={course.courseInfo}
-            courseContent={course.courseInfo}
+            courseContent={course.courseContent} // Changed from course.courseInfo to courseContent
             eligibilityCriteria={course.eligibilityCriteria}
             image={course.university.cloudinaryImageUrl}
             aboutUniversity={course.university.aboutUniversity}
