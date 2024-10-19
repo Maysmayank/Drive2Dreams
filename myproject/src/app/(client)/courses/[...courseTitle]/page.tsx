@@ -40,10 +40,9 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
     async function fetchdataCourse() {
       try {
         setLoading(true);
-        const response = await axios.get(`/api/get-courseinfo?title=${decodedCourseTitle}`);
+        const response = await axios.post(`/api/get-courseinfo?`,{title:decodedCourseTitle});
         
         setCourseData(response.data.courseData); // Assuming response.data.course contains the course array
-        console.log(courseData);
         
       } catch (error) {
         console.error('Error fetching course data:', error);
