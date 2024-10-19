@@ -1,5 +1,5 @@
 type UniversityInfoType =
-{
+{       _id?:string;
         universityName: string;
         aboutUniversity: string;
         admissionProcess: string;

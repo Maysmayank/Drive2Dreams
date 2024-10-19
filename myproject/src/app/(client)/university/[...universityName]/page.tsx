@@ -34,7 +34,7 @@ export default function Page({ params }: { params: { universityName: string } })
   }, [decodedUniversityName]);
 
   return (
-    <div className="pt-[85px] min-h-[100vh]">
+    <div className="pt-[74px] md:pt-[85px] min-h-[100vh]">
       {loading ? (
         <div className="flex flex-col gap-3 items-center min-h-[100vh] justify-center">
           <Loader2 height={50} width={50} className="mr-2 animate-spin" />

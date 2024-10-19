@@ -10,7 +10,7 @@ export default function DynamicUniversityCardinfo({
 
   return (
     <>
-      <div className="bg-gray-600 min-h-[400px] w-full relative">
+      <div className="bg-gray-600 pt-[70px] min-h-[400px] w-full relative">
         <Image
           src={universityImage}
           alt="image"

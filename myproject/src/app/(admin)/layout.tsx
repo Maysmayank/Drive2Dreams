@@ -6,6 +6,7 @@ import AdminNavbar from '@/components/admin/AdminNavBar'
 import { Toaster } from '@/components/ui/toaster'
 import { useState } from 'react'
 import Image from 'next/image'
+import { X } from 'lucide-react'
 export default function RootLayout({
   children,
 }: {
@@ -34,7 +35,7 @@ export default function RootLayout({
                   className="absolute top-4 right-4 text-white text-xl"
                   aria-label="Close Menu"
                 > 
-                X 
+                <X className='bg-white text-black rounded-sm p-1' size={30}/>
 
                 </button>
               </div>

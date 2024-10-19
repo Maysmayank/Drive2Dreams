@@ -14,13 +14,13 @@ export default function Introduction() {
   return (
     <>
       <div className='relative'>
-        <div className='pt-20 pb-7 bg-[rgb(250,208,91)] w-full flex flex-col md:flex-row px-3 m-auto min-h-[500px] gap-2 items-center  justify-around'>
+        <div className='pt-20 pb-7 bg-[hsl(44,86%,61%)] w-full flex flex-col md:flex-row px-3 m-auto min-h-[500px] gap-2 items-center  justify-around'>
 
           <div className=" flex flex-col  gap-5 justify-between rounded-lg w-full md:w-[80%] p-8">
 
             <h1 className='text-4xl md:text-5xl .open-sans-paragraph font-bold'> Welcome to Drive2Dreams</h1>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam dignissimos aperiam facere quos! Enim ea ab, magni delectus ex dolores suscipit debitis accusamus quisquam saepe, tenetur minus tempore ipsa accusantium?</p>
-            <button onClick={() => { router.push('/contact') }} className='mt-5 md:mt-10 bg-[#191359] p-2  text-white w-[120px]'>contactus</button>
+            <button onClick={() => { router.push('/contact') }} className='mt-5 md:mt-10 bg-[#110d3b] p-2  text-white w-[120px]'>contact us</button>
 
           </div>
 

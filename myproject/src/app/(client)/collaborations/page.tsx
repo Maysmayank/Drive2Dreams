@@ -2,17 +2,10 @@ import React from 'react'
 import dbConnect from '@/lib/dbConnect';
 import { UniversityInfoModel } from '@/models/UniversityModel';
 import CollaboratedUniversity from '@/components/CollaboratedUniversity'
-type UniversityInfo =
-    {
-        universityName: string;
-        aboutUniversity: string;
-        admissionProcess: string;
-        cutoffs: string;
-        cloudinaryImageUrl?:string;
-    cloudinaryImageName?:string;
-    }
+import { UniversityInfoType } from '../../../../ModelTypes/ModelTypes';
 
-async function fetchedAllUniversityData():Promise<UniversityInfo[]>{
+
+async function fetchedAllUniversityData():Promise<UniversityInfoType[]>{
     try {
         await dbConnect();        
         const data=UniversityInfoModel.find({})   // fetch all data
@@ -26,12 +19,12 @@ async function fetchedAllUniversityData():Promise<UniversityInfo[]>{
 
  const  Collaborations = async() => {
 
-  const allUniversitydata:UniversityInfo[] =await fetchedAllUniversityData();
+  const allUniversitydata:UniversityInfoType[] =await fetchedAllUniversityData();
     
   return (
     <div className='pt-[80px]'>
       <div className=' main-container min-h-[100vh] my-5 mb-16 md:w-full flex flex-col items-center justify-center gap-4'>
-        <h1 className='my-7   md:text-5xl font-bold bg-[#e1944c] px-10 py-2'>Our University Collaborators</h1>
+        <h1 className='my-5   md:text-5xl font-bold bg-[#e1944c] px-10 py-2'>Our University Collaborators</h1>
         <hr className='  w-full'/>
         <div className='w-[80%] flex-col flex gap-20 mt-10'>
         {

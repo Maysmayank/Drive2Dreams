@@ -7,6 +7,7 @@ export async function POST(request: Request) {
         await dbConnect();
         let {title}=await request.json();
         
+        console.log(title);
         
         const courseData=await CourseInfoModel.find({title:title}).populate('university')
         if(courseData.length>0){

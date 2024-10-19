@@ -17,14 +17,14 @@ function CollaboratedUniversity({  image, universityName, aboutUniversity }: any
       </div>
 
     
-      <div className="  md:w-[80%]  md:px-5 p-0 rounded-lg flex flex-col ">
+      <div className="w-[95%]  md:w-[80%]  md:px-5 p-0 rounded-lg flex flex-col ">
 
 
         <h1 className="text-4xl mb-5 md:text-5xl font-bold text-left text-slate-900">
           {universityName}
         </h1>
 
-        <p className=" text-justify nunito-para md:py-6 leading-relaxed line-clamp-6 md:line-clamp-2">
+        <p className="break-words text-justify md:text-justify nunito-para md:py-6 md:leading-relaxed line-clamp-6 md:line-clamp-2">
           {aboutUniversity} 
         </p>
         <p className='opacity-65'>see more</p>

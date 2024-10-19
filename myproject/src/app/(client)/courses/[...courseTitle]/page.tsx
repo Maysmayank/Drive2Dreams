@@ -55,7 +55,7 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
   }, [decodedCourseTitle]); // Add decodedCourseTitle to the dependency array
 
   return (
-    <div className="min-h-[100vh]">
+    <div className=" min-h-[100vh]">
       {loading ? (
         <div className="flex items-center min-h-[100vh] justify-center">
           <Loader2 height={50} width={50} className="mr-2 animate-spin" />
