@@ -14,7 +14,7 @@ interface CourseInfo extends Document {
 }
 
 
-const CourseInfoSchema: Schema = new Schema<CourseInfo>({
+const CourseInfoSchema: Schema = new mongoose.Schema<CourseInfo>({
     university: {
         type: Schema.Types.ObjectId,
         ref:"UniversityInfo",
