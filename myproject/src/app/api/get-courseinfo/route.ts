@@ -29,10 +29,12 @@ export async function POST(request: Request) {
 
     }catch(error){  
         console.log("error  occured Detected: ",error);
+         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : null;
         return Response.json({
             success: false,
             message: "Error Occured fetching course details Internal Server Error",
-            showError:error
+            showError:errorMessage
         }, {
             status: 500,
         })
