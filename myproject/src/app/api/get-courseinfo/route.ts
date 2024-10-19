@@ -1,16 +1,13 @@
 import dbConnect from "@/lib/dbConnect";
 import { CourseInfoModel } from "@/models/courseInfo";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
     
     try {
         await dbConnect();
-        const{searchParams}=new URL(request.url)
+        let {title}=await request.json();
+        console.log(title);
         
-        const queryParam={
-            searchName:searchParams.get("title")|| ''
-        }
-        let title=queryParam.searchName;
         
         const courseData=await CourseInfoModel.find({title:title}).populate('university')
         if(courseData.length>0){
