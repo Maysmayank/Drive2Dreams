@@ -1,6 +1,5 @@
 'use client';
 import DynamicUniversityCardinfo from '@/components/DynamicUniversityCardinfo';
-import fetch_University_Data_ByName from '@/utils/FetchUniversity';
 import axios from 'axios';
 import { Loader2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
@@ -37,11 +36,12 @@ export default function Page({ params }: { params: { universityName: string } })
   return (
     <div className="pt-[85px] min-h-[100vh]">
       {loading ? (
-        <div className="flex items-center min-h-[100vh] justify-center">
+        <div className="flex flex-col gap-3 items-center min-h-[100vh] justify-center">
           <Loader2 height={50} width={50} className="mr-2 animate-spin" />
+          <h2>Hold up</h2>
         </div>
-      ) : universityData && universityData.length > 0 ? (
-        universityData.map((university: UniversityInfoType, index: number) => (
+      ) : (
+        universityData?.map((university: UniversityInfoType, index: number) => (
           <DynamicUniversityCardinfo
             key={index}
             universityImage={university.cloudinaryImageUrl}
@@ -50,8 +50,6 @@ export default function Page({ params }: { params: { universityName: string } })
             cutoffs={university.cutoffs}
           />
         ))
-      ) : (
-        <div>No university data found.</div>
       )}
     </div>
   );

@@ -15,17 +15,17 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   
+
   const { data: session } = useSession()
   // console.log(session);
 
   
   return (
-    <div className=" fixed z-50 flex min-w-full bg-black h-[85px] text-white px-5 md:px-10 items-center justify-between">
+    <div className=" fixed z-50 flex min-w-full bg-black h-[70px] md:h-[85px] text-white px-5 md:px-10 items-center justify-between">
       
-      <div className="flex items-center gap-3" >
+      <div className="flex items-center gap-3 " >
         <div className="rounded-full h-18 w-[60px] flex gap-4 items-center justify-center">
         <Image src="/LOGOFINAL.png" height={100} width={100} alt="" />
-
         </div>
         <div className="flex flex-col opacity-80 ">
           <p className="font-bold  text-xl md:text-2xl">Drive2Dreams</p>

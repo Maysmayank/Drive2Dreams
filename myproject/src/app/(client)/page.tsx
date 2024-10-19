@@ -5,29 +5,10 @@ import dbConnect from '@/lib/dbConnect'
 import StayConnected from '@/components/StayConnected'
 import { CourseInfoModel } from '@/models/courseInfo'
 import PartneredUniversities from '@/components/PartneredUniversities'
-type UniversityData = {
-  _id: string;
-  universityName: string;
-  aboutUniversity: string;
-  admissionProcess: string;
-  cutoffs: string;
-  cloudinaryImageUrl?: string;
-  cloudinaryImageName?: string;
-}
-
-type CourseData = {
-  _id: string;
-  university: UniversityData; // Full university object
-  title: string;
-  courseInfo: string;
-  courseOverview: string;
-  courseContent?: string[];
-  duration?: string;
-  syllabus?: string;
-}
+import { UniversityInfoType ,CourseInfoType} from '../../../ModelTypes/ModelTypes'
 
 
-async function fetchCourseData(): Promise<CourseData[]> {
+async function fetchCourseData(): Promise<CourseInfoType[]> {
   try {
     await dbConnect(); // Connect to the database
     

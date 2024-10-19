@@ -22,7 +22,7 @@ async function PartneredUniversities() {
   let data = await fetchUniversityData();
   
   return (
-    <div className='flex flex-col items-center justify-center p-6 pt-0  gap-10'>
+    <div className='flex flex-col items-center justify-center  p-6 gap-10 md:gap-16'>
       <h1 className='font-bold  text-center text-3xl md:text-5xl md:homepage-title2'>Partenered Universities</h1>
       
       {

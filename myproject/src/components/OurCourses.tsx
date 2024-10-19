@@ -2,30 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import CourseCard from '@/components/CourseCard';
 import Pagination from './Pagination';
-type UniversityData = {
-  _id: string;
-  universityName: string;
-  aboutUniversity: string;
-  admissionProcess: string;
-  cutoffs: string;
-  cloudinaryImageUrl?: string;
-  cloudinaryImageName?: string;
-}
+import { CourseInfoType } from '../../ModelTypes/ModelTypes';
 
-// Define the course data interface, where university is now of type UniversityData
-type CourseData = {
-  _id: string;
-  university: UniversityData; // Full university object
-  title: string;
-  courseInfo: string;
-  courseOverview: string;
-  courseContent?: string[];
-  duration?: string;
-  syllabus?: string;
-}
 
 type CourseDataProps = {
-  courseData: CourseData[];
+  courseData: CourseInfoType[];
 };
 const LIMIT=2
 // const SKIP=(pagenumber-1)*LIMIT;
@@ -33,8 +14,8 @@ const LIMIT=2
 export default function OurCourses({ courseData }: CourseDataProps,) {
   
   const [pageNumber,setpageNumber]=useState(1);
-  const [allcoursesdata]=useState<CourseData[]>(courseData);
-  const [paginatedData,setPaginatedData]=useState<CourseData[]>([])
+  const [allcoursesdata]=useState<CourseInfoType[]>(courseData);
+  const [paginatedData,setPaginatedData]=useState<CourseInfoType[]>([])
   const [totalCourses]=useState(courseData.length)
 
   useEffect(()=>{
@@ -53,7 +34,7 @@ export default function OurCourses({ courseData }: CourseDataProps,) {
   
   return (
     <div className='relative'>
-      <div className='mt-2 flex flex-col items-center pb-10 px-3'>
+      <div className='mt-2 flex flex-col items-center pb-5 px-3'>
         <h1 className='font-bold mb-12 text-3xl md:rubik-homepage-title md:text-5xl'>Our Courses</h1>
 
         {/* Grid for courses */}

@@ -12,7 +12,7 @@ function StayConnected() {
 
                 <div className='flex flex-col mt-10'>
                     <div className='flex flex-col px-10 gap-10 items-center justify-center'>
-                        <h1 className='text-6xl '>Stay in Touch</h1>
+                        <h1 className='text-6xl pl-7 md:pl-0'>Stay in Touch</h1>
 
                         <p className='text-center'> Your thoughts and concerns matter to us! If you have any inquiries, feedback, or need assistance, our team is here to support you
                             we will ensure you receive prompt and helpful responses.</p>
