@@ -31,7 +31,8 @@ export async function POST(request: Request) {
         console.log("error  occured Detected: ",error);
         return Response.json({
             success: false,
-            message: "Error Occured fetching course details Internal Server Error"
+            message: "Error Occured fetching course details Internal Server Error",
+            showerror:error
         }, {
             status: 500,
         })
