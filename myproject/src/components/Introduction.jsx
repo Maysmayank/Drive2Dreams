@@ -20,8 +20,8 @@ export default function Introduction() {
 
             <h1 className='text-4xl md:text-5xl .open-sans-paragraph font-bold'> Welcome to Drive2Dreams</h1>
             <p className="nunito-para">
-  We&apos;re here to turn your career ambitions into reality. From helping you choose the right college to offering personalized guidance, we connect your dreams with the best opportunities. Your future&nbsp;starts&nbsp;with&nbsp;us!
-</p>            <button onClick={() => { router.push('/contact') }} className='mt-5 md:mt-10 bg-[#110d3b] p-2  text-white w-[120px]'>contact us</button>
+              We&apos;re here to turn your career ambitions into reality. From helping you choose the right college to offering personalized guidance, we connect your dreams with the best opportunities. Your future&nbsp;starts&nbsp;with&nbsp;us!
+            </p>            <button onClick={() => { router.push('/contact') }} className='mt-5 md:mt-10 bg-[#110d3b] p-2  text-white w-[120px]'>contact us</button>
 
           </div>
 
@@ -36,7 +36,7 @@ export default function Introduction() {
           <div className='absolute bg-black flex items-center justify-center animate-jump-in animate-delay-1000  opacity-96 z-10 p-2 top-[10%] w-full md:top-[16%] md:p-0  '>
 
             <div className='absolute  pt-10 bg-white  flex flex-col items-center top-[15%] md:w-[40%] md:top-[50%]'>
-              
+
               <Button className='absolute top-7 right-4' onClick={HandleClick}>X</Button>
 
               <div className="flex px-2 flex-col items-center">
