@@ -6,7 +6,7 @@ import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import {PopoverDemo} from '@/components/PopoverDemo'
 import Image from "next/image";
-import { Headset, House, LayoutDashboard, Menu, MessageSquareText, Search, Shield, User, X } from "lucide-react";
+import { Headset, House, LayoutDashboard, Menu, MessageSquareText, Search, Shield, User, UsersRound, X } from "lucide-react";
 const Navbar = () => {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,9 +27,9 @@ const Navbar = () => {
         <div className="rounded-full h-18 w-[60px] flex gap-4 items-center justify-center">
         <Image src="/LOGOFINAL.png" height={100} width={100} alt="" />
         </div>
-        <div className="flex flex-col opacity-80 ">
+        <div className="flex flex-col opacity-80  w-[90%]">
           <p className="font-bold  text-xl md:text-2xl">Drive2Dreams</p>
-          <span>tagline</span>
+          <span className="text-left opacity-80">Connecting ambitions with opportunities</span>
         </div>
       </div>
       
@@ -49,7 +49,7 @@ const Navbar = () => {
 
           <li>
           <Link className={pathname==='/collaborations' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/collaborations'>          
-          <Shield  size={20} className="mr-1 mb-1 inline"/>Collaborations
+          <UsersRound  size={20} className="mr-1 mb-1 inline"/>Collaborations
           </Link>
           </li>
 

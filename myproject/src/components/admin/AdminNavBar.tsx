@@ -16,11 +16,11 @@ function AdminNavBar() {
   }
  
   return (
-    <div className='flex flex-col justify-between py-10 items-center bg-black p-5 h-screen fixed'>
+    <div className='flex flex-col justify-between py-10 items-center  p-6 min-h-screen fixed'>
       
-      <div className="flex flex-col  justify-between gap-2 text-white h-[70%]">
+      <div className="flex flex-col  justify-between gap-4 text-white h-[70%]">
 
-        <div className='logo mt-2'>
+        <div className='logo mt-10 mb-20'>
           <h1 className='text-white font-bold text-3xl opacity-80'>Drive2Dreams</h1>
         </div>
 
