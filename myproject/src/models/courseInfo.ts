@@ -46,6 +46,6 @@ const CourseInfoSchema: Schema = new mongoose.Schema<CourseInfo>({
     }
 });
 
-const CourseInfoModel = mongoose.models.CourseInfo || mongoose.model<CourseInfo>('CourseInfo', CourseInfoSchema);
+const CourseInfoModel = mongoose.models?.CourseInfo || mongoose.model<CourseInfo>('CourseInfo', CourseInfoSchema);
 
 export  {CourseInfoModel};
