@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-
 import { UniversityInfoModel } from "./UniversityModel";
 // Define the TypeScript interface for the CourseInfo document
 interface CourseInfo extends Document {
@@ -17,7 +16,7 @@ interface CourseInfo extends Document {
 const CourseInfoSchema: Schema = new mongoose.Schema<CourseInfo>({
     university: {
         type: Schema.Types.ObjectId,
-        ref:UniversityInfoModel,
+        ref: UniversityInfoModel,  // Use the model name as a string
         required: true,
     },
     title: {
@@ -46,6 +45,6 @@ const CourseInfoSchema: Schema = new mongoose.Schema<CourseInfo>({
     }
 });
 
-const CourseInfoModel = mongoose.models.CourseInfo || mongoose.model<CourseInfo>('CourseInfo', CourseInfoSchema);
+const CourseInfoModel = mongoose.models?.CourseInfo || mongoose.model<CourseInfo>('CourseInfo', CourseInfoSchema);
 
 export  {CourseInfoModel};
