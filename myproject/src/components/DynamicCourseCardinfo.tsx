@@ -61,7 +61,7 @@ export default function DynamicCourseCardinfo({
                 eligibilityCriteria.length === 0 ? "No eligibility criteria" : (
                   <ul className=" pl-4 md:pl-5 flex flex-col gap-2 list-disc">
                     {eligibilityCriteria.map((item: any, i: number) => (
-                      <li key={i}>{item}</li>
+                      <li key={i}className="break-words" >{item}</li>
                     ))}
 
                   </ul>
