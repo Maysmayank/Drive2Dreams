@@ -38,6 +38,6 @@ const UniversityInfoSchema: Schema = new mongoose.Schema<UniversityInfo>({
     timestamps:true
 });
 
-const UniversityInfoModel = mongoose.models.UniversityInfo || mongoose.model<UniversityInfo>('UniversityInfo', UniversityInfoSchema);
+const UniversityInfoModel = mongoose.models?.UniversityInfo || mongoose.model<UniversityInfo>('UniversityInfo', UniversityInfoSchema);
 
 export { UniversityInfoModel };
