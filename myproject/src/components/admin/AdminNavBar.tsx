@@ -33,8 +33,8 @@ function AdminNavBar() {
             <Link className={pathname==='/admin/dashboard'?'active rounded p-2  bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/dashboard'><LayoutDashboard className="inline mr-4 mb-1" />Dashboard</Link>
           </li>
           
-          <li>
-            <Link className={pathname==='/admin/manage-admins'?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/manage-admins'><UserRoundCog className="inline mr-4 mb-1"/>Manage Admins</Link>
+          <li >
+            <Link className={pathname==='/admin/manage-admins'?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black rounded p-2 transition duration-200 delay-75 ease-in'}  href='/admin/manage-admins' ><UserRoundCog className="inline mr-4 mb-1" />Manage Admins</Link>
           </li>
 
           <li>

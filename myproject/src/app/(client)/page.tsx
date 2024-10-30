@@ -11,6 +11,7 @@ import { UniversityInfoType ,CourseInfoType} from '../../../ModelTypes/ModelType
 async function fetchCourseData(): Promise<CourseInfoType[]> {
   try {
     await dbConnect(); // Connect to the database
+    console.log("hererer");
     
     const fetchedCourseData = await CourseInfoModel.find({})
       .populate('university') // Populate the university reference
@@ -29,6 +30,8 @@ async function fetchCourseData(): Promise<CourseInfoType[]> {
 
 export default async function Home() {
   const courseData = await fetchCourseData();
+  console.log(courseData);
+  
   
   return (
   
