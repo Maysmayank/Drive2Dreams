@@ -15,8 +15,8 @@ export async function GET(request: Request) {
 
         const user=await UserModel.find({
             $or:[
-                {username:queryParam.searchName},
-                {email:queryParam.searchName}
+                {username:{"$regex":queryParam.searchName,"$options":"i"}},
+                {email:{"$regex":queryParam.searchName,"$options":"i"}},
             ]
         }).select('-password -_id -__v');
         

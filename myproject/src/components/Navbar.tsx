@@ -1,20 +1,36 @@
 'use client'
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { PopoverDemo } from '@/components/PopoverDemo'
 import Image from "next/image";
-import { Headset, House, LayoutDashboard, Menu, MessageSquareText, Search, SearchIcon, Shield, User, UsersRound, X } from "lucide-react";
+import { Headset, House, LayoutDashboard, Loader2, Loader2Icon, Menu, MessageSquareText, Search, SearchIcon, Shield, User, UsersRound, X } from "lucide-react";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import ResponsiveDropDown from '@/components/ResponsiveDropdown'
 import axios from "axios";
+import { useDebounceCallback } from "usehooks-ts";
+
+
+interface CourseInfoSearchBarType{
+  title:string;
+  UniversityName:string;
+}
 const Navbar = () => {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const[isDropDownOpen,setIsDropDownOpen]=useState(false);
+
+  /**
+   * this states below responsible to handle search bar value and their functionality including dropdown
+   */
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const [courseInfo, setCourseInfo] = useState<CourseInfoSearchBarType[]>([]);
+  const [value, setValue] = useState("");
+  const [showinputBoxInMobile, setShowinputBoxInMobile] = useState("none");
+  const [isLoading, setIsLoading] = useState(false);
+
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -22,16 +38,78 @@ const Navbar = () => {
 
   const { data: session } = useSession()
   // console.log(session);
-  const [value, setValue] = useState('');
-  console.log(value);
+  
+  useEffect(() => {
+    if (value) {
+      const delay = setTimeout(() => {
+        setIsLoading(true)    // loading start from here 
 
-  const  HandleSearchClick= () => {
-    setIsDropDownOpen((prev) => !prev);
-  };
+        debouncedFetchCourseInfo(value);
+      }, 1000)
+
+      return () => clearTimeout(delay)
+
+    }
+
+  }, [value])
+
+  async function fetchDropDownData(value: string) {
+    try {
+
+      let response = await axios.post("/api/dropDownData", { value })
+      if (response.data.success) {
+
+        setCourseInfo(response.data.data);
+
+        setIsDropDownOpen((prev) => !prev);
+
+      } else {
+        setCourseInfo([]);
+      }
+    } catch (error: any) {
+      console.log(error.response.data.message);
+
+    } finally {
+      setIsLoading(false)  // loading ends here
+    }
+  }
+
+ 
+
+  const debouncedFetchCourseInfo = useDebounceCallback((value) => {
+    fetchDropDownData(value);
+  });
+
+  function HandleSearchChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setValue(e.target.value);
+  }
+
+
+  const CloseOnCLickRef = useRef<HTMLDivElement>(null);
+  const searchIconRef = useRef<HTMLButtonElement>(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        CloseOnCLickRef.current &&
+        searchIconRef.current &&
+        !CloseOnCLickRef.current.contains(e.target as Node) &&
+        !searchIconRef.current.contains(e.target as Node)
+      ) {
+
+        setShowinputBoxInMobile("none"); // Close the input box if clicked outside
+        setIsDropDownOpen(false)
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
 
   return (
     <div className=" fixed z-50 flex min-w-full bg-black h-[75px] md:h-[85px] text-white px-2 md:px-10 items-center justify-between">
-
       <div className="flex items-center gap-3 " >
         <div className="rounded-full h-18 w-[50px] flex gap-4 items-center justify-center">
           <Image src="/LOGOFINAL.png" height={100} width={80} alt="" />
@@ -74,39 +152,44 @@ const Navbar = () => {
       <div className="hidden md:flex">
         <div className="relative md:w-[320px]">
 
-          <Input placeholder="Search Courses" onChange={(e) => (setValue(e.target.value))} className="pr-[35px] hidden md:block" />
+          <Input value={value} placeholder="Search Courses" onChange={HandleSearchChange} className="pr-[35px] md:block" />
 
-          <button className="absolute rounded-sm p-1.5 outline-none border-none top-0 right-0.5 hover:bg-white hover:text-black" onClick={HandleSearchClick}>
-            <SearchIcon />
+          <button className="absolute rounded-sm p-1.5 outline-none border-none top-0 right-0.5 hover:bg-white hover:text-black">
+            {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon />}
           </button>
-          
-          <div className="absolute hidden md:block md:mt-6 w-full bg-red-400 ">
-          {
-            isDropDownOpen&&<ResponsiveDropDown value={value}/>
-          }
+
+          <div className="absolute hidden md:block md:mt-6 w-full">
+            {
+              isDropDownOpen && <ResponsiveDropDown setValue={setValue} courseInfo={courseInfo} value={value} />
+            }
           </div>
-          
+
         </div>
       </div>
 
-      <button className="relative md:hidden rounded-sm p-1.5 outline-none border-none  right-2 hover:bg-white hover:text-black" onClick={HandleSearchClick}>
-        <SearchIcon size={25} />
-        
-      
+      <button ref={searchIconRef} className="relative  md:hidden rounded-sm p-1.5 outline-none border-none  right-2 hover:bg-white hover:text-black" onClick={() => {
+        setShowinputBoxInMobile((prev) => (prev === "none" ? "block" : "none"));
+      }}  >
+        {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon />}
       </button>
 
-      <div className="md:hidden absolute w-[90%] top-20 left-5">
-  {isDropDownOpen && (
-    <>
-      <Input
-        placeholder="Search Courses"
-        onChange={(e) => setValue(e.target.value)}
-        className="pr-[35px] py-2 bg-white text-black"
-      />
-      <ResponsiveDropDown value={value}/>
-    </>
-  )}
-</div>
+      {/* for mobile */}
+      <div ref={CloseOnCLickRef} className="md:hidden absolute w-[90%] top-20 left-5" > 
+        <Input
+          placeholder="Search Courses"
+          value={value}
+          onChange={HandleSearchChange}
+          className="pr-[35px] py-2 bg-white text-black "
+          style={{ display: showinputBoxInMobile }}
+        />
+
+        {isDropDownOpen && (
+
+          <>
+            <ResponsiveDropDown  setValue={setValue} courseInfo={courseInfo} value={value} />
+          </>
+        )}
+      </div>
 
 
       <div className="hidden md:flex items-center gap-4">
