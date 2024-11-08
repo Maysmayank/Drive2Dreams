@@ -19,11 +19,5 @@
 - **Authentication**: JWT tokens for secure login and NEXT AUTH
 - **Deployment**: Vercel for production
 
-## Setup Instructions
-
-### Prerequisites
-
-- Node.js 
-- MongoDB 
 
 
