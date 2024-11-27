@@ -109,11 +109,15 @@ const Navbar = () => {
 
 
   return (
-    <div className=" fixed z-50 flex min-w-full bg-black h-[75px] md:h-[85px] text-white px-2 md:px-10 items-center justify-between">
-      <div className="flex items-center gap-3 " >
-        <div className="rounded-full h-18 w-[50px] flex gap-4 items-center justify-center">
-          <Image src="/LOGOFINAL.png" height={100} width={80} alt="" />
-        </div>
+    <div className=" fixed z-50 flex min-w-full bg-black h-[75px]  md:h-[85px] text-white pr-2 md:px-5 items-center justify-between">
+      <div className="flex bg-red items-center md:gap-3 " >
+
+        <Link href={'/'}>
+          <div className="rounded-full h-20 w-[95px] md:w-[120px] flex gap-4 items-center justify-center ">
+            <Image src="/LOGOFINAL.png" height={200} width={300} alt="" />
+          </div>
+        </Link>
+        
         <div className="flex flex-col opacity-80 w-[58%] md:w-[80%]">
           <p className="font-bold  text-md md:text-2xl">Drive2Dreams</p>
           <span className="text-xs md:text-md  text-left opacity-80">Connecting ambitions with opportunities</span>
