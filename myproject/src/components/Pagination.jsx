@@ -1,29 +1,23 @@
 'use client'
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import axios from "axios";
-// we will get total courses as the number of documents in DB
-// limit = 2
-const Pagination = ({totalCourses, limit ,pageNumber,setpageNumber}) => {   
 
-  const totalPages = Math.ceil(totalCourses / limit);
-  
- 
-  
+
+const Pagination = ({ currentPage, totalPages,onPageChange }) => {
+
+  function handleChange(){
+    if(currentPage<totalPages){
+      onPageChange(currentPage+1)
+
+    }
+  }
   return (
-    <div className="mt-16">
-      
-{     totalPages===limit&& <Button disabled={pageNumber===1}>Prev</Button>
-}      { totalPages===limit&&
-        [...Array(totalPages)].map((_,index)=>(
-          <Button key={index+1} disabled={pageNumber===index+1} onClick={()=>setpageNumber(index+1)} >{index+1}</Button>
-        ))
-      }
-{  totalPages===limit&&<Button disabled={pageNumber===totalPages}>Next</Button>
-}
+    <div className=" mt-16">
+
+          <Button disabled={totalPages==currentPage} onClick={handleChange} >See More</Button>
+         
     </div>
   )
-  };
-  
-  export default Pagination;
-  
+};
+
+export default Pagination;

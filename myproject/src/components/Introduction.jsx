@@ -11,6 +11,8 @@ export default function Introduction() {
   function HandleClick() {
     setShowContact(false)
   }
+
+  
   return (
     <>
       <div className='relative'>
@@ -18,7 +20,7 @@ export default function Introduction() {
 
           <div className=" flex flex-col  gap-5 justify-between rounded-lg w-full md:w-[80%] p-8">
 
-            <h1 className='text-4xl md:text-5xl .open-sans-paragraph font-bold'> Welcome to Drive2Dreams</h1>
+            <h1 className='text-4xl md:text-5xl .open-sans-paragraph font-bold '> Welcome to Drive2Dreams</h1>
             <p className="nunito-para">
               We&apos;re here to turn your career ambitions into reality. From helping you choose the right college to offering personalized guidance, we connect your dreams with the best opportunities. Your future&nbsp;starts&nbsp;with&nbsp;us!
             </p>            <button onClick={() => { router.push('/contact') }} className='mt-5 md:mt-10 bg-[#110d3b] p-2  text-white w-[120px]'>contact us</button>
