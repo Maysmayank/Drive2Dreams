@@ -3,35 +3,39 @@ import React, { useEffect, useState } from 'react';
 import CourseCard from '@/components/CourseCard';
 import Pagination from './Pagination';
 import { CourseInfoType } from '../../ModelTypes/ModelTypes';
+import Image from 'next/image';
+import axios from 'axios';
+
+const LIMIT = 3
+
+export default function OurCourses() {
+
+  const [currentpage, setcurrentPage] = useState(1);
+  const [paginatedData, setPaginatedData] = useState<CourseInfoType[]>([])
+  const [totalPages, setTotalPages] = useState(1);
 
 
-type CourseDataProps = {
-  courseData: CourseInfoType[];
-};
-const LIMIT=2
-// const SKIP=(pagenumber-1)*LIMIT;
+  useEffect(() => {
+    async function fetch() {
+      const response = await axios.get(`/api/get-paginated-data?page=${currentpage}&limit=${LIMIT}`);
 
-export default function OurCourses({ courseData }: CourseDataProps,) {
-  
-  const [pageNumber,setpageNumber]=useState(1);
-  const [allcoursesdata]=useState<CourseInfoType[]>(courseData);
-  const [paginatedData,setPaginatedData]=useState<CourseInfoType[]>([])
-  const [totalCourses]=useState(courseData.length)
+      if (response.data.success) {
+        setPaginatedData((prevData) => [
+          ...prevData, // Existing data
+          ...response.data.paginatedCourses, // New data from the API
+        ]);
 
-  useEffect(()=>{
-    
-    function paginationCalculation(){
-      let startindex=(pageNumber-1)*LIMIT;
-      let endIndex=pageNumber*LIMIT;
-      const paginatedCourseData=allcoursesdata.slice(startindex,endIndex)
-      setPaginatedData(paginatedCourseData)
+        setTotalPages(response.data.totalPages)
+        setcurrentPage(response.data.currentPage)
+      }
     }
-    
-    paginationCalculation()
 
-  },[pageNumber,LIMIT,courseData,allcoursesdata])
-  
-  
+    fetch()
+
+
+  }, [currentpage])
+
+
   return (
     <div className='relative'>
       <div className='mt-2 flex flex-col items-center pb-5 px-3'>
@@ -39,9 +43,12 @@ export default function OurCourses({ courseData }: CourseDataProps,) {
 
         {/* Grid for courses */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          
+
           {paginatedData.length === 0 ? (
-            <p className='text-center text-lg col-span-full'>No courses available at the moment.</p>
+            <p className='text-center  items-center flex flex-col text-lg col-span-full'>
+              <Image src="/ComingSoon.webp" className='' width={300} height={100} alt='no courses available image' ></Image>
+              <span className=''>Hey, Courses are on the way, they will Be added Soon...</span>
+            </p>
           ) : (
             paginatedData.map((course) => (
               <CourseCard
@@ -54,13 +61,14 @@ export default function OurCourses({ courseData }: CourseDataProps,) {
               />
             ))
           )}
-        
+
         </div>
-          {/* {pageNumber} */}
-        {courseData&&<div>
-          <Pagination  totalCourses={totalCourses} limit={LIMIT} pageNumber={pageNumber} setpageNumber={setpageNumber}/> 
-        </div>
+        {
+          paginatedData &&
+
+          <Pagination currentPage={currentpage} totalPages={totalPages} onPageChange={setcurrentPage} />
         }
+
       </div>
     </div>
   );

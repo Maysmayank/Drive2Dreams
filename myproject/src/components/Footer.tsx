@@ -2,6 +2,7 @@ import React from 'react'
 import FooterBox from '../components/FooterBox'
 import { Linkedin } from 'lucide-react'
 import { InstagramLogoIcon, Link1Icon, LinkedInLogoIcon } from '@radix-ui/react-icons'
+import Link from 'next/link'
 function Footer() {
   return (
     <div className='relative'>
@@ -18,9 +19,9 @@ function Footer() {
             <h1 className='text-3xl open-sans-paragraph inline'>Socials <Link1Icon className='inline translate-y h-6 w-5'/></h1>
             
             <div className='flex flex-row w-full items-center justify-center  gap-5  font-semibold' >
-                <LinkedInLogoIcon height={40} width={35}/>
-                
-                <InstagramLogoIcon  height={40} width={35}/>
+                <Link href={"https://www.linkedin.com/company/drive2dreams/posts/?feedView=all"}> <LinkedInLogoIcon className='hover:scale-110' height={40} width={35}/>
+                </Link>
+                <InstagramLogoIcon className='hover:scale-110' height={40} width={35}/>
                 
                 
             </div>
