@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 
 const Pagination = ({ currentPage, totalPages,onPageChange }) => {
 
-  function handleChange(){
+  function LoadMore(){
     if(currentPage<totalPages){
       onPageChange(currentPage+1)
 
@@ -14,7 +14,7 @@ const Pagination = ({ currentPage, totalPages,onPageChange }) => {
   return (
     <div className=" mt-16">
 
-          <Button disabled={totalPages==currentPage} onClick={handleChange} >See More</Button>
+          <Button disabled={totalPages==currentPage} onClick={LoadMore} >See More</Button>
          
     </div>
   )

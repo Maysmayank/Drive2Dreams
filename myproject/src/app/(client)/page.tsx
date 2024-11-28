@@ -7,17 +7,44 @@ import { CourseInfoModel } from '@/models/courseInfo'
 import PartneredUniversities from '@/components/PartneredUniversities'
 import { UniversityInfoType ,CourseInfoType} from '../../../ModelTypes/ModelTypes'
 
+/**
+ * 
+ * we are using this serversideprop to get the inital 3 courses to prevent loading the contents at first on client side
+ * so first three data will be loaded on the server and then the rest will be dynamically handled based on see more button
+ */
+const LIMIT=3
+async function serverSideFetchCourseData(): Promise<{initialCourseData:CourseInfoType[],initialTotalPages:number}> {
+  try {
+    await dbConnect(); // Connect to the database
+    
+    const fetchedCourseData = await CourseInfoModel.find({})
+      .populate('university') // Populate the university reference
+      .limit(3)   // limit is 3
+      .lean().exec(); // Convert Mongoose documents to plain JavaScript objects    
+    let initialCourseData = JSON.parse(JSON.stringify(fetchedCourseData))
+    const totalCourses=await CourseInfoModel.countDocuments();
+
+    let initialTotalPages=Math.ceil(totalCourses/LIMIT);
+      
+    return {initialCourseData,initialTotalPages};
+  } catch (error) {
+    console.error('Error fetching course data:', error);
+    return {initialCourseData:[],initialTotalPages:0};
+  }
+}
 
 
 export default async function Home() {
 
+  const {initialCourseData,initialTotalPages}=await serverSideFetchCourseData();
+  
   
   return (
   
       <div className="w-full flex flex-col gap-10">
         <Introduction />
 
-        <OurCourses />
+        <OurCourses initialCourseData={initialCourseData} initialTotalPages={initialTotalPages}/>
 
         <PartneredUniversities/>
         

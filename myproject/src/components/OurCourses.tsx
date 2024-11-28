@@ -7,16 +7,24 @@ import Image from 'next/image';
 import axios from 'axios';
 
 const LIMIT = 3
+interface OurCoursesProps {
+  initialCourseData: CourseInfoType[];
+  initialTotalPages:number;
+}
 
-export default function OurCourses() {
+export default function OurCourses({initialCourseData,initialTotalPages}:OurCoursesProps) {
 
   const [currentpage, setcurrentPage] = useState(1);
-  const [paginatedData, setPaginatedData] = useState<CourseInfoType[]>([])
-  const [totalPages, setTotalPages] = useState(1);
+  const [paginatedData, setPaginatedData] = useState<CourseInfoType[]>(initialCourseData)
+  const [totalPages, setTotalPages] = useState<number>(initialTotalPages);
+
 
 
   useEffect(() => {
     async function fetch() {
+      
+      if(currentpage===1) return;
+
       const response = await axios.get(`/api/get-paginated-data?page=${currentpage}&limit=${LIMIT}`);
 
       if (response.data.success) {
