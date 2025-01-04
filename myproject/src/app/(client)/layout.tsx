@@ -11,9 +11,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Drive2Dreams",
   description: "Drive2Dreams",
-  icons:{
-    icon:'/LOGOFINAL.png'
-  }
+  icons: {
+    icon: "/LOGOFINAL.png",
+  },
 };
 
 export default function RootLayout({
@@ -24,12 +24,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+
+        <AuthProvider>
+          <Navbar></Navbar>
         
-          <AuthProvider>
-            <Navbar></Navbar>
-          </AuthProvider>
+
+          
+        </AuthProvider>
+        
         {children}
+        
         <Toaster></Toaster>
+
         <Footer />
 
       </body>

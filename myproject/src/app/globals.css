@@ -70,6 +70,7 @@
 .text-content {
   --max-lines: 5;
   --line-height: 1.6;
+  z-index: 1; /* Ensure it is lower than the Banner's z-index */
   max-height: calc(var(--max-lines) * 1rem * var(--line-height));
   overflow: hidden;
   line-height: var(--line-height);
@@ -89,13 +90,13 @@
 }
 
 .text-content:hover {
-  transition: 1s ease-in; /* Smooth transition */
-  max-height: 1000px; /* Increase to a large value to reveal all content */
+  max-height: 1000px; /* Expand on hover */
 }
 
 .text-content:hover::before {
-  opacity: 0; /* Fade out the gradient */
+  opacity: 0; /* Remove gradient effect */
 }
+
 .courseCardContainer{
   box-Shadow: rgba(99, 99, 99, 0.2) 0px 2px 5px 0px
 }

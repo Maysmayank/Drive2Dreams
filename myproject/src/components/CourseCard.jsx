@@ -11,10 +11,12 @@ function CourseCard({ title,text, duration,universityName,image }) {
 
       <h2 className='text-black font-semibold text-2xl break-words'>{title}</h2>
 
-      <div className='flex flex-col gap-5 p-4'>
-        <span className='text-content line-clamp-6 mb-5'>
+      <div className=' flex flex-col gap-5 p-4'>
+        
+        <span className='   line-clamp-6 mb-5'>
           {text}...
         </span>
+
         <span className='ml-3 text-left'> <p className=' inline font-bold'>Offered university: </p> {universityName}</span>
         <span className='ml-3 font-bold text-left'>Duration : {duration}</span>
       </div>
