@@ -109,7 +109,7 @@ const Navbar = () => {
 
 
   return (
-    <div className=" fixed z-50 flex min-w-full bg-black h-[75px]  md:h-[85px] text-white pr-2 md:px-5 items-center justify-between">
+    <div className=" fixed z-50 flex min-w-full bg-black h-[70px]  md:h-[85px] text-white pr-2 md:px-5 items-center justify-between">
       <div className="flex bg-red items-center md:gap-3 " >
 
         <Link href={'/'}>

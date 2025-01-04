@@ -9,7 +9,7 @@ function UniversityCard({ imageUrl, universityName }: any) {
   let [hover, sethover] = useState(false);
   return (
     <div className='flex flex-col gap-2  items-center rounded-sm w-full'>
-      <div className='relative' onMouseLeave={() => sethover(false)} onMouseEnter={() => sethover(true)} >
+      <div className='' onMouseLeave={() => sethover(false)} onMouseEnter={() => sethover(true)} >
         <Image src={imageUrl} width={400} height={400} className=' rounded-sm md:w-[400px] object-fill h-[120px] w-[150px] md:h-[150px] ' alt='' />
         {
           hover && (

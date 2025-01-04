@@ -15,7 +15,7 @@ export default function Introduction() {
   
   return (
     <>
-      <div className='relative'>
+      <div className=''>
         <div className='pt-20 pb-7 bg-[hsl(44,86%,61%)] w-full flex flex-col md:flex-row px-3 m-auto min-h-[500px] gap-2 items-center  justify-around'>
 
           <div className=" flex flex-col  gap-5 justify-between rounded-lg w-full md:w-[80%] p-8">

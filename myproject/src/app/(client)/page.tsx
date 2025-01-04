@@ -43,7 +43,6 @@ export default async function Home() {
   
       <div className="w-full flex flex-col gap-10">
         <Introduction />
-
         <OurCourses initialCourseData={initialCourseData} initialTotalPages={initialTotalPages}/>
 
         <PartneredUniversities/>

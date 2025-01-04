@@ -34,7 +34,7 @@ async function PartneredUniversities() {
             </p>
         ) :
           (
-            <div className='flex md:w-[80%] items-center justify-center '>
+            <div className=' flex  md:w-[80%] items-center justify-center '>
               <div className='grid items-center gap-2 md:gap-10 justify-center w-full grid-cols-2 lg:grid-cols-4 '>
                 {data.map((uni,index) => (
                 <UniversityCard key={index} universityName={uni.universityName} imageUrl={uni.cloudinaryImageUrl} />
