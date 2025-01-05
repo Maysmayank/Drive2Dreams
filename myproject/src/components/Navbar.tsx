@@ -109,43 +109,36 @@ const Navbar = () => {
 
 
   return (
-    <div className=" fixed z-50 flex min-w-full bg-black h-[70px]  md:h-[85px] text-white pr-2 md:px-5 items-center justify-between">
+    <div className="relative z-50 flex text-black pt-5 md:pt-10  md:px-5 items-center justify-between">
       <div className="flex bg-red items-center md:gap-3 " >
-
-        <Link href={'/'}>
-          <div className="rounded-full h-20 w-[95px] md:w-[120px] flex gap-4 items-center justify-center ">
-            <Image src="/LOGOFINAL.png" height={200} width={300} alt="" />
-          </div>
-        </Link>
-        
         <div className="flex flex-col opacity-80 w-[58%] md:w-[80%]">
-          <p className="font-bold  text-md md:text-2xl">Drive2Dreams</p>
-          <span className="text-xs md:text-md  text-left opacity-80">Connecting ambitions with opportunities</span>
+          <p className="font-extrabold ml-4 text-2xl  md:text-4xl md:ml-8 text-black">CareerWay</p>
+          <span className="text-sm ml-4 text-black font-bold md:text-md md:ml-8 text-left opacity-80">Drive2Dreams</span>
         </div>
       </div>
 
       <div className="hidden md:flex">
-        <ul className=" flex gap-10 text-sm items-center">
-          <li className=" flex ">
-            <Link className={pathname === '/' ? 'active rounded p-2  bg-white text-black' : 'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/'>
+        <ul className=" flex gap-10  text-[15px] items-center">
+          <li className="flex">
+            <Link className={pathname === '/' ? 'active rounded p-2 scale-125 text-black' : 'hover:scale-125  rounded p-2 transition duration-200 delay-75 ease-in'} href='/'>
 
               <House size={20} className="inline mr-1 mb-1" />Home</Link>
           </li>
 
-          <li>
-            <Link className={pathname === '/about' ? 'active rounded p-2 bg-white text-black' : 'hover:bg-white hover:text-black rounded p-2 transition duration-200 delay-75 ease-in'} href='/about'>
+          <li className="flex">
+            <Link className={pathname === '/about' ? 'active rounded p-2 scale-125 text-black' : 'hover:scale-125  rounded p-2 transition duration-200 delay-75 ease-in'} href='/about'>
               <MessageSquareText size={20} className="mr-1 mb-1 inline" />About
             </Link>
           </li>
 
-          <li>
-            <Link className={pathname === '/collaborations' ? 'active rounded p-2 bg-white text-black' : 'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/collaborations'>
+          <li className="flex">
+            <Link className={pathname === '/collaborations' ? 'active rounded p-2 scale-125 text-black' : 'hover:scale-125  rounded p-2 transition duration-200 delay-75 ease-in'} href='/collaborations'>
               <UsersRound size={20} className="mr-1 mb-1 inline" />Collaborations
             </Link>
           </li>
 
-          <li>
-            <Link className={pathname === '/contact' ? 'active rounded p-2 bg-white text-black' : 'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/contact'>
+          <li className="flex">
+            <Link className={pathname === '/contact' ? 'active rounded p-2  scale-125 text-black' : 'hover:scale-125  rounded p-2 transition duration-200 delay-75 ease-in'} href='/contact'>
               <Headset className="inline mr-1 mb-1" />
               Contact us</Link>
           </li>
@@ -153,8 +146,8 @@ const Navbar = () => {
 
       </div>
 
-      <div className="hidden md:flex">
-        <div className="relative md:w-[320px]">
+      <div className="hidden md:flex ">
+        <div className="relative md:w-[300px]">
 
           <Input value={value} placeholder="Search Courses" onChange={HandleSearchChange} className="pr-[35px] md:block" />
 
@@ -171,19 +164,20 @@ const Navbar = () => {
         </div>
       </div>
 
-      <button ref={searchIconRef} className="relative  md:hidden rounded-sm p-1.5 outline-none border-none  right-2 hover:bg-white hover:text-black" onClick={() => {
+      <button ref={searchIconRef} className="relative md:hidden rounded-sm p-1.5 outline-none border-none -right-[50px] hover:bg-white hover:text-black" onClick={() => {
         setShowinputBoxInMobile((prev) => (prev === "none" ? "block" : "none"));
       }}  >
-        {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon />}
+        {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon size={30}/>}
       </button>
 
       {/* for mobile */}
-      <div ref={CloseOnCLickRef} className="md:hidden absolute w-[90%] top-20 left-5" > 
+      <div ref={CloseOnCLickRef} className=" md:hidden absolute w-[90%] z-50 top-[80px] left-5" > 
         <Input
           placeholder="Search Courses"
+
           value={value}
           onChange={HandleSearchChange}
-          className="pr-[35px] py-2 bg-white text-black "
+          className="pr-[35px] py-6ww bg-white text-black "
           style={{ display: showinputBoxInMobile }}
         />
 

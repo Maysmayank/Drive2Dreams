@@ -21,7 +21,7 @@ function ResponsiveDropdown( { value, setValue,courseInfo} :ResponsiveDropdownPr
     <div id='dropDownDiv' >
       {value &&courseInfo.length > 0 && (
         
-        <div className='relative flex flex-col items-center justify-center bg-white  pt-4 pb-2 rounded-b-md md:pt-2  md:pb-1 text-black'>
+        <div className='relative border z-10 flex flex-col items-center justify-center bg-white  pt-4 pb-2 rounded-b-md md:pt-2  md:pb-1 text-black'>
           <div className=' flex flex-col items-center gap-2'>
 
             <span className='text-sm opacity-90'>Results ({courseInfo.length})</span>

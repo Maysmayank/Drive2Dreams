@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { useRouter } from 'next/navigation'
 import FormComponent from './Form';
 import Image from 'next/image';
+import Link from 'next/link';
 export default function Introduction() {
   const [showContact, setShowContact] = useState(true);
 
@@ -12,24 +13,34 @@ export default function Introduction() {
     setShowContact(false)
   }
 
-  
+
   return (
     <>
-      <div className=''>
-        <div className='pt-20 pb-7 bg-[hsl(44,86%,61%)] w-full flex flex-col md:flex-row px-3 m-auto min-h-[500px] gap-2 items-center  justify-around'>
+      <div >
+        <div className="relative  w-full -translate-y-14 z-0 md:w-[92%] md:translate-y-0  m-auto h-[400px] md:h-[500px] md:mt-16">
+          <Image
+            className="object-contain md:object-cover w-full h-full" // Ensures the image fills and maintains aspect ratio
+            src="/graduation.jpg"
+            alt="Graduation"
+            layout='fill'
+          />
 
-          <div className=" flex flex-col  gap-5 justify-between rounded-lg w-full md:w-[80%] p-8">
+          <div className='absolute flex items-center  inset-0 text-white'>
+            <div className=' translate-y-5 md:-translate-y-2 translate-x-6 flex flex-col'>
+            <h2 className='font-black text-2xl md:text-[40px]'>Discover Your</h2>
+            <h1 className='font-black text-4xl md:text-7xl'>Dream Campus</h1>
 
-            <h1 className='text-4xl md:text-5xl .open-sans-paragraph font-bold '> Welcome to Drive2Dreams</h1>
-            <p className="nunito-para">
-              We&apos;re here to turn your career ambitions into reality. From helping you choose the right college to offering personalized guidance, we connect your dreams with the best opportunities. Your future&nbsp;starts&nbsp;with&nbsp;us!
-            </p>            <button onClick={() => { router.push('/contact') }} className='mt-5 md:mt-10 bg-[#110d3b] p-2  text-white w-[120px]'>contact us</button>
+            <Link href={'/contact'}>
+            <Button className='bg-[#3B80E8] text-[12px] md:text-xl hover:bg-[#3e7cd9] hover:scale-105 transition-all mt-4 md:mt-10 md:w-[30%] ml-2' onClick={HandleClick}>Get Started</Button>
 
+            </Link>
+            </div>
+          
+
+            
           </div>
-
-          <div className='md:h-[270px] md:w-[700px]' style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
-            <Image height={300} width={800} className='object-cover w-full h-full rounded-md' src="/home.jpg" alt="homeimage" />
-          </div>
+        
+         
 
         </div>
       </div>
