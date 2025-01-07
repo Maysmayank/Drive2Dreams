@@ -3,7 +3,7 @@ import { FormModel } from "@/models/user";
 import { NextRequest } from "next/server";
 
 export async function POST(req:NextRequest){    
-    dbConnect();
+   await dbConnect();
     
     try{
         const {username,email,phone_number,program}=await req.json();

@@ -4,11 +4,11 @@ import React from 'react'
 
 export default function About() {
   return (
-    <div className=" pt-[100px] ">
-      <div className='flex flex-col'>
-        <div className='  md:ml-28 flex items-center flex-col gap-10 p-10 '>
+    <div className=" pt-5 ">
+      <div className='flex items-center flex-col'>
+        <div className='  w-[85%] flex items-center flex-col gap-10 p-10 '>
           <h1 className='text-8xl font-bold  md:mt-8 md:px-2 bg-[#F2E5BF]'>WHO WE ARE ?</h1>
-          <p className='md:w-[92%]  nunito-para text-center'>
+          <p className='nunito-para text-center'>
             At Drive2Dreams, we believe in the power of education to unlock potential and transform lives. Our mission is to guide and support students on their journey to finding the perfect university or college that aligns with their goals and aspirations. Whether you &apos;re dreaming of a career in engineering, medicine, business, or the arts, we&apos;re dedicated to helping you make informed decisions and take confident steps toward a brighter future.
 
             We partner with leading institutions to provide you with the best options, personalized guidance, and up-to-date information. Our team of experts is passionate about helping you navigate the complex world of higher education, ensuring that you are equipped with the tools and knowledge to succeed.

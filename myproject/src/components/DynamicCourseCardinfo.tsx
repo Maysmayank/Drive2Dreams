@@ -13,7 +13,7 @@ export default function DynamicCourseCardinfo({
 }: any) {
 
   return (
-    <div className="pt-[85px] min-h-[100vh]">
+    <div className="pt-[75px] md:pt-[85px] min-h-[100vh]">
       <div className="w-full pt-16 md:pt-10 relative min-h-[370px] md:min-h-[400px]">
         <Image
           src={image}
@@ -61,7 +61,7 @@ export default function DynamicCourseCardinfo({
                 eligibilityCriteria.length === 0 ? "No eligibility criteria" : (
                   <ul className=" pl-4 md:pl-5 flex flex-col gap-2 list-disc">
                     {eligibilityCriteria.map((item: any, i: number) => (
-                      <li key={i}>{item}</li>
+                      <li key={i}className="break-words" >{item}</li>
                     ))}
 
                   </ul>
@@ -72,7 +72,7 @@ export default function DynamicCourseCardinfo({
             <div className=" text-center syllabus">
 
               <button className="bg-[#110C44] text-white rounded-md my-6 p-3 px-4" disabled={!syllabus}>
-                {!!syllabus ? "Syllabus Will be added Soon" : "Download Syllabus"}
+                {!syllabus ? "Syllabus Will be added Soon" : "Download Syllabus"}
               </button>
 
             </div>
@@ -86,7 +86,7 @@ export default function DynamicCourseCardinfo({
             </p>
           </div>
 
-          <div className="mt-16 rounded-md grid grid-cols-1 md:grid-cols-2 bg-red-50">
+          <div className="mt-20 rounded-md grid grid-cols-1 md:grid-cols-2 gap-10 ">
             <div className=" flex items-center pb-10 md:pb-0 bg-white justify-center ">
               <h1 className="text-5xl font-semibold md:text-8xl ">Talk TO Our Expert</h1>
             </div>

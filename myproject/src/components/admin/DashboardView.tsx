@@ -5,27 +5,9 @@ import AdminCourseCard from './AdminCourseCard';
 import ShowCount from '@/components/ShowCount'
 import { UniversityInfoModel } from '@/models/UniversityModel';
 import AdminUniversityCard from '@/components/admin/AdminUniversityCard'
-import UniversityCard from '../UniversityCard';
-type CourseData = {
-  _id: string;        // we need id to delete the data or card so we use _id only here as we are getting  the _id from courseData 
-  university: string; // Name of the university or college
-  title: string; // Title of the course
-  courseInfo: string; // Detailed information about the course
-  courseOverview: string;
-  courseContent?: string[]; // Optional array of strings for course content like syllabus
-  duration?: string; // Duration of the course
-  syllabus?: string; // Optional field for storing file path or URL to PDF
-}
-type UniversityData={
-  _id?:string;
-  universityName:string;
-    aboutUniversity:string;
-    admissionProcess:string;
-    cutoffs:string,
-    cloudinaryImageUrl?:string,
-    cloudinaryImageName?:string
-}
-async function fetchCourse_University_Data(): Promise<{ courseData: CourseData[], universityData: UniversityData[] }> {
+import { CourseInfoType, UniversityInfoType } from '../../../ModelTypes/ModelTypes';
+
+async function fetchCourse_University_Data(): Promise<{ courseData: CourseInfoType[], universityData: UniversityInfoType[] }> {
   try {
     await dbConnect(); // Connect to the database
     const courseData = await CourseInfoModel.find({});

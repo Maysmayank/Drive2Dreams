@@ -9,7 +9,7 @@ interface UniversityInfo extends Document{
     cloudinaryImageName?:string
 }
 
-const UniversityInfoSchema: Schema = new Schema<UniversityInfo>({
+const UniversityInfoSchema: Schema = new mongoose.Schema<UniversityInfo>({
     universityName:{
         type:String,trim:true,
         required:true
@@ -38,6 +38,6 @@ const UniversityInfoSchema: Schema = new Schema<UniversityInfo>({
     timestamps:true
 });
 
-const UniversityInfoModel = mongoose.models.UniversityInfo || mongoose.model<UniversityInfo>('UniversityInfo', UniversityInfoSchema);
+const UniversityInfoModel = mongoose.models?.UniversityInfo || mongoose.model<UniversityInfo>('UniversityInfo', UniversityInfoSchema);
 
 export { UniversityInfoModel };

@@ -4,6 +4,7 @@ import { Button } from './ui/button';
 import { useRouter } from 'next/navigation'
 import FormComponent from './Form';
 import Image from 'next/image';
+import Link from 'next/link';
 export default function Introduction() {
   const [showContact, setShowContact] = useState(true);
 
@@ -11,22 +12,35 @@ export default function Introduction() {
   function HandleClick() {
     setShowContact(false)
   }
+
+
   return (
     <>
-      <div className='relative'>
-        <div className='pt-20 pb-7 bg-[rgb(250,208,91)] w-full flex flex-col md:flex-row px-3 m-auto min-h-[500px] gap-2 items-center  justify-around'>
+      <div >
+        <div className="relative  w-full -translate-y-14 z-0 md:w-[92%] md:translate-y-0  m-auto h-[400px] md:h-[500px] md:mt-10">
+          <Image
+            className="object-contain md:object-cover w-full h-full" // Ensures the image fills and maintains aspect ratio
+            src="/Graduation.jpg"
+            alt="Graduation"
+            layout='fill'
+          />
 
-          <div className=" flex flex-col gap-2 justify-between rounded-lg w-full md:w-[80%] p-8">
+          <div className='absolute flex items-center  inset-0 text-white'>
+            <div className=' translate-y-5 md:-translate-y-2 translate-x-6 flex flex-col'>
+            <h2 className='font-black text-2xl md:text-[40px]'>Discover Your</h2>
+            <h1 className='font-black text-4xl md:text-7xl'>Dream Campus</h1>
 
-            <h1 className='text-2xl font-semibold'>Hi,Welcome to Drive2Dreams</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam dignissimos aperiam facere quos! Enim ea ab, magni delectus ex dolores suscipit debitis accusamus quisquam saepe, tenetur minus tempore ipsa accusantium?</p>
-            <button onClick={() => { router.push('/contact') }} className='mt-10 bg-blue-500 p-2 rounded-xl text-white w-[120px]'>contactus</button>
+            <Link href={'/contact'}>
+            <Button className='bg-[#3B80E8] text-[12px] md:text-xl hover:bg-[#3e7cd9] hover:scale-105 transition-all mt-4 md:mt-10 md:w-[30%] ml-2' onClick={HandleClick}>Get Started</Button>
 
+            </Link>
+            </div>
+          
+
+            
           </div>
-
-          <div className='md:h-[270px] md:w-[700px]' style={{ boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px' }}>
-            <Image height={300} width={800} className='object-cover w-full h-full rounded-md' src="/home.jpg" alt="homeimage" />
-          </div>
+        
+         
 
         </div>
       </div>
@@ -35,7 +49,7 @@ export default function Introduction() {
           <div className='absolute bg-black flex items-center justify-center animate-jump-in animate-delay-1000  opacity-96 z-10 p-2 top-[10%] w-full md:top-[16%] md:p-0  '>
 
             <div className='absolute  pt-10 bg-white  flex flex-col items-center top-[15%] md:w-[40%] md:top-[50%]'>
-              
+
               <Button className='absolute top-7 right-4' onClick={HandleClick}>X</Button>
 
               <div className="flex px-2 flex-col items-center">

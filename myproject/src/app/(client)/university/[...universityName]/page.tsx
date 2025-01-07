@@ -1,40 +1,47 @@
 'use client';
-import DynamicCourseCardinfo from '@/components/DynamicCourseCardinfo';
 import DynamicUniversityCardinfo from '@/components/DynamicUniversityCardinfo';
-import dbConnect from '@/lib/dbConnect';
-import { UniversityInfoModel } from '@/models/UniversityModel';
-import React from 'react'
+import axios from 'axios';
+import { Loader2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
-type UniversityInfo =
-    {
-        universityName: string;
-        aboutUniversity: string;
-        admissionProcess: string;
-        cutoffs: string
-    }
-async function fetch_University_Data_ByName(universityName :string):Promise<UniversityInfo[]>{
-    try {
-        await dbConnect();
-        const data=UniversityInfoModel.find({universityName:universityName})
-        return data
-    } catch (error) {
-        console.error('Error fetching University data:', error);
-        return [];
-    }
-}
-async function page({params}:{params:{universityName:string}}) {
-    const {universityName}=params;
-    const decodeduniversityName=decodeURIComponent(universityName);
-    const universityData:UniversityInfo[]= await fetch_University_Data_ByName(decodeduniversityName) 
-    console.log(universityData);
-    
-    return (
-        <div className="pt-[85px]">
-      {universityData.length === 0 ? (
-        "No University Info here at Home"
+import { UniversityInfoType } from '../../../../../ModelTypes/ModelTypes';
+
+export default function Page({ params }: { params: { universityName: string } }) {
+  const { universityName } = params;
+  const decodedUniversityName = decodeURIComponent(universityName);
+
+  const [loading, setLoading] = useState(false);
+  const [universityData, setUniversityData] = useState<UniversityInfoType[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        
+        const response = await axios.post("/api/get-universityInfoByName",{universityName:decodedUniversityName});
+        setUniversityData(response.data.universityData);
+
+      }
+       catch (error:any) {
+        console.error('Error fetching university data:', error.response.data.message);
+      
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [decodedUniversityName]);
+
+  return (
+    <div className="pt-[74px] md:pt-[85px] min-h-[100vh]">
+      {loading ? (
+        <div className="flex flex-col gap-3 items-center min-h-[100vh] justify-center">
+          <Loader2 height={50} width={50} className="mr-2 animate-spin" />
+          <h2>Hold up</h2>
+        </div>
       ) : (
-        universityData.map((university:any, index:any) => (
-          
+        universityData?.map((university: UniversityInfoType, index: number) => (
           <DynamicUniversityCardinfo
             key={index}
             universityImage={university.cloudinaryImageUrl}
@@ -45,7 +52,5 @@ async function page({params}:{params:{universityName:string}}) {
         ))
       )}
     </div>
-    )
+  );
 }
-
-export default page

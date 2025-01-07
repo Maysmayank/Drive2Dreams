@@ -2,65 +2,61 @@
 import React, { useEffect, useState } from 'react';
 import CourseCard from '@/components/CourseCard';
 import Pagination from './Pagination';
-type UniversityData = {
-  _id: string;
-  universityName: string;
-  aboutUniversity: string;
-  admissionProcess: string;
-  cutoffs: string;
-  cloudinaryImageUrl?: string;
-  cloudinaryImageName?: string;
+import { CourseInfoType } from '../../ModelTypes/ModelTypes';
+import Image from 'next/image';
+import axios from 'axios';
+
+const LIMIT = 3
+interface OurCoursesProps {
+  initialCourseData: CourseInfoType[];
+  initialTotalPages:number;
 }
 
-// Define the course data interface, where university is now of type UniversityData
-type CourseData = {
-  _id: string;
-  university: UniversityData; // Full university object
-  title: string;
-  courseInfo: string;
-  courseOverview: string;
-  courseContent?: string[];
-  duration?: string;
-  syllabus?: string;
-}
+export default function OurCourses({initialCourseData,initialTotalPages}:OurCoursesProps) {
 
-type CourseDataProps = {
-  courseData: CourseData[];
-};
-const LIMIT=2
-// const SKIP=(pagenumber-1)*LIMIT;
+  const [currentpage, setcurrentPage] = useState(1);
+  const [paginatedData, setPaginatedData] = useState<CourseInfoType[]>(initialCourseData)
+  const [totalPages, setTotalPages] = useState<number>(initialTotalPages);
 
-export default function OurCourses({ courseData }: CourseDataProps,) {
-  
-  const [pageNumber,setpageNumber]=useState(1);
-  const [allcoursesdata]=useState<CourseData[]>(courseData);
-  const [paginatedData,setPaginatedData]=useState<CourseData[]>([])
-  const [totalCourses]=useState(courseData.length)
 
-  useEffect(()=>{
-    
-    function paginationCalculation(){
-      let startindex=(pageNumber-1)*LIMIT;
-      let endIndex=pageNumber*LIMIT;
-      const paginatedCourseData=allcoursesdata.slice(startindex,endIndex)
-      setPaginatedData(paginatedCourseData)
+
+  useEffect(() => {
+    async function fetch() {
+      
+      if(currentpage===1) return;
+
+      const response = await axios.get(`/api/get-paginated-data?page=${currentpage}&limit=${LIMIT}`);
+
+      if (response.data.success) {
+        setPaginatedData((prevData) => [
+          ...prevData, // Existing data
+          ...response.data.paginatedCourses, // New data from the API
+        ]);
+
+        setTotalPages(response.data.totalPages)
+        setcurrentPage(response.data.currentPage)
+      }
     }
-    
-    paginationCalculation()
 
-  },[pageNumber,LIMIT,courseData])
-  
-  
+    fetch()
+
+
+  }, [currentpage])
+
+
   return (
-    <div className='relative'>
-      <div className='mt-2 flex flex-col items-center pb-10 px-3'>
-        <h1 className='font-bold mb-12 text-3xl md:rubik-homepage-title md:text-5xl'>Our Courses</h1>
+    <div className='mt-[80px]'>
+      <div className='mt-2 flex flex-col items-center pb-5 px-3'>
+        <h1 className='font-bold mb-12 text-3xl md:rubik-homepage-title md:text-4xl'>Top MBA/PGDM Programs</h1>
 
         {/* Grid for courses */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-          
+
           {paginatedData.length === 0 ? (
-            <p className='text-center text-lg col-span-full'>No courses available at the moment.</p>
+            <p className='text-center  items-center flex flex-col text-lg col-span-full'>
+              <Image src="/ComingSoon.webp" className='' width={300} height={100} alt='no courses available image' ></Image>
+              <span className=''>Hey, Courses are on the way, they will Be added Soon...</span>
+            </p>
           ) : (
             paginatedData.map((course) => (
               <CourseCard
@@ -73,13 +69,14 @@ export default function OurCourses({ courseData }: CourseDataProps,) {
               />
             ))
           )}
-        
+
         </div>
-          {/* {pageNumber} */}
-        {courseData&&<div>
-          <Pagination  totalCourses={totalCourses} limit={LIMIT} pageNumber={pageNumber} setpageNumber={setpageNumber}/> 
-        </div>
+        {
+          paginatedData &&
+
+          <Pagination currentPage={currentpage} totalPages={totalPages} onPageChange={setcurrentPage} />
         }
+
       </div>
     </div>
   );
