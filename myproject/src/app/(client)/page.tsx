@@ -4,6 +4,7 @@ import OurCourses from '@/components/OurCourses'
 import dbConnect from '@/lib/dbConnect'
 import StayConnected from '@/components/StayConnected'
 import { CourseInfoModel } from '@/models/courseInfo'
+import RecruiterPanel from '@/components/RecruiterPanel'
 import PartneredUniversities from '@/components/PartneredUniversities'
 import { UniversityInfoType ,CourseInfoType} from '../../../ModelTypes/ModelTypes'
 import PopularPrograms from '@/components/PopularPrograms'
@@ -41,11 +42,11 @@ export default async function Home() {
   
   return (
   
-      <div className="w-full flex flex-col gap-10">
+      <div className="w-full flex flex-col gap-2">
         <Introduction />
         <PopularPrograms/>
         <OurCourses initialCourseData={initialCourseData} initialTotalPages={initialTotalPages}/>
-
+        <RecruiterPanel/>
         
         <StayConnected/>
       </div>

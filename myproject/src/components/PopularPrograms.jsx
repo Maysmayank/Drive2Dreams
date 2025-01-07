@@ -33,14 +33,14 @@ function PopularPrograms() {
 
   return (
     <>
-      <h1 className="font-bold text-3xl text-center mt-16">
+      <h1 className="font-bold text-xl px-4 md:px-0 md:text-3xl text-center  md:mt-16">
         Explore Popular Degree Programs by Top Universities
       </h1>
-      <div className="scroller-conatiner relative m-auto md:w-[92%]">
-        <div ref={scrollerRef} className="scroller">
+      <div className="scroller-conatiner relative m-auto w-[90%] mt-2 md:mt-10 md:w-[92%]">
+        <div ref={scrollerRef} className="scroller gap-7 md:gap-[40px]">
           {imageArray.map((src, index) => (
               <Image
-                className={` ${index===5?'bg-red-400 mt-3 h-[80px]':'object-contain px-2'}`}
+                className={` ${index===5?' mt-3 h-[80px]':'object-contain px-2'}`}
                 key={index}
                 src={src}
                 alt={`Image ${index + 1}`}

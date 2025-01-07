@@ -142,7 +142,6 @@
   display: flex;
   overflow-x: scroll;
   scroll-behavior: smooth;
-  gap: 40px;
 }
 .scroller::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */
