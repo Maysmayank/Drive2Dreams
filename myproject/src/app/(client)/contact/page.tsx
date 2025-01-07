@@ -7,7 +7,7 @@ import FormComponent from '@/components/Form';
 const Contact = () => {
 
   return (
-    <div className=" pt-[120px] ">
+    <div className="pt-10 ">
       <div className='flex gap-2 items-center mb-9 flex-col md:flex-row justify-around md:items-center '>
         
         <div className='contact-info-container bg-white p-4 h-full'>

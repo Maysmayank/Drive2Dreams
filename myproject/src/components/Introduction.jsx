@@ -17,7 +17,7 @@ export default function Introduction() {
   return (
     <>
       <div >
-        <div className="relative  w-full -translate-y-14 z-0 md:w-[92%] md:translate-y-0  m-auto h-[400px] md:h-[500px] md:mt-16">
+        <div className="relative  w-full -translate-y-14 z-0 md:w-[92%] md:translate-y-0  m-auto h-[400px] md:h-[500px] md:mt-10">
           <Image
             className="object-contain md:object-cover w-full h-full" // Ensures the image fills and maintains aspect ratio
             src="/Graduation.jpg"

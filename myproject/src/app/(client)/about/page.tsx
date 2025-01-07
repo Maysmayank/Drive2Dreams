@@ -4,7 +4,7 @@ import React from 'react'
 
 export default function About() {
   return (
-    <div className=" pt-[100px] ">
+    <div className=" pt-5 ">
       <div className='flex items-center flex-col'>
         <div className='  w-[85%] flex items-center flex-col gap-10 p-10 '>
           <h1 className='text-8xl font-bold  md:mt-8 md:px-2 bg-[#F2E5BF]'>WHO WE ARE ?</h1>

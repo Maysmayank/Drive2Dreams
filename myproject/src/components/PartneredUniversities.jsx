@@ -4,7 +4,7 @@ import React from 'react'
 import UniversityCard from '@/components/UniversityCard'
 import Image from 'next/image';
 
-
+/**no in use  */
 
 async function fetchUniversityData() {
   try {

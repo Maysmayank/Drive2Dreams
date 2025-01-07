@@ -6,7 +6,7 @@ import StayConnected from '@/components/StayConnected'
 import { CourseInfoModel } from '@/models/courseInfo'
 import PartneredUniversities from '@/components/PartneredUniversities'
 import { UniversityInfoType ,CourseInfoType} from '../../../ModelTypes/ModelTypes'
-
+import PopularPrograms from '@/components/PopularPrograms'
 /**
  * 
  * we are using this serversideprop to get the inital 3 courses to prevent loading the contents at first on client side
@@ -43,9 +43,9 @@ export default async function Home() {
   
       <div className="w-full flex flex-col gap-10">
         <Introduction />
+        <PopularPrograms/>
         <OurCourses initialCourseData={initialCourseData} initialTotalPages={initialTotalPages}/>
 
-        <PartneredUniversities/>
         
         <StayConnected/>
       </div>

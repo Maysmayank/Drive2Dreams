@@ -45,9 +45,9 @@ export default function OurCourses({initialCourseData,initialTotalPages}:OurCour
 
 
   return (
-    <div className=''>
+    <div className='mt-[80px]'>
       <div className='mt-2 flex flex-col items-center pb-5 px-3'>
-        <h1 className='font-bold mb-12 text-3xl md:rubik-homepage-title md:text-5xl'>Our Courses</h1>
+        <h1 className='font-bold mb-12 text-3xl md:rubik-homepage-title md:text-4xl'>Top MBA/PGDM Programs</h1>
 
         {/* Grid for courses */}
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>

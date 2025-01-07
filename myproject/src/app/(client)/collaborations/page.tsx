@@ -23,7 +23,7 @@ async function fetchedAllUniversityData():Promise<UniversityInfoType[]>{
   const allUniversitydata:UniversityInfoType[] =await fetchedAllUniversityData();
     
   return (
-    <div className='pt-[80px]'>
+    <div className='pt-5'>
       <div className=' main-container  min-h-[100vh] my-5 mb-16 md:w-full flex flex-col items-center  gap-4'>
         <h1 className='my-5   md:text-5xl font-bold bg-[#e1944c] px-10 py-2'>Our University Collaborators</h1>
         <hr className='  w-full'/>
