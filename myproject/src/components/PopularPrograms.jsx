@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useEffect, useRef } from "react";
 const imageArray = [
   "/colleges/Accurate College.webp",
-  "/colleges/Amity university.png",
+  "/colleges/Amity University.png",
   "/colleges/Amry Institute.webp",
   "/colleges/Gn Group.jpeg.jpg",
   "/colleges/GNIOT.jpg",
@@ -12,14 +12,14 @@ const imageArray = [
   "/colleges/Lloyd Business School.png",
 ];
 function PopularPrograms() {
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     scrollAmount(442);
-  //   }, 8000);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      scrollAmount(200);
+    }, 2000);
 
-  //   // Cleanup the interval when the component unmounts
-  //   return () => clearInterval(intervalId);
-  // }, []);
+    // Cleanup the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
 
   let scrollerRef = useRef(null);
   const scrollAmount = (amount) => {
@@ -36,7 +36,7 @@ function PopularPrograms() {
       <h1 className="font-bold text-xl px-4 md:px-0 md:text-3xl text-center  md:mt-16">
         Explore Popular Degree Programs by Top Universities
       </h1>
-      <div className="scroller-conatiner relative m-auto w-[90%] mt-2 md:mt-10 md:w-[92%]">
+      <div className="scroller-conatiner relative m-auto  mt-4 md:mt-10 md:w-[92%]">
         <div ref={scrollerRef} className="scroller gap-7 md:gap-[40px]">
           {imageArray.map((src, index) => (
               <Image
@@ -51,14 +51,14 @@ function PopularPrograms() {
 
           <span
             onClick={() => scrollAmount(-442)}
-            className="  bg-slate-100 p-2  -left-3 top-10 rounded-full  absolute "
+            className={` bg-slate-100 p-2  -left-3 top-10 rounded-full  absolute ${''} hidden md:block `}
           >
             <ArrowLeft size={15} />{" "}
           </span>
           <span
             onClick={() => scrollAmount(442)}
             id="forward"
-            className="bg-slate-100 p-2 -right-3 top-10 rounded-full absolute "
+            className="bg-slate-100 p-2 -right-3 top-10 rounded-full absolute hidden md:block "
           >
             <ArrowRight size={15} />
           </span>

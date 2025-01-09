@@ -22,7 +22,7 @@ export default function Introduction() {
             className="object-contain md:object-cover w-full h-full" // Ensures the image fills and maintains aspect ratio
             src="/Graduation.jpg"
             alt="Graduation"
-            layout='fill'
+            fill
           />
 
           <div className='absolute flex items-center  inset-0 text-white'>

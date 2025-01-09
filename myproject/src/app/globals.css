@@ -134,7 +134,13 @@
   font-style: normal;
 }
 
-
+.top-container-scroller{
+  padding: 0 21px;
+  display: flex;
+  gap: 15px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
 
 .scroller{
 
@@ -143,6 +149,13 @@
   overflow-x: scroll;
   scroll-behavior: smooth;
 }
+.top-container-scroller::-webkit-scrollbar {
+  display: none; 
+}
+
+
 .scroller::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */
 }
+
+
