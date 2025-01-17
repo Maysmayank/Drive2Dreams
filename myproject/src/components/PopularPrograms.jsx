@@ -1,46 +1,53 @@
 "use client";
 import { ArrowBigLeft, ArrowLeft, ArrowRight } from "lucide-react";
 import Image from "next/image";
+import { motion } from "motion/react"
 import React, { useEffect, useRef } from "react";
 const imageArray = [
   "/colleges/Accurate College.webp",
+  "/colleges/Gn Group.jpeg.jpg",
   "/colleges/Amity University.png",
   "/colleges/Amry Institute.webp",
-  "/colleges/Gn Group.jpeg.jpg",
   "/colleges/GNIOT.jpg",
-  "/colleges/JIMS-Greater-Noida.jpg",
-  "/colleges/Lloyd Business School.png",
-];
-function PopularPrograms() {
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      scrollAmount(200);
-    }, 2000);
+  "/colleges/JIIMSGNjpg.jpg",
+  "/colleges/llyod.jpg",
+  "/colleges/GIMS.avif",
 
-    // Cleanup the interval when the component unmounts
-    return () => clearInterval(intervalId);
-  }, []);
+];
+
+
+function PopularPrograms() {
+  
 
   let scrollerRef = useRef(null);
-  const scrollAmount = (amount) => {
-    if (scrollerRef.current) {
-      scrollerRef.current.scrollBy({
-        left: amount,
-        behavior: "smooth",
-      });
-    }
-  };
+  // const scrollAmount = (amount) => {
+  //   if (scrollerRef.current) {
+  //     scrollerRef.current.scrollBy({
+  //       left: amount,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // };
 
   return (
     <>
       <h1 className="font-bold text-xl px-4 md:px-0 md:text-3xl text-center  md:mt-16">
         Explore Popular Degree Programs by Top Universities
       </h1>
-      <div className="scroller-conatiner relative m-auto  mt-4 md:mt-10 md:w-[92%]">
-        <div ref={scrollerRef} className="scroller gap-7 md:gap-[40px]">
-          {imageArray.map((src, index) => (
+      <div className="scroller-conatiner relative  m-auto   mt-4 md:mt-10 w-full md:w-[92%]">
+        <div ref={scrollerRef} className="scroller gap-10 md:gap-[45px]">
+          <motion.div
+          className="flex gap-4"
+          animate={{ x: ["0%", "-100%"] }} // Scrolls to the left
+          transition={{
+            repeat: Infinity,
+            duration: 35,
+            ease: "linear",
+          }}
+        >
+          {[...imageArray,...imageArray].map((src, index) => (
               <Image
-                className={` ${index===5?' mt-3 h-[80px]':'object-contain px-2'}`}
+                className={` ${index===5?'':'object-contain px-2'}`}
                 key={index}
                 src={src}
                 alt={`Image ${index + 1}`}
@@ -48,20 +55,10 @@ function PopularPrograms() {
                 width={150}
               />
           ))}
+          </motion.div>
+          
 
-          <span
-            onClick={() => scrollAmount(-442)}
-            className={` bg-slate-100 p-2  -left-3 top-10 rounded-full  absolute ${''} hidden md:block `}
-          >
-            <ArrowLeft size={15} />{" "}
-          </span>
-          <span
-            onClick={() => scrollAmount(442)}
-            id="forward"
-            className="bg-slate-100 p-2 -right-3 top-10 rounded-full absolute hidden md:block "
-          >
-            <ArrowRight size={15} />
-          </span>
+         
         </div>
       </div>
     </>

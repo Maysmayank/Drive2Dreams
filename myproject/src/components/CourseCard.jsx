@@ -11,7 +11,7 @@ function CourseCard({ title, text, duration, universityName, image }) {
   <div className=' mb-[300px]  md:mb-[300px] relative flex flex-col items-center'>
     
     <Image src={image} alt="image"  
-      className={`relative z-10 w-[95%] md:w-[400px] h-[220px] hover:scale-105 transition-transform duration-300`} 
+      className={`relative z-10 w-[95%] md:w-[345px] h-[220px] hover:scale-105 transition-transform duration-300`} 
       width={300} height={300}  ></Image>   
     
     <div 

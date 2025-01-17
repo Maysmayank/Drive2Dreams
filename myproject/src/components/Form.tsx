@@ -17,11 +17,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
+import clsx from 'clsx';
+import { usePathname } from 'next/navigation';
 
-export default function FormComponent() {
+export default function FormComponent({ classname }: { classname?: string }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { toast } = useToast()
+    const pathname = usePathname()
+
     // console.log(formSchema.shape.program.options);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -30,7 +34,7 @@ export default function FormComponent() {
             username: "",
             email: "",
             phone_number: "",
-            program: "BBA"
+            program: "PGDM"
         },
     })
     const programOptions = formSchema.shape.program.options;
@@ -79,7 +83,7 @@ export default function FormComponent() {
 
     return (
 
-        <div className='form-container p-4 bg-bla min-w-full md:min-w-[500px] min-h-[500px]'>
+        <div className={clsx("form-container p-4 flex flex-grow flex-col h-full w-full", classname)}>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <FormField
@@ -87,7 +91,7 @@ export default function FormComponent() {
                         name="username"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>FullName </FormLabel>
+                                <FormLabel>Full Name </FormLabel>
                                 <FormControl>
                                     <Input placeholder="Enter your Fullname" {...field} />
                                 </FormControl>
@@ -137,7 +141,8 @@ export default function FormComponent() {
                             <FormItem>
                                 <FormLabel>Program </FormLabel>
                                 <FormControl>
-                                    <select {...field} className=" w-full border p-2 rounded ">
+                                    <select {...field}
+                                        className={`w-full border p-2 rounded ${pathname === '/' ? 'changeColor-popup' : ''}`}>
                                         <option value="" disabled>Select program</option>
                                         {
                                             programOptions.map((choice) => (
@@ -153,7 +158,7 @@ export default function FormComponent() {
                         )}
                     />
 
-                    <Button type="submit" disabled={isSubmitting} className='min-w-full flex items-center m-auto'>
+                    <Button type="submit" disabled={isSubmitting} className='min-w-full bg-[#4e4feb] flex items-center m-auto'>
                         {
                             isSubmitting ? (
                                 <>

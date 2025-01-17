@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 import { Mail } from 'lucide-react';
 import FormComponent from '@/components/Form';
-
+import clsx from 'clsx';
 const Contact = () => {
 
   return (
@@ -31,7 +31,7 @@ const Contact = () => {
           </div>  
 
         </div>
-        <FormComponent/>
+        <FormComponent classname='max-w-[40%]'/>
       </div>
 
       

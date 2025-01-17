@@ -8,6 +8,8 @@ import RecruiterPanel from '@/components/RecruiterPanel'
 import PartneredUniversities from '@/components/PartneredUniversities'
 import { UniversityInfoType ,CourseInfoType} from '../../../ModelTypes/ModelTypes'
 import PopularPrograms from '@/components/PopularPrograms'
+import PopUpForm from '@/components/PopUpForm'
+import ReviewCard from '@/components/ReviewCard'
 import axios from 'axios'
 /**
  * 
@@ -46,12 +48,13 @@ export default async function Home() {
   
   return (
   
-      <div className="w-full flex flex-col gap-5">
+      <div className="w-full flex flex-col md:gap-5">
+        <PopUpForm/>
         <Introduction />
         <PopularPrograms/>
         <OurCourses initialCourseData={initialCourseData} initialTotalPages={initialTotalPages}/>
+        <ReviewCard/>
         <RecruiterPanel/>
-        
         <StayConnected/>
       </div>
     

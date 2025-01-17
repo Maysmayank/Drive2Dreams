@@ -49,7 +49,7 @@ export default function OurCourses({initialCourseData,initialTotalPages}:OurCour
         <h1 className='font-bold mb-20 text-2xl md:rubik-homepage-title md:text-4xl'>Top MBA/PGDM Programs</h1>
 
         {/* Grid for courses */}
-        <div className='grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 space-x-1 md:ml-28 md:mr-28'>
+        <div className='flex flex-col md:flex-row flex-wrap  justify-center gap-16 space-x-1 md:ml-28 md:mr-28'>
 
           {paginatedData.length === 0 ? (
             <p className='text-center  items-center flex flex-col text-lg col-span-full'>

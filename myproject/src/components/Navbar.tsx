@@ -107,9 +107,16 @@ const Navbar = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  const handleOutsideClick=(e:any)=>{
+    console.log(e.target.id);
+    
+    if(e.target.id) {
+      setIsMenuOpen(!isMenuOpen)
+    }
+  }
 
   return (
-    <div className="relative z-50 flex text-black pt-5 md:pt-10  md:px-5 items-center justify-between">
+    <div id="navbar" className="relative z-40 flex text-black pt-4 md:pt-1  md:px-5 items-center justify-between">
       <div className="flex bg-red items-center md:gap-3 " >
         <div className="flex flex-col opacity-80 w-[58%] md:w-[80%]">
           <p className="font-extrabold ml-4 text-2xl  md:text-4xl md:ml-8 text-black">CareerWay</p>
@@ -118,29 +125,29 @@ const Navbar = () => {
       </div>
 
       <div className="hidden md:flex">
-        <ul className=" flex gap-10  text-[15px] items-center">
+        <ul className=" flex gap-10  text-[14px] items-center">
           <li className="flex">
-            <Link className={pathname === '/' ? 'active rounded p-2 scale-125 text-black' : 'hover:scale-125  rounded p-2 transition duration-200 delay-75 ease-in'} href='/'>
+            <Link className={pathname === '/' ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'} href='/'>
 
               <House size={20} className="inline mr-1 mb-1" />Home</Link>
           </li>
 
           <li className="flex">
-            <Link className={pathname === '/about' ? 'active rounded p-2 scale-125 text-black' : 'hover:scale-125  rounded p-2 transition duration-200 delay-75 ease-in'} href='/about'>
+            <Link className={pathname === '/about' ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'} href='/about'>
               <MessageSquareText size={20} className="mr-1 mb-1 inline" />About
             </Link>
           </li>
 
           <li className="flex">
-            <Link className={pathname === '/collaborations' ? 'active rounded p-2 scale-125 text-black' : 'hover:scale-125  rounded p-2 transition duration-200 delay-75 ease-in'} href='/collaborations'>
+            <Link className={pathname === '/collaborations' ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'} href='/collaborations'>
               <UsersRound size={20} className="mr-1 mb-1 inline" />Collaborations
             </Link>
           </li>
 
           <li className="flex">
-            <Link className={pathname === '/contact' ? 'active rounded p-2  scale-125 text-black' : 'hover:scale-125  rounded p-2 transition duration-200 delay-75 ease-in'} href='/contact'>
+            <Link className={pathname === '/contact' ? 'active rounded p-2  scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'} href='/contact'>
               <Headset className="inline mr-1 mb-1" />
-              Contact us</Link>
+              Get in Touch</Link>
           </li>
         </ul>
 
@@ -227,13 +234,15 @@ const Navbar = () => {
       <div className="md:hidden">
         <button onClick={toggleMenu}>
           <Menu size={42} />
-
         </button>
       </div>
 
       {isMenuOpen && (
         //mobile responsive  navbar 
-        <div className="fixed right-0 top-0 bg-black w-60 h-screen items-center pt-[100px] justify-around flex flex-col md:hidden">
+        <div 
+        id="mobile-navbar"
+        onClick={handleOutsideClick}
+        className="fixed right-0 top-0 bg-red-600 w-60 h-screen items-center pt-[100px] justify-around flex flex-col md:hidden">
           <button className="text-white absolute top-10 right-10" onClick={toggleMenu}><X size={30} /></button>
 
           <ul className=" flex flex-col gap-10 ">

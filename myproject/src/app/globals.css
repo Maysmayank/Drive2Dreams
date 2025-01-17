@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Bebas+Neue&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Rubik:ital,wght@0,300..900;1,300..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+  padding: 0;margin: 0;box-sizing: border-box;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -157,5 +160,76 @@
 .scroller::-webkit-scrollbar {
   display: none; /* For Chrome, Safari, and Edge */
 }
+.changeColor-popup{
+  background-color: #1c1c39;
+}
 
 
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%); /* Start outside the viewport on the right */
+    opacity: 0; /* Optional: Start invisible */
+  }
+  to {
+    transform: translateX(0); /* Slide into the viewport */
+    opacity: 1; /* Fully visible */
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0); /* Start in the viewport */
+    opacity: 1; /* Fully visible */
+  }
+  to {
+    transform: translateX(100%); /* Slide out to the right */
+    opacity: 0; /* Optional: Fade out */
+  }
+}
+
+@keyframes fadeIn{
+  from{
+    opacity: 0.5;
+  }
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
+}
+
+#modal-container{
+  animation-duration: 2s;
+  animation-direction:normal;
+
+}
+#modal.slide-out{
+  animation: slideOut 1s ease-in-out;
+
+}
+#modal-container.fade-out{
+  animation: fadeOut 1s ease-in-out;
+}
+
+
+
+
+#modal {
+  animation: slideIn 1s forwards; /* 1-second slide-in */
+  animation-timing-function: ease-in-out;
+}
+
+
+.review-feedback::before{
+  content: '“';
+  font-size: 2em; 
+  color: rgb(6, 26, 254);
+  opacity: 0.5;
+}

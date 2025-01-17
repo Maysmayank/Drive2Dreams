@@ -33,7 +33,7 @@ const RecruiterPanel = () => {
 
   const topImages = [...topImageArray, ...topImageArray]; // Clone array
 
-  const bottomImages=[...bottomImageArray,...bottomImageArray]
+  const bottomImages=[...bottomImageArray,...bottomImageArray,...bottomImageArray]
 
   return (
     <div className="flex flex-col gap-16 items-center bg-[#f9f9f8] py-10 md:p-6 md:py-14">
@@ -73,7 +73,7 @@ const RecruiterPanel = () => {
               key={index}
               initial={{ x: "-900%" }} // Start with the last element
               animate={{ x: "100%" }} // Scroll forward to show the first element
-              transition={{ duration: 35, ease: "linear", repeat: Infinity }}
+              transition={{ duration: 30, ease: "linear", repeat: Infinity }}
               className="rounded-lg p-2 bg-white shadow-md w-[150px] h-[100px] flex flex-shrink-0"
             >
               <Image
