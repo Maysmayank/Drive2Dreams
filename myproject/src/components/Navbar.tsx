@@ -6,20 +6,65 @@ import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { PopoverDemo } from '@/components/PopoverDemo'
 import Image from "next/image";
-import { Headset, House, LayoutDashboard, Loader2, Loader2Icon, Menu, MessageSquareText, Search, SearchIcon, Shield, User, UsersRound, X } from "lucide-react";
+import { Headset, HeadsetIcon, House, HouseIcon, LayoutDashboard, Loader2, Loader2Icon, Menu, MessageSquareText, Search, SearchIcon, Shield, User, UserRound, UsersRound, X } from "lucide-react";
 import { Input } from "./ui/input";
 import ResponsiveDropDown from '@/components/ResponsiveDropdown'
 import axios from "axios";
 import { useDebounceCallback } from "usehooks-ts";
 
+const navItems = [
+  {
+    icon: <House />,
+    label: 'Home',
+    path: '/',
+    role: 'user',
+    isUser: true
+  },
+  {
+    icon: <MessageSquareText />,
+    label: 'About',
+    path: '/about',
+    role: 'user',
+    isUser: true
 
-interface CourseInfoSearchBarType{
-  title:string;
-  UniversityName:string;
+  },
+  {
+    icon: <UserRound />,
+    label: 'Collaborations',
+    path: '/collaborations',
+    role: 'user',
+    isUser: true
+
+
+  },
+  {
+    icon: <HeadsetIcon />,
+    label: 'Get in Touch',
+    path: '/contact',
+    role: 'user',
+    isUser: true,
+
+  },
+  {
+    icon: <LayoutDashboard />,
+    path: '/admin/dashboard',
+    label: 'Dashboard',
+    role: 'admin',
+    isUser: false
+  }
+
+
+]
+interface CourseInfoSearchBarType {
+  title: string;
+  UniversityName: string;
 }
+
+
+
 const Navbar = () => {
   const pathname = usePathname()
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar state
 
   /**
    * this states below responsible to handle search bar value and their functionality including dropdown
@@ -31,14 +76,19 @@ const Navbar = () => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
 
   const { data: session } = useSession()
   // console.log(session);
-  
+
+  const isAdmin = session?.user.role === 'admin'; // admin check
+
+  const isUser = session?.user.role === 'user' ? true : false || session?.user.role === null ? false : true;   // user check 
+
+
   useEffect(() => {
     if (value) {
       const delay = setTimeout(() => {
@@ -74,7 +124,7 @@ const Navbar = () => {
     }
   }
 
- 
+
 
   const debouncedFetchCourseInfo = useDebounceCallback((value) => {
     fetchDropDownData(value);
@@ -107,17 +157,17 @@ const Navbar = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const handleOutsideClick=(e:any)=>{
+  const handleOutsideClick = (e: any) => {
     console.log(e.target.id);
-    
-    if(e.target.id) {
-      setIsMenuOpen(!isMenuOpen)
+
+    if (e.target.id) {
+      // setIsMenuOpen(!isMenuOpen)
     }
   }
 
   return (
     <div id="navbar" className="relative z-40 flex text-black pt-4 md:pt-1  md:px-5 items-center justify-between">
-      <div className="flex bg-red items-center md:gap-3 " >
+      <div className="flex items-center md:gap-3 " >
         <div className="flex flex-col opacity-80 w-[58%] md:w-[80%]">
           <p className="font-extrabold ml-4 text-2xl  md:text-4xl md:ml-8 text-black">CareerWay</p>
           <span className="text-sm ml-4 text-black font-bold md:text-md md:ml-8 text-left opacity-80">Drive2Dreams</span>
@@ -125,30 +175,24 @@ const Navbar = () => {
       </div>
 
       <div className="hidden md:flex">
+
         <ul className=" flex gap-10  text-[14px] items-center">
-          <li className="flex">
-            <Link className={pathname === '/' ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'} href='/'>
+          {
+            navItems.slice(0, navItems.length - 1).map((item, index) => {
+              return (
+                <li key={index} className={` flex items-center`}>
 
-              <House size={20} className="inline mr-1 mb-1" />Home</Link>
-          </li>
+                  <Link
+                    className={pathname === item.path ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'}
+                    href={item.path}>
+                    {React.cloneElement(item.icon as React.ReactElement, { size: 20, className: "inline mr-1 mb-1" })}
+                    {item.label}
 
-          <li className="flex">
-            <Link className={pathname === '/about' ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'} href='/about'>
-              <MessageSquareText size={20} className="mr-1 mb-1 inline" />About
-            </Link>
-          </li>
-
-          <li className="flex">
-            <Link className={pathname === '/collaborations' ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'} href='/collaborations'>
-              <UsersRound size={20} className="mr-1 mb-1 inline" />Collaborations
-            </Link>
-          </li>
-
-          <li className="flex">
-            <Link className={pathname === '/contact' ? 'active rounded p-2  scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'} href='/contact'>
-              <Headset className="inline mr-1 mb-1" />
-              Get in Touch</Link>
-          </li>
+                  </Link>
+                </li>
+              )
+            })
+          }
         </ul>
 
       </div>
@@ -162,6 +206,8 @@ const Navbar = () => {
             {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon />}
           </button>
 
+
+
           <div className="absolute hidden md:block md:mt-6 w-full">
             {
               isDropDownOpen && <ResponsiveDropDown setValue={setValue} courseInfo={courseInfo} value={value} />
@@ -171,27 +217,107 @@ const Navbar = () => {
         </div>
       </div>
 
-      <button ref={searchIconRef} className="relative md:hidden rounded-sm p-1.5 outline-none border-none -right-[50px] hover:bg-white hover:text-black" onClick={() => {
-        setShowinputBoxInMobile((prev) => (prev === "none" ? "block" : "none"));
-      }}  >
-        {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon size={30}/>}
-      </button>
+
+
+      <div className=" flex gap-3 items-center justify-center">
+        <button ref={searchIconRef} className=" md:hidden rounded-sm   hover:bg-white hover:text-black" onClick={() => {
+          setShowinputBoxInMobile((prev) => (prev === "none" ? "block" : "none"));
+        }}  >
+          {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon size={30}  />}
+        </button>
+
+        <div className=" md:hidden relative right-1">
+          <Menu size={40} onClick={toggleSidebar} />
+
+          {
+            isSidebarOpen && <div onClick={toggleSidebar} className="z-50 top-0 -right-1 fixed flex justify-end bg-transparent h-[100vh] w-[100vw]" >
+              <div className="bg-[#111111] flex flex-col items-center justify-center  w-60 py-28  " >
+
+                <button className="text-white absolute top-10 right-10 hover:bg-white hover:text-black" onClick={toggleSidebar}><X size={30} /></button>
+
+                <ul className=" flex flex-col gap-10 h-full text-white ">
+
+                  {
+                    navItems.map((item, index) => {
+                      return (
+                        <li key={index}
+                          className={`${isAdmin && (item.role === 'admin' || item.role === 'user') || isUser && (item.role === 'user') ? 'flex items-center' : 'hidden'
+                            }`}>
+
+                          <Link
+                            className={pathname === item.path ? 'active rounded p-2 scale-110' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'}
+                            href={item.path}>
+                            {React.cloneElement(item.icon as React.ReactElement, { size: 20, className: "inline mr-1 mb-1" })}
+                            {item.label}
+
+                          </Link>
+                        </li>
+                      )
+                    })
+                  }
+
+
+
+                  {session?.user?.image ? (
+                    <div className=" flex flex-col gap-3 items-center">
+                      <Image
+                        src={session.user.image}
+                        alt={session.user.name || "Profile"}
+                        width={40} height={40}
+                        className="w-10 h-10 bg-white rounded-full"
+                      />
+                      <button onClick={() => { signOut({ callbackUrl: '/login' }) }} className=" hover:bg-red-600 rounded-sm p-2 text-white transition duration-200 delay-75 ease-in">Logout</button>
+                    </div>
+
+                  ) : (
+
+                    <div className="flex flex-col items-center gap-2">
+
+                      <span className="bg-white text-gray-700 p-2 rounded-full w-10 h-10 flex items-center justify-center">
+
+                        {session?.user?.email?.charAt(0).toUpperCase() || <User />}
+                      </span>
+                      {
+                        session?.user.role === "admin" ? (
+                          <button onClick={() => { signOut({ callbackUrl: '/login' }) }} className=" hover:bg-red-600 rounded-sm p-2 text-white transition duration-200 delay-75 ease-in ">Logout</button>
+
+                        ) : (
+                          <button onClick={() => { signOut({ callbackUrl: '/login' }) }} className=" text-xl hover:bg-green-600 rounded-sm p-2 text-white transition duration-200 delay-75 ease-in ">LogIn</button>
+
+                        )
+                      }
+                    </div>
+                  )}
+
+
+
+
+                </ul>
+              </div>
+            </div>
+          }
+        </div>
+
+      </div>
+
+
+
 
       {/* for mobile */}
-      <div ref={CloseOnCLickRef} className=" md:hidden absolute w-[90%] z-50 top-[80px] left-5" > 
+      <div ref={CloseOnCLickRef} className=" md:hidden absolute w-[90%] z-50 top-[80px] left-5" >
         <Input
           placeholder="Search Courses"
 
           value={value}
           onChange={HandleSearchChange}
-          className="pr-[35px] py-6ww bg-white text-black "
+          className="pr-[35px] py-6 bg-white text-black "
           style={{ display: showinputBoxInMobile }}
         />
 
         {isDropDownOpen && (
 
           <>
-            <ResponsiveDropDown  setValue={setValue} courseInfo={courseInfo} value={value} />
+            <ResponsiveDropDown setValue={setValue} courseInfo={courseInfo} value={value} />
           </>
         )}
       </div>
@@ -230,87 +356,6 @@ const Navbar = () => {
 
         }
       </div>
-
-      <div className="md:hidden">
-        <button onClick={toggleMenu}>
-          <Menu size={42} />
-        </button>
-      </div>
-
-      {isMenuOpen && (
-        //mobile responsive  navbar 
-        <div 
-        id="mobile-navbar"
-        onClick={handleOutsideClick}
-        className="fixed right-0 top-0 bg-red-600 w-60 h-screen items-center pt-[100px] justify-around flex flex-col md:hidden">
-          <button className="text-white absolute top-10 right-10" onClick={toggleMenu}><X size={30} /></button>
-
-          <ul className=" flex flex-col gap-10 ">
-            <li >
-              <Link className={pathname === '/' ? 'active rounded p-2  bg-white text-black' : 'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/' onClick={toggleMenu}><House className="inline mr-4 mb-1" />Home</Link>
-            </li>
-
-            {session?.user.role === 'admin' && (
-              <li>
-                <Link className={pathname === '/admin/dashboard' ? 'active rounded p-2 bg-white text-black' : 'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/dashboard' onClick={toggleMenu}> <LayoutDashboard className="inline mr-3 mb-1" />DashBoard</Link>
-              </li>
-            )}
-
-
-            <li>
-              <Link className={pathname === '/about' ? 'active rounded p-2 bg-white text-black' : 'hover:bg-white hover:text-black rounded p-2 transition duration-200 delay-75 ease-in'} href='/about' onClick={toggleMenu}><MessageSquareText className="mb-1 mr-3 inline" />About</Link>
-            </li>
-
-            <li>
-              <Link className={pathname === '/collaborations' ? 'active rounded p-2 bg-white text-black' : 'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/collaborations' onClick={toggleMenu}><Shield className="mb-1 mr-3 inline" /> Collaborations</Link>
-            </li>
-
-            <li>
-              <Link className={pathname === '/contact' ? 'active rounded p-2 bg-white text-black' : 'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/contact' onClick={toggleMenu}><Headset className="mr-3 mb-1 inline" />Contact us</Link>
-            </li>
-
-
-
-
-          </ul>
-
-          {session?.user?.image ? (
-            <div className=" flex flex-col gap-3 items-center">
-              <Image
-                src={session.user.image}
-                alt={session.user.name || "Profile"}
-                width={40} height={40}
-                className="w-10 h-10 bg-white rounded-full"
-              />
-              <button onClick={() => { signOut({ callbackUrl: '/login' }) }} className=" hover:bg-red-600 rounded-sm p-2 text-white transition duration-200 delay-75 ease-in">Logout</button>
-            </div>
-
-          ) : (
-
-            <div className="flex flex-col items-center gap-2">
-
-              <span className="bg-white text-gray-700 p-2 rounded-full w-10 h-10 flex items-center justify-center">
-
-                {session?.user?.email?.charAt(0).toUpperCase() || <User />}
-              </span>
-              {
-                session?.user.role === "admin" ? (
-                  <button onClick={() => { signOut({ callbackUrl: '/login' }) }} className=" hover:bg-red-600 rounded-sm p-2 text-white transition duration-200 delay-75 ease-in ">Logout</button>
-
-                ) : (
-                  <button onClick={() => { signOut({ callbackUrl: '/login' }) }} className=" text-xl hover:bg-green-600 rounded-sm p-2 text-white transition duration-200 delay-75 ease-in ">LogIn</button>
-
-                )
-              }
-            </div>
-          )}
-
-          <h2 className="opacity-70">Drive2Dreams</h2>
-
-        </div>
-
-      )}
-
     </div>
 
   )

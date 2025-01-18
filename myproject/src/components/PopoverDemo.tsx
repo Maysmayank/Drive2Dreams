@@ -25,6 +25,7 @@ export const PopoverDemo: React.FC<PopoverProps> = ({ element }) => {
         <div>
             <Popover>
                 <PopoverTrigger>{element}</PopoverTrigger>
+                
                 <PopoverContent className="max-w-[200px] flex flex-col gap-2 justify-center  relative top-7">
                     {
                     session?.user.role==="admin" ?(
