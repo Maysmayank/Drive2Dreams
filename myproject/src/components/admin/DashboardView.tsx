@@ -39,7 +39,7 @@ async function DashboardView() {
                 <p className='text-center text-lg col-span-full'>No courses available at the moment.</p>
               ) : (
                 courseData.map((course, index) => (
-                  <AdminCourseCard key={index} id={course._id.toString()} title={course.title} overview={course.courseOverview} />
+                  <AdminCourseCard key={index} id={course._id.toString()} title={course.title} overview={course.courseInfo} />
                 ))
               )}
             </div>

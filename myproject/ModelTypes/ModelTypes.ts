@@ -1,22 +1,35 @@
+type PlacedStudentsType={
+    _id:string;   
+    studentName: string; 
+    companyName?: string;
+    companyImage?: string;
+    studentImage?: string;
+
+}
+
 type UniversityInfoType =
 {       _id?:string;
+        placedStudents:PlacedStudentsType[];
         universityName: string;
         aboutUniversity: string;
-        admissionProcess: string;
         cutoffs: string,
         cloudinaryImageUrl?: string;
         cloudinaryImageName?: string;
+        
 }
+
 
 type CourseInfoType = {
     _id: string;
     university: UniversityInfoType; // Full university object
-    title: string;
     courseInfo: string;
-    courseOverview: string;
-    courseContent?: string[];
+    eligibilityCriteria:string[];
     duration?: string;
     syllabus?: string;
+    title: string; // Title of the course
+    courseRating:number;
+    admissionProcess?: string; // Optional array of strings for course content like syllabus
+    Brochure?: string; // Optional field for storing file path or URL to PDF
 }
 
-export type {CourseInfoType,UniversityInfoType}
+export type {CourseInfoType,UniversityInfoType,PlacedStudentsType}

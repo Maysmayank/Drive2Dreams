@@ -4,7 +4,7 @@ import * as z from 'zod';
 
 const tagSchema = z.string().min(3, "Tag cannot be empty");
 
-function TagInputComponent({name,settags,tags}:any) {
+function TagInputComponent({label,setState,state,tagsSchema}:any) {
    
     const [inputValue, setInputValue] = useState(''); // State to manage the input value
     const [error, setError] = useState(''); // State to manage validation error
@@ -15,7 +15,7 @@ function TagInputComponent({name,settags,tags}:any) {
             try {
                 
                 tagSchema.parse(inputValue.trim()); // Validate the input value
-                settags((prevTags: any) => [...prevTags, inputValue.trim()]);
+                setState((prevTags: any) => [...prevTags, inputValue.trim()]);
                 setInputValue('');
 
                 setError(''); // Clear error on successful validation
@@ -34,12 +34,13 @@ function TagInputComponent({name,settags,tags}:any) {
     
     function handleDelete(e:any,index:number){
         e.preventDefault();
-        settags((prevTags:any)=>prevTags.filter((_:any,i:number)=>index!=i))
+        setState((prevTags:any)=>prevTags.filter((_:any,i:number)=>index!=i))
     }
+
   return (
 
     <div>
-       <h2>{name}</h2> 
+       <h2>{label}</h2> 
 
       <input value={inputValue} placeholder='Enter the info' onKeyDown={handleOnKeyDown} onChange={handleChange} className='mt-1 w-full bg-transparent border px-3 py-1 rounded-md outline-1' />
         {
@@ -47,8 +48,8 @@ function TagInputComponent({name,settags,tags}:any) {
         }
         <div className='mt-4'>
             {
-                tags.length===0?(""):(
-                    tags.map((tag:string,index:number)=>(
+                state.length===0?(""):(
+                    state.map((tag:string,index:number)=>(
                         <div key={index} className='flex items-center mb-3'>
                             <Button onClick={(e)=>handleDelete(e,index)} className='text-sm bg-transparent h-6'>x</Button>
                             <p>{tag}</p>

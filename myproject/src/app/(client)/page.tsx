@@ -5,12 +5,10 @@ import dbConnect from '@/lib/dbConnect'
 import StayConnected from '@/components/StayConnected'
 import { CourseInfoModel } from '@/models/courseInfo'
 import RecruiterPanel from '@/components/RecruiterPanel'
-import PartneredUniversities from '@/components/PartneredUniversities'
-import { UniversityInfoType ,CourseInfoType} from '../../../ModelTypes/ModelTypes'
+import { CourseInfoType} from '../../../ModelTypes/ModelTypes'
 import PopularPrograms from '@/components/PopularPrograms'
 import PopUpForm from '@/components/PopUpForm'
-import ReviewCard from '@/components/ReviewCard'
-import axios from 'axios'
+import {ReviewCard} from '@/components/ReviewCard'
 /**
  * 
  * we are using this serversideprop to get the inital 3 courses to prevent loading the contents at first on client side

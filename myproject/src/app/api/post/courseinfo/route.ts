@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 
 interface CourseInfo{
     university: string; // Name of the university or college
+    universityName:string;
     title: string; // Title of the course
     courseInfo: string; // Detailed information about the course
     courseContent?: string[]; // Optional array of strings for course content like syllabus
@@ -15,8 +16,9 @@ interface CourseInfo{
 export async function POST(request: Request,response:NextResponse) {
     await dbConnect();
     try {
-        const{universityName,title,duration,courseInfo,courseContent,syllabus,eligibilityCriteria}=await request.json();
+        const{universityName,title,duration,courseInfo,admissionProcess,brochure,eligibilityCriteria,videoUrl,specializationOffered,courseRating}=await request.json();
         
+        console.log(courseRating);
         
         const isCourseExisted=await CourseInfoModel.find({title:title}) 
         
@@ -41,16 +43,21 @@ export async function POST(request: Request,response:NextResponse) {
         }else{
             const newCourse=new CourseInfoModel({
                 university:isUniversityExists._id,
+                universityName:universityName,
+                videoUrl:videoUrl,
+                specializationOffered:specializationOffered,
+                courseRating:courseRating,
                 title,
                 duration,
-                courseContent,
+                admissionProcess,
                 courseInfo,
-                syllabus,
+                brochure,
                 eligibilityCriteria // array of string
             
             })
             await newCourse.save();
-            // console.log(newCourse);
+            console.log(newCourse);
+            
             
             await CourseInfoModel.findById(newCourse._id)
 

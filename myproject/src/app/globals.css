@@ -229,7 +229,10 @@
 
 .review-feedback::before{
   content: '“';
-  font-size: 2em; 
+  position:absolute;
+  font-size: 3em; 
+  top: -30px; 
+  left: -6px;
   color: rgb(6, 26, 254);
   opacity: 0.5;
 }

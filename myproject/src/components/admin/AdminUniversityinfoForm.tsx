@@ -21,39 +21,38 @@ import { Loader2 } from "lucide-react";
 import axios from "axios";
 import { revalidateCourseData } from "@/lib/action";
 
-type universityInfo={
-  universityName:string;
-  aboutUniversity:string;
-  admissionProcess:string;
-  cutoffs:string,
-  cloudinaryImageUrl?:string,
-  cloudinaryImageName?:string
+type universityInfo = {
+  universityName: string;
+  aboutUniversity: string;
+  cutoffs: string,
+  cloudinaryImageUrl?: string,
+  cloudinaryImageName?: string
 }
-function AdminUniversityinfoFormComponent({id}:any) {
+function AdminUniversityinfoFormComponent({ id }: any) {
   const { toast } = useToast();
 
   const [Loading, setIsLoading] = useState(false);
-  const [universityData,setUniversityData]=useState<universityInfo|null>(null)
-  const[imagename,setimagename]=useState("")
+  const [universityData, setUniversityData] = useState<universityInfo | null>(null)
+  const [imagename, setimagename] = useState("")
   const form = useForm<z.infer<typeof UniversityInfoSchema>>({
     resolver: zodResolver(UniversityInfoSchema),
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     async function fetchUniversityData() {
-      const response=await axios.get(`/api/update-universitybyid?id=${id}`)
-      if(response.data.success){
+      const response = await axios.get(`/api/update-universitybyid?id=${id}`)
+      if (response.data.success) {
         const parsedData = JSON.parse(response.data.message); // Parse the JSON string to a JS object
         setUniversityData(parsedData); // Set the parsed object in state
         setimagename(parsedData.cloudinaryImageName);
         form.reset(parsedData);  // setting the form field with its info (prefilling) 
-        
+
       }
     }
-    if(id){
+    if (id) {
       fetchUniversityData();
     }
-},[]);
+  }, []);
 
   async function onSubmit(data: z.infer<typeof UniversityInfoSchema>) {
     try {
@@ -62,19 +61,24 @@ function AdminUniversityinfoFormComponent({id}:any) {
 
       formData.append("universityName", data.universityName);
       formData.append("aboutUniversity", data.aboutUniversity);
-      formData.append("admissionProcess", data.admissionProcess);
       formData.append("cutoffs", data.cutoffs);
-      formData.append("image", data.image);
+      formData.append("ageOfUniversity", data.ageOfUniversity.toString());
+      formData.append("placementRatio", data.placementRatio.toString());
+      formData.append("highestPackageOffered", data.highestPackageOffered.toString());
+      formData.append("industryConnections", data.industryConnections.toString());
+      if(data.image){
+        formData.append("image", data.image);
+      }
 
       // const formDataObj = Object.fromEntries(formData.entries());
       // console.log("obj",formDataObj);
-      
+
       let response;
-      if(id){
+      if (id) {
         response = await axios.patch(`/api/update-universitybyid?id=${id}`, formData);  //updating
 
-      }else{
-         response = await axios.post("/api/post/universityinfo", formData); 
+      } else {
+        response = await axios.post("/api/post/universityinfo", formData);
 
       }
       if (response.data.success) {
@@ -147,30 +151,13 @@ function AdminUniversityinfoFormComponent({id}:any) {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="admissionProcess"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>admissionProcess*</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Admission process of the university"
-                    {...field}
-                    rows={10} // Adjust the number of rows to display initially
-                    style={{ width: "100%", resize: "vertical" }} // Full width and allow vertical resizing
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <FormField
             control={form.control}
             name="cutoffs"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>cutoff*</FormLabel>
+                <FormLabel>cutoff</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Cutoffs"
@@ -180,6 +167,70 @@ function AdminUniversityinfoFormComponent({id}:any) {
                   />
                 </FormControl>
                 <FormDescription></FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="ageOfUniversity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>University Age*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter the University Age " type="number" 
+                  
+                  {...field} />
+                </FormControl>
+                <FormDescription>Age is the period of establishment of university till now in years </FormDescription>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="highestPackageOffered"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Highest Package*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter the Highest Package Offered " type="number" {...field} />
+                </FormControl>
+                <FormDescription> Package will be considered in LPA </FormDescription>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="industryConnections"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Industry Connections*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter the Connections "  type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+
+          <FormField
+            control={form.control}
+            name="placementRatio"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Placement Ratio Number*</FormLabel>
+                <FormControl>
+                <Input placeholder="Enter the Placement Ratio Age " type="number" {...field} />
+                </FormControl>
+                <FormDescription>Enter the max number It will be displayed as percentage </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
@@ -204,7 +255,7 @@ function AdminUniversityinfoFormComponent({id}:any) {
                   />
 
                 </FormControl>
-                <FormDescription> {id?`in use image :   ${imagename}`:""}</FormDescription>
+                <FormDescription> {id ? `in use image :   ${imagename}` : ""}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

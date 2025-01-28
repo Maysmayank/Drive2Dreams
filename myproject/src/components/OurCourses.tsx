@@ -42,7 +42,8 @@ export default function OurCourses({initialCourseData,initialTotalPages}:OurCour
 
   }, [currentpage])
 
-
+  console.log(initialCourseData);
+  
   return (
     <div className=' mt-10 md:mt-20'>
       <div className='mt-2 flex flex-col items-center pb-5 px-3'>
@@ -65,6 +66,7 @@ export default function OurCourses({initialCourseData,initialTotalPages}:OurCour
                 text={course.courseInfo}
                 duration={course.duration}
                 universityName={course.university.universityName}
+                rating={course.courseRating}
               />
             ))
           )}

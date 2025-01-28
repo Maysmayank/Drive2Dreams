@@ -45,6 +45,9 @@ function AdminNavBar() {
             <Link className={pathname==='/admin/post-unoversityinfo' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/post-universityinfo'><University className="inline mr-4 mb-1"/> Add University</Link>          
           </li>
           
+          <li>
+            <Link className={pathname==='/admin/addPlacedStudents' ?'active rounded p-2 bg-white text-black':'hover:bg-white hover:text-black  rounded p-2 transition duration-200 delay-75 ease-in'} href='/admin/addPlacedStudents'><University className="inline mr-4 mb-1"/> Add PlacedStudents</Link>          
+          </li>
 
         </ul>
       </div>

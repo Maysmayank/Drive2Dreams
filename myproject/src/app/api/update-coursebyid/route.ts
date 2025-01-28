@@ -1,16 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import { CourseInfoModel } from "@/models/courseInfo";
 
-type CourseData = {
-    courseOverview:string;
-    university: string; // Name of the university or college
-    title: string; // Title of the course
-    courseInfo: string; // Detailed information about the course
-    courseContent?: string[]; // Optional array of strings for course content like syllabus
-    duration?: string; // Duration of the course
-    eligibilityCriteria:string[];
-    syllabus?: string; // Optional field for storing file path or URL to PDF
-}
+
 
 export async function PATCH(request: Request) {
     try {
@@ -21,7 +12,8 @@ export async function PATCH(request: Request) {
         }
         const updateId = queryParam.id
         
-        const { university, title, courseOverview,courseInfo, courseContent, duration, syllabus,eligibilityCriteria } = await request.json()
+        const { university, title,courseInfo, admissionProcess, duration, syllabus,eligibilityCriteria ,videoUrl,courseRating,specializationOffered} = await request.json()
+        
         
         const isUpdated = await CourseInfoModel.updateOne(
             { _id: updateId },
@@ -30,15 +22,18 @@ export async function PATCH(request: Request) {
                     university,
                     title,
                     courseInfo,
-                    courseContent,
+                    admissionProcess,
                     duration,
                     syllabus,
-                    courseOverview,
-                    eligibilityCriteria //aaray of strings
+                    videoUrl,
+                    specializationOffered,
+                    courseRating,
+                    eligibilityCriteria ,//aaray of strings
                 }
             }
         )
         
+
         if (isUpdated) {
             return Response.json({
                 success: true,

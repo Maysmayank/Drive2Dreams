@@ -1,6 +1,7 @@
 'use client';
 
 import DynamicCourseCardinfo from '@/components/DynamicCourseCardinfo';
+import { PlacedStudent } from '@/models/PlacedStudents';
 import axios from 'axios';
 import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -19,31 +20,42 @@ type CourseData = {
   _id: string;
   university: UniversityData; // Full university object
   title: string;
+  specializationOffered:string[];
   courseInfo: string;
   courseOverview: string;
   courseContent?: string[];
   duration?: string;
   eligibilityCriteria: string[];
   syllabus?: string;
+  videoUrl:string;
 };
 
 export default function CoursePage({ params }: { params: { courseTitle: string } }) {
   const { courseTitle } = params;
   const [loading, setLoading] = useState(true); // Initialize loading as true
   const [courseData, setCourseData] = useState<CourseData[]>([]); // Initialize state for course data
-
+  const [placedStudents,setPlacedStudentsData]=useState<PlacedStudent[]>([]);
   const decodedCourseTitle = decodeURIComponent(courseTitle);
 
   useEffect(() => {
-    console.log('Fetching data');
-
+    
     async function fetchdataCourse() {
       try {
         setLoading(true);
-        const response = await axios.post(`/api/get-courseinfo?`,{title:decodedCourseTitle});
+        let response = await axios.post(`/api/get-courseinfo?`,{title:decodedCourseTitle});
         
         setCourseData(response.data.courseData); 
         
+        if (response.data.courseData.length > 0) {
+          const universityName = response.data.courseData[0].university.universityName;
+
+          // Fetch placed students based on universityName
+          console.log(universityName);
+          
+          const placedStudentsResponse = await axios.get(`/api/get-placedStudents?universityName=${universityName}`);
+          setPlacedStudentsData(placedStudentsResponse.data.placedStudentsData);
+
+        }
       } catch (error) {
         console.error('Error fetching course data:', error);
       } finally {
@@ -51,9 +63,13 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
       }
     }
 
+  
+
     fetchdataCourse(); // Call the function to fetch data
   }, [decodedCourseTitle]); // Add decodedCourseTitle to the dependency array
 
+
+  
   return (
     <div className=" min-h-[100vh]">
       {loading ? (
@@ -66,14 +82,18 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
             key={index}
             title={course.title}
             courseInfo={course.courseInfo}
-            courseContent={course.courseContent} // Changed from course.courseInfo to courseContent
             eligibilityCriteria={course.eligibilityCriteria}
             image={course.university.cloudinaryImageUrl}
             aboutUniversity={course.university.aboutUniversity}
+            universityName={course.university.universityName}
             syllabus={course.syllabus}
+            videoUrl={course.videoUrl}
+            specializationOffered={course.specializationOffered}
+            placedStudentData={placedStudents}
           />
         ))
       )}
+      
     </div>
   );
 }

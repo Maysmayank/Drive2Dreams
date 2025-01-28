@@ -1,20 +1,20 @@
 import dbConnect from "@/lib/dbConnect";
-import { UniversityInfoModel } from "@/models/UniversityModel";
-import { log } from "console";
-export async function POST(request: Request) {
+import { PlacedStudentModel } from "@/models/PlacedStudents";
+import { NextRequest } from "next/server";
+export async function GET(request: NextRequest) {
+    await dbConnect();
 
     try {
-        await dbConnect();
-        let { universityName } = await request.json();
-        let decodedUniversityName=decodeURIComponent(universityName)        
-        const universityData = await UniversityInfoModel.find({ universityName: decodedUniversityName });
+        const searchParams=request.nextUrl.searchParams
+        const universityName=searchParams.get('universityName') 
+        const placedStudents = await PlacedStudentModel.find({ universityName: universityName });
 
-        if (universityData.length > 0) {
+        if (placedStudents.length > 0) {
 
             return Response.json({
                 success: true,
-                message: "University Data Found",
-                universityData: universityData
+                message: "PlacedStudent Data Found",
+                placedStudentsData: placedStudents
             }, {
                 status: 201,
             })

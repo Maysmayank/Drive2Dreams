@@ -3,9 +3,8 @@ import React, { Suspense, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-
 import { Textarea } from "@/components/ui/textarea";
-
+import CloudinaryUploader from '@/components/CloudinaryUploader'
 import { Button } from "@/components/ui/button";
 
 import {
@@ -25,19 +24,22 @@ import { revalidateCourseData } from "@/lib/action";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import TagInputComponent from "@/utils/TagInputComponent";
+import { useFormState } from "react-dom";
 
 type CourseData = {
   university: string;
   title: string;
   courseInfo: string;
-  courseContent?: string[];
+  admissionProcess?: string;
   duration?: string;
-  syllabus?: string;
+  Brochure?: string;
 };
 
 interface Payload {
   [key: string]: any; // Other properties in 'data'
+  specializationOffered: string[];
   eligibilityCriteria: string[]; // Specify eligibilityCriteria as an array of strings
+  videoUrl: string;
 }
 
 function AdminCourseinfoFormComponent({ id }: any) {
@@ -46,12 +48,14 @@ function AdminCourseinfoFormComponent({ id }: any) {
   const [courseData, setCourseData] = useState<CourseData | null>(null); // the state will be in object
   // if there is courseData then we fetch it using useffect then conditionally handle the sent requests
 
+
   const [tags, settags] = useState<string[]>([]);
-
+  const [specialization, setSpecialization] = useState<string[]>([]);
+  const [videoUrl, setVideoUrl] = useState<string>('')
   const { toast } = useToast();
-
   const router = useRouter();
   const [Loading, setIsLoading] = useState(false);
+
 
   const form = useForm<z.infer<typeof courseInfoSchema>>({
     resolver: zodResolver(courseInfoSchema),
@@ -68,6 +72,8 @@ function AdminCourseinfoFormComponent({ id }: any) {
         form.reset(parsedData);  // setting the form field with its info (prefilling) 
 
         settags(parsedData.eligibilityCriteria || []); // Set tags to eligibilityCriteria
+        setSpecialization(parsedData.specializationOffered || []) // set the specialization 
+        setVideoUrl(parsedData.videoUrl)
 
       } catch (error) {
         console.error("Error fetching course data:", error);
@@ -78,35 +84,51 @@ function AdminCourseinfoFormComponent({ id }: any) {
     }
   }, [id, form]);
 
-  
-  function createPayload(data: z.infer<typeof courseInfoSchema>) {
-    let payload: Payload = { ...data, eligibilityCriteria: [] };
 
-    if (tags.length != 0) {
+  function createPayload(data: z.infer<typeof courseInfoSchema>) {
+    let payload: Payload = {
+      ...data,
+      specializationOffered: [],
+      eligibilityCriteria: [],
+      videoUrl, // Include videoUrl here
+    };
+
+
+    if (tags.length !== 0) {
       tags.forEach((tag: string) => {
         payload.eligibilityCriteria.push(tag); // Push each tag into the array
       });
     }
-    
+
+    if (specialization.length !== 0) {
+      specialization.forEach((item: string) => {
+        payload.specializationOffered.push(item);
+      })
+    }
+
     return payload;
 
   }
 
 
+
   async function onSubmit(data: z.infer<typeof courseInfoSchema>) {
+
     try {
 
       let payloadedData = createPayload(data);
-      
+      console.log(payloadedData);
+
       setIsLoading(true);
 
       let response;
 
       if (id) {
+
         response = await axios.patch(`/api/update-coursebyid?id=${id}`, payloadedData); // updating
       } else {
 
-        response=await axios.post("/api/post/courseinfo",payloadedData)
+        response = await axios.post("/api/post/courseinfo", payloadedData)
       }
 
       if (response?.data?.success) {
@@ -144,6 +166,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
       ) : (
         <p className="text-white">Status : Adding Course</p>
       )}
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -205,34 +228,31 @@ function AdminCourseinfoFormComponent({ id }: any) {
           />
           <FormField
             control={form.control}
-            name="courseContent"
+            name="admissionProcess"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>courseContent</FormLabel>
+                <FormLabel>AdmissionProcess*</FormLabel>
                 <FormControl>
                   <Input
-                    disabled
-                    placeholder="Enter all the course Modules or roadmap just topics(optional) "
+                    placeholder="Enter the admission process  "
                     {...field}
                   />
                 </FormControl>
-                <FormDescription className="text-red-600">
-                  It is is not supported yet
-                </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="syllabus"
+            name="Brochure"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Syllabus</FormLabel>
+                <FormLabel>Brochure</FormLabel>
                 <FormControl>
                   <Input
                     disabled
-                    placeholder="Enter the syllabus in pdf (optional)"
+                    placeholder="Enter the Brochure in pdf (optional)"
                     {...field}
                   />
                 </FormControl>
@@ -259,12 +279,34 @@ function AdminCourseinfoFormComponent({ id }: any) {
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="courseRating"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Course Rating*</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter the Course rating" max={5} type="number" {...field} />
+                </FormControl>
+                <FormDescription>Maximum Rating should be 5</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <TagInputComponent
-            name={"EligibilityCriteria *"}
-            tags={tags}
-            settags={settags}
+            label={"EligibilityCriteria"}
+            state={tags}
+            setState={settags}
           />
 
+          <TagInputComponent
+            label={"Specialization Offered*"}
+            state={specialization}
+            setState={setSpecialization}
+          />
+
+
+          <CloudinaryUploader setVideoUrl={setVideoUrl} videoUrl={videoUrl} />
           {Loading ? (
             <Loader2 className=" m-auto  animate-spin"></Loader2>
           ) : (
@@ -281,4 +323,6 @@ function AdminCourseinfoFormComponent({ id }: any) {
   );
 }
 
+
 export default AdminCourseinfoFormComponent;
+

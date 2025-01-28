@@ -1,43 +1,69 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
+import { PlacedStudentModel } from "./PlacedStudents";
 
-interface UniversityInfo extends Document{
-    universityName:string;
-    aboutUniversity:string;
-    admissionProcess:string;
-    cutoffs:string,
-    cloudinaryImageUrl?:string,
-    cloudinaryImageName?:string
+export interface UniversityInfo extends Document {
+  placedStudents?: Types.ObjectId;
+  universityName: string;
+  aboutUniversity: string;
+  cutoffs: string;
+  ageOfUniversity: number;
+  highestPackageOffered: number;
+  industryConnections: number;
+  placementRatio: number;
+  cloudinaryImageUrl?: string;
+  cloudinaryImageName?: string;
 }
 
-const UniversityInfoSchema: Schema = new mongoose.Schema<UniversityInfo>({
-    universityName:{
-        type:String,trim:true,
-        required:true
+const UniversityInfoSchema: Schema = new mongoose.Schema<UniversityInfo>(
+  {
+    universityName: {
+      type: String,
+      trim: true,
+      required: true,
     },
     aboutUniversity: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-    admissionProcess: {
-        type: String,
-        required: true,
-    },
-    cutoffs: {
-        type: String,
-        required: true,
-    },
-    cloudinaryImageUrl:{
-        type:String,
-        default:""   
-    },
-    cloudinaryImageName:{
-        type:String,
-        default:""
-    }
-},{
-    timestamps:true
-});
 
-const UniversityInfoModel = mongoose.models?.UniversityInfo || mongoose.model<UniversityInfo>('UniversityInfo', UniversityInfoSchema);
+    cutoffs: {
+      type: String,
+      required: false,
+    },
+    ageOfUniversity: {
+      type: Number, // Fixed typo and type
+      required: true,
+    },
+    highestPackageOffered: {
+      type: Number,
+      required: true,
+    },
+    industryConnections: {
+      type: Number,
+      required: true,
+    },
+    placementRatio: {
+      type: Number,
+      required: true,
+    },
+    cloudinaryImageUrl: {
+      type: String,
+      default: "",
+      required:false
+    },
+    cloudinaryImageName: {
+      type: String,
+      default: "",
+      required:false
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const UniversityInfoModel =
+  mongoose.models?.UniversityInfo ||
+  mongoose.model<UniversityInfo>("UniversityInfo", UniversityInfoSchema);
 
 export { UniversityInfoModel };

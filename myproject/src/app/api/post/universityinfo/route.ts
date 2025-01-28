@@ -48,18 +48,22 @@ export async function POST(request: Request, response: NextResponse) {
 
                 let cloudImageUrl=res.secure_url;
                 let cloudImageName=res.display_name;
+                
                 const newUniversity = new UniversityInfoModel({
                     universityName: data.get("universityName"),
                     aboutUniversity: data.get("aboutUniversity"),
-                    admissionProcess: data.get("admissionProcess"),
                     cutoffs: data.get("cutoffs"),
                     cloudinaryImageUrl:cloudImageUrl,
-                    cloudinaryImageName:cloudImageName
-
+                    cloudinaryImageName:cloudImageName,
+                    ageOfUniversity:data.get('ageOfUniversity'),
+                    highestPackageOffered:data.get('highestPackageOffered'),
+                    industryConnections:data.get('industryConnections'),
+                    placementRatio:data.get('placementRatio')
                 });
 
                 await newUniversity.save();
-
+                console.log(newUniversity);
+                
                 return Response.json({
                     success: true,
                     message: "University Added successfully ",

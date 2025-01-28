@@ -5,12 +5,14 @@ export const courseInfoSchema = z.object({
   universityName: z.string().min(1, { message: "University name is required" }),
 
   title: z.string().min(1, { message: "Title is required" }),
-  
   courseInfo: z.string().min(2,{message:"Enter this field"}),
   
-  courseContent: z.array(z.string()).optional(), // Optional array of strings
+  admissionProcess: z.string(),
   
   duration: z.string().min(1, { message: "Duration is required" }).optional(),
+  courseRating:z.coerce.number().max(5,{message:"the maximum rating can be 5"}),
   
-  syllabus: z.string().optional(), // Optional field for syllabus
-  })
+  Brochure: z.string().optional(), // Optional field for syllabus
+  
+})
+
