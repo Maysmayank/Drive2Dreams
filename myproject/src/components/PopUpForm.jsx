@@ -8,15 +8,6 @@ function PopUpForm() {
     const [isVisible, setIsVisible] = useState(true); // Controls modal visibility
     const [isFadingOut, setIsFadingOut] = useState(false); // Tracks fade-out animation
 
-
-    useEffect(() => {
-        // Check localStorage for popup visibility
-        const hasSeenPopup = localStorage.getItem('hasSeenPopup');
-
-        setIsVisible(!hasSeenPopup); // Show popup if the user hasn't seen it before
-
-    }, []); 
-
     const handleClose = () => {
         setIsFadingOut(true); // Trigger fade-out animation
             
