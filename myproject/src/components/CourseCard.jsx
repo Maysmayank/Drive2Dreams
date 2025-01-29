@@ -21,8 +21,9 @@ const labels = {
 
 
 
-function CourseCard({ title, text, duration, universityName, image, rating }) {
-  let value = 4
+function CourseCard({ title, text, duration, universityName,affilitatedWith, image, rating }) {
+  console.log("course card",affilitatedWith);
+  
   return (
     <div className=' mb-[300px]  md:mb-[300px] relative flex flex-col items-center'>
 
@@ -41,7 +42,7 @@ function CourseCard({ title, text, duration, universityName, image, rating }) {
           <p className=' line-clamp-6 text-sm text-justify'>{text}</p>
 
           <div className='flex'>
-            <p className='text-sm font-semibold'>Duration : {duration}  |   Affiliated with AKTU</p>
+            <p className='text-sm font-semibold'>Duration : {duration}  |   Affiliated with {affilitatedWith}</p>
           </div>
 
           <div className='bottom-box mt-2 mb-5 flex justify-between  items-center'>

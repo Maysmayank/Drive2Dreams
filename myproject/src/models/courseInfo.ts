@@ -8,6 +8,7 @@ export interface CourseInfo extends Document {
     courseInfo: string; // Detailed information about the course
     eligibilityCriteria:string[];
     videoUrl:string;
+    affilitatedWith:string;
     specializationOffered:string[];
     admissionProcess?: string; // Optional array of strings for course content like syllabus
     duration?: string; // Duration of the course
@@ -36,7 +37,10 @@ const CourseInfoSchema: Schema = new mongoose.Schema<CourseInfo>({
     admissionProcess: {
         type: String, // Array of strings for multiple lines of course content
     },
-
+    affilitatedWith:{
+        type:String,
+        required:false,
+    },
     eligibilityCriteria:{
         type:[String],
         required: true,

@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import { CourseInfoModel } from "@/models/courseInfo";
+import { CourseInfo, CourseInfoModel } from "@/models/courseInfo";
 
 
 
@@ -12,7 +12,7 @@ export async function PATCH(request: Request) {
         }
         const updateId = queryParam.id
         
-        const { university, title,courseInfo, admissionProcess, duration, syllabus,eligibilityCriteria ,videoUrl,courseRating,specializationOffered} = await request.json()
+        const { university, title,courseInfo, admissionProcess, duration, Brochure,eligibilityCriteria ,videoUrl,courseRating,specializationOffered,affilitatedWith}:CourseInfo = await request.json()
         
         
         const isUpdated = await CourseInfoModel.updateOne(
@@ -24,7 +24,8 @@ export async function PATCH(request: Request) {
                     courseInfo,
                     admissionProcess,
                     duration,
-                    syllabus,
+                    Brochure,
+                    affilitatedWith,
                     videoUrl,
                     specializationOffered,
                     courseRating,

@@ -13,6 +13,7 @@ export const courseInfoSchema = z.object({
   courseRating:z.coerce.number().max(5,{message:"the maximum rating can be 5"}),
   
   Brochure: z.string().optional(), // Optional field for syllabus
+  affilitatedWith:z.string().optional(),
   
 })
 

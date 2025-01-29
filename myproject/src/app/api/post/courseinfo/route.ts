@@ -16,9 +16,9 @@ interface CourseInfo{
 export async function POST(request: Request,response:NextResponse) {
     await dbConnect();
     try {
-        const{universityName,title,duration,courseInfo,admissionProcess,brochure,eligibilityCriteria,videoUrl,specializationOffered,courseRating}=await request.json();
+        const{universityName,title,duration,courseInfo,admissionProcess,brochure,eligibilityCriteria,videoUrl,specializationOffered,courseRating,affilitatedWith}=await request.json();
         
-        console.log(courseRating);
+        // console.log(courseRating);
         
         const isCourseExisted=await CourseInfoModel.find({title:title}) 
         
@@ -47,6 +47,7 @@ export async function POST(request: Request,response:NextResponse) {
                 videoUrl:videoUrl,
                 specializationOffered:specializationOffered,
                 courseRating:courseRating,
+                affilitatedWith,
                 title,
                 duration,
                 admissionProcess,
@@ -56,7 +57,7 @@ export async function POST(request: Request,response:NextResponse) {
             
             })
             await newCourse.save();
-            console.log(newCourse);
+            // console.log(newCourse);
             
             
             await CourseInfoModel.findById(newCourse._id)

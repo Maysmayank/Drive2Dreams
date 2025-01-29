@@ -28,6 +28,7 @@ type CourseInfoType = {
     syllabus?: string;
     title: string; // Title of the course
     courseRating:number;
+    affilitatedWith:string;
     admissionProcess?: string; // Optional array of strings for course content like syllabus
     Brochure?: string; // Optional field for storing file path or URL to PDF
 }

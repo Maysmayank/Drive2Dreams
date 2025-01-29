@@ -279,6 +279,22 @@ function AdminCourseinfoFormComponent({ id }: any) {
             )}
           />
 
+          
+<FormField
+            control={form.control}
+            name="affilitatedWith"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Affiliation</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter the Affilation" {...field} />
+                </FormControl>
+                <FormDescription>Ex: AKTU,IPU etc</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name="courseRating"
@@ -286,7 +302,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
               <FormItem>
                 <FormLabel>Course Rating*</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter the Course rating" max={5} type="number" {...field} />
+                  <Input placeholder="Enter the Course rating" max={5}  {...field} />
                 </FormControl>
                 <FormDescription>Maximum Rating should be 5</FormDescription>
                 <FormMessage />

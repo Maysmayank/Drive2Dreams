@@ -42,7 +42,6 @@ export default function OurCourses({initialCourseData,initialTotalPages}:OurCour
 
   }, [currentpage])
 
-  console.log(initialCourseData);
   
   return (
     <div className=' mt-10 md:mt-20'>
@@ -67,6 +66,7 @@ export default function OurCourses({initialCourseData,initialTotalPages}:OurCour
                 duration={course.duration}
                 universityName={course.university.universityName}
                 rating={course.courseRating}
+                affilitatedWith={course.affilitatedWith}
               />
             ))
           )}

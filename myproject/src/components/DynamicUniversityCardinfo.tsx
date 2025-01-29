@@ -38,7 +38,6 @@ export default function DynamicUniversityCardinfo({
 
   }, []);
 
-  console.log("Placed",placedStudentData);
   
 
   return (
@@ -71,12 +70,7 @@ export default function DynamicUniversityCardinfo({
             </p>
           </div>
 
-          <div className="flex flex-col gap-5 md:gap-8 mb-2">
-            <h1 className="font-semibold text-2xl md:m-auto md:text-5xl text-center ">
-              CutOffs
-            </h1>
-            <p className="text-justify nunito-para">{cutoffs}</p>
-          </div>
+          
 
           {/* Admission Process */}
           <div className="flex  w-full flex-col  gap-8">
