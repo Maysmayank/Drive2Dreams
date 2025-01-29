@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import FormComponent from "./Form";
-
+import { Briefcase, Package, Users, Award, Plus, Percent, PercentIcon } from "lucide-react";
+import CountUp from 'react-countup';
 import Link from "next/link";
 import {PlacedStudents} from  '@/components/PlacedStudents'
 import { GraduationCap } from "lucide-react";
@@ -52,7 +53,11 @@ type DynamicCourseCardinfoProps = {
   image: string | undefined; 
   aboutUniversity: string;
   universityName: string;
-  syllabus?: string;
+  Brochure?: string;
+  ageOfUniversity?:number;
+  industryConnections:number;
+  highestPackageOffered:number;
+  placementRatio:number;
   placedStudentData:PlacedStudent[];
 };
 
@@ -63,10 +68,15 @@ export default function DynamicCourseCardinfo({
   aboutUniversity,
   title,
   specializationOffered,
-  syllabus,
+  Brochure,
   videoUrl,
   universityName,
   image,
+  ageOfUniversity,
+  highestPackageOffered,
+  industryConnections,
+  placementRatio,
+
   placedStudentData
   
 }: DynamicCourseCardinfoProps) {
@@ -74,9 +84,7 @@ export default function DynamicCourseCardinfo({
   return (
     <div className="md:pt-[85px] min-h-[100vh]">
       
-      <h1 className="text-wrap text-xl md:text-3xl text-left font-bold md:w-[70%] px-3 py-8 md:ml-28">
-        {title}
-      </h1>
+      <ProofWidget ageOfUniversity={ageOfUniversity?? 0} highestPackageOffered={highestPackageOffered} placementRatio={placementRatio} industryConnections={industryConnections}/>
 
       <div className=" flex flex-col-reverse gap-10  md:flex-row  md:max-w-[85%] m-auto md:mt-10 justify-between " style={{ boxShadow: " rgba(0, 0, 0, 0.15) 10px 5px 30px, rgba(0, 0, 0, 0.23) 0px 6px 6px" }}>
         
@@ -184,11 +192,11 @@ export default function DynamicCourseCardinfo({
         <div className=" text-center syllabus hidden">
           <button
             className="bg-[#110C44] text-white rounded-md my-6 p-3 px-4"
-            disabled={!syllabus}
+            disabled={!Brochure}
           >
-            {!syllabus
-              ? "Syllabus Will be added Soon"
-              : "Download Syllabus"}
+            {!Brochure
+              ? "Brochure Will be added Soon"
+              : "Download Brochure"}
           </button>
         </div>
        
@@ -215,6 +223,48 @@ export default function DynamicCourseCardinfo({
         </div>
       </div>
 
+    </div>
+  );
+}
+
+function StatCard({ icon: Icon, value, label, color }: { icon: any; value:  number; label: string; color: string }) {
+  console.log(label);
+  
+  return (
+    <div className="flex flex-col gap-2 items-center p-4 bg-white rounded-xl hover:scale-105 transition-all shadow-md">
+      <Icon className={`w-8 h-8 ${color}`} />
+
+      <div className="flex items-center justify-center">
+      <CountUp delay={0.1} className="text-3xl inline font-semibold" duration={5} start={0} end={value}></CountUp>
+      {label==='Years in Industry'|| label=== 'Industry Connections' ?<Plus/>:''}
+      {label==='Placement Ratio'?<PercentIcon/>:''}
+      {label==='Highest Package'?<span className="font-semibold text-xl ml-2">LPA</span>:''}
+      </div>
+      
+      <span className="text-gray-600 text-md font-medium">{label}</span>
+    </div>
+  );
+}
+
+export function ProofWidget({
+  ageOfUniversity,
+  highestPackageOffered,
+  industryConnections,
+  placementRatio,
+}: {
+  ageOfUniversity: number;
+  highestPackageOffered: number;
+  industryConnections: number;
+  placementRatio: number;
+}) {
+  return (
+    <div className="md:w-[85%] mx-auto p-6 rounded-2xl">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <StatCard icon={Briefcase} value={ageOfUniversity} label="Years in Industry" color="text-blue-500" />
+        <StatCard icon={Package} value={highestPackageOffered} label="Highest Package" color="text-green-500" />
+        <StatCard icon={Users} value={industryConnections} label="Industry Connections" color="text-purple-500" />
+        <StatCard icon={Award} value={placementRatio} label="Placement Ratio" color="text-orange-500" />
+      </div>
     </div>
   );
 }

@@ -7,16 +7,18 @@ type PlacedStudentsType={
 
 }
 
-type UniversityInfoType =
-{       _id?:string;
-        placedStudents:PlacedStudentsType[];
-        universityName: string;
-        aboutUniversity: string;
-        cutoffs: string,
-        cloudinaryImageUrl?: string;
-        cloudinaryImageName?: string;
-        
-}
+type UniversityInfoType = {
+    _id?: string;
+    universityName: string;
+    aboutUniversity: string;
+    cutoffs: string;
+    ageOfUniversity?: number;
+    highestPackageOffered: number;
+    industryConnections: number;
+    placementRatio: number;
+    cloudinaryImageUrl?: string;
+    cloudinaryImageName?: string;
+  };
 
 
 type CourseInfoType = {

@@ -10,6 +10,10 @@ export default function DynamicUniversityCardinfo({
   universityName,
   aboutUniversity,
   cutoffs,
+  ageOfUniversity,
+  industryConnections,
+  highestPackageOffered,
+  placementRatio
 }: any) {
 
   const [placedStudentData, setPlacedStudentData] = useState<

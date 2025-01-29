@@ -5,6 +5,7 @@ import { PlacedStudent } from '@/models/PlacedStudents';
 import axios from 'axios';
 import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { UniversityInfoType } from '../../../../../ModelTypes/ModelTypes';
 
 type UniversityData = {
   _id: string;
@@ -18,7 +19,7 @@ type UniversityData = {
 
 type CourseData = {
   _id: string;
-  university: UniversityData; // Full university object
+  university: UniversityInfoType; // Full university object
   title: string;
   specializationOffered:string[];
   courseInfo: string;
@@ -26,7 +27,7 @@ type CourseData = {
   courseContent?: string[];
   duration?: string;
   eligibilityCriteria: string[];
-  syllabus?: string;
+  Brochure?: string;
   videoUrl:string;
 };
 
@@ -84,9 +85,14 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
             courseInfo={course.courseInfo}
             eligibilityCriteria={course.eligibilityCriteria}
             image={course.university.cloudinaryImageUrl}
+
             aboutUniversity={course.university.aboutUniversity}
+            industryConnections={course.university.industryConnections}
+            highestPackageOffered={course.university.highestPackageOffered}
+            placementRatio={course.university.placementRatio}
+            ageOfUniversity={course.university.ageOfUniversity}
             universityName={course.university.universityName}
-            syllabus={course.syllabus}
+            Brochure={course.Brochure}
             videoUrl={course.videoUrl}
             specializationOffered={course.specializationOffered}
             placedStudentData={placedStudents}

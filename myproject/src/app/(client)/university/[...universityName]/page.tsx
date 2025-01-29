@@ -48,6 +48,10 @@ export default function Page({ params }: { params: { universityName: string } })
             universityName={university.universityName}
             aboutUniversity={university.aboutUniversity}
             cutoffs={university.cutoffs}
+            ageOfUniversity={university.ageOfUniversity}
+            placementRatio={university.placementRatio}
+            industryConnections={university.industryConnections}
+            highestPackageOffered={university.highestPackageOffered}
           />
         ))
       )}
