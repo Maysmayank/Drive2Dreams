@@ -1,3 +1,5 @@
+import { User } from "@/models/user";
+
 type PlacedStudentsType={
     _id:string;   
     studentName: string; 
@@ -35,4 +37,15 @@ type CourseInfoType = {
     Brochure?: string; // Optional field for storing file path or URL to PDF
 }
 
-export type {CourseInfoType,UniversityInfoType,PlacedStudentsType}
+type BlogType={
+  _id:string;
+    title: string;
+      metadata:string;
+      blogImage:string;
+      description: string;
+      author: User;
+      content: string;
+      thumbnail:string;
+      publishedDate:string;
+}
+export type {CourseInfoType,UniversityInfoType,PlacedStudentsType,BlogType}

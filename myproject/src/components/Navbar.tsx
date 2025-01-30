@@ -6,7 +6,7 @@ import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { PopoverDemo } from '@/components/PopoverDemo'
 import Image from "next/image";
-import { Headset, HeadsetIcon, House, HouseIcon, LayoutDashboard, Loader2, Loader2Icon, Menu, MessageSquareText, Search, SearchIcon, Shield, User, UserRound, UsersRound, X } from "lucide-react";
+import { Headset, HeadsetIcon, House, HouseIcon, LayoutDashboard, Loader2, Loader2Icon, Menu, MessageSquareText, Paperclip, Search, SearchIcon, Shield, User, UserRound, UsersRound, X } from "lucide-react";
 import { Input } from "./ui/input";
 import ResponsiveDropDown from '@/components/ResponsiveDropdown'
 import axios from "axios";
@@ -51,6 +51,12 @@ const navItems = [
     label: 'Dashboard',
     role: 'admin',
     isUser: false
+  },{
+    icon:<Paperclip/>,
+    path:'/blogs',
+    label:'Blogs',
+    role:'both'
+
   }
 
 
@@ -157,13 +163,7 @@ const Navbar = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  const handleOutsideClick = (e: any) => {
-    console.log(e.target.id);
-
-    if (e.target.id) {
-      // setIsMenuOpen(!isMenuOpen)
-    }
-  }
+  
 
   return (
     <div id="navbar" className="relative z-40 flex text-black pt-4 md:pt-1  md:px-5 items-center justify-between">
@@ -174,13 +174,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex">
+      <div className="hidden md:flex ">
 
-        <ul className=" flex gap-10  text-[14px] items-center">
+        <ul className=" flex gap-2  text-[12px] items-center">
           {
-            navItems.slice(0, navItems.length - 1).map((item, index) => {
+            navItems.slice(0, navItems.length).map((item, index) => {
               return (
-                <li key={index} className={` flex items-center`}>
+                <li key={index} className={` flex  items-center`}>
 
                   <Link
                     className={pathname === item.path ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'}
@@ -241,7 +241,7 @@ const Navbar = () => {
                     navItems.map((item, index) => {
                       return (
                         <li key={index}
-                          className={`${isAdmin && (item.role === 'admin' || item.role === 'user') || isUser && (item.role === 'user') ? 'flex items-center' : 'hidden'
+                          className={`${isAdmin && (item.role === 'admin' || item.role === 'user'||item.role==='both') || isUser && (item.role === 'user'|| item.role==='both') ? 'flex items-center' : 'hidden'
                             }`}>
 
                           <Link
@@ -304,7 +304,7 @@ const Navbar = () => {
 
 
       {/* for mobile */}
-      <div ref={CloseOnCLickRef} className=" md:hidden absolute w-[90%] z-50 top-[80px] left-5" >
+      <div ref={CloseOnCLickRef} className=" md:hidden absolute w-[70%] z-50 top-[80px] left-5" >
         <Input
           placeholder="Search Courses"
 
