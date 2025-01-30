@@ -28,33 +28,43 @@ function AddPlacedStudents({ id }: any) {
   const { toast } = useToast();
 
   const [Loading, setIsLoading] = useState(false);
-  const [placedStudents, setPlacedStudents] = useState<PlacedStudentsType | null>(null)
-  const [imagename, setimagename] = useState("")
+  const [placedStudents, setPlacedStudents] = useState(null)
+  const [studentImage, setStudentImage] = useState("")
+  const [companyImage, setCompanyImage] = useState("")
+
   const form = useForm<z.infer<typeof PlacedStudentSchema>>({
     resolver: zodResolver(PlacedStudentSchema),
   });
 
-  //   useEffect(()=>{
-  //     async function fetchUniversityData() {
-  //       const response=await axios.get(`/api/update-universitybyid?id=${id}`)
-  //       if(response.data.success){
-  //         // const parsedData = JSON.parse(response.data.message); // Parse the JSON string to a JS object
-  //         // setUniversityData(parsedData); // Set the parsed object in state
-  //         // setimagename(parsedData.cloudinaryImageName);
-  //         // form.reset(parsedData);  // setting the form field with its info (prefilling) 
+  console.log(id);
+  
+    useEffect(()=>{
+      async function fetchPlacedStudentData() {
+        const response=await axios.get(`/api/get-placedStudents?id=${id}`)
+        console.log(response);
+        
+        if(response.data.success){
+          const data = response.data.placedStudentsData; // Parse the JSON string to a JS object
+          
+          setPlacedStudents(data[0]); // Set the parsed object in state
+          setStudentImage(data[0].cloudinaryStudentImageName);
+          setCompanyImage(data[0].cloudinaryCompanyImageName)
+          form.reset(data[0]);  // setting the form field with its info (prefilling) 
+        }
+      }
+      if(id){
+        fetchPlacedStudentData();
+      }
+  },[]);
 
-  //       }
-  //     }
-  //     if(id){
-  //       fetchUniversityData();
-  //     }
-  // },[]);
+  console.log(placedStudents);
+  
 
   async function onSubmit(data: z.infer<typeof PlacedStudentSchema>) {
     try {
       setIsLoading(true);
       const formData = new FormData();     // using formdata to send the files  like image in object format
-      
+          
       formData.append("universityName", data.universityName);
       formData.append("studentName", data.studentName);
       formData.append("companyName", data.companyName);
@@ -66,7 +76,9 @@ function AddPlacedStudents({ id }: any) {
 
       let response;
       if (id) {
-        response = await axios.patch(`/api/update-placedStudents?id=${id}`, formData);  //updating
+        console.log(formData);
+        
+        response = await axios.patch(`/api/update-placedStudent?studentId=${id}`, formData);  //updating
 
       } else {
         response = await axios.post("/api/post/addPlacedStudents", formData);
@@ -92,9 +104,9 @@ function AddPlacedStudents({ id }: any) {
         });
       }
     } catch (error: any) {
-
+      
       toast({
-        title: "error Occure",
+        title: `error Occured${error}`,
         variant: "destructive",
         description: error.response.data.message,
       });
@@ -178,7 +190,7 @@ function AddPlacedStudents({ id }: any) {
                   />
 
                 </FormControl>
-                <FormDescription> {id ? `in use image :   ${imagename}` : ""}</FormDescription>
+                <FormDescription> {id ? `in use Student image :   ${studentImage}` : ""}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -190,7 +202,7 @@ function AddPlacedStudents({ id }: any) {
             name="companyImage"
             render={({ field: { value, onChange, ...fieldProps } }) => (
               <FormItem>
-                <FormLabel>Image*</FormLabel>
+                <FormLabel>Company Image*</FormLabel>
                 <FormControl>
                   <Input
                     {...fieldProps}
@@ -204,7 +216,7 @@ function AddPlacedStudents({ id }: any) {
                   />
 
                 </FormControl>
-                <FormDescription> {id ? `in use image :   ${imagename}` : ""}</FormDescription>
+                <FormDescription> {id ? `in use Company Logo image :   ${companyImage}` : ""}</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

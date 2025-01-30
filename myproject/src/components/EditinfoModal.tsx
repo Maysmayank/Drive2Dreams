@@ -3,6 +3,7 @@ import AdminCourseinfoFormComponent from './admin/AdminCourseinfoForm';
 import { Button } from './ui/button';
 import axios from 'axios';
 import AdminUniversityinfoFormComponent from './admin/AdminUniversityinfoForm';
+import AddPlacedStudents from './admin/AddPlacedStudentsForm';
 
 
 
@@ -11,9 +12,10 @@ type Props = {
   onCancel: () => void;
   courseid?: string;      // getting the course id if course edit button is clicked 
   universityid?: string // getting the university id if university edit button is clicked 
+  placedStudentId?:string
 };
 
-function EditinfoModal({ isVisible, onCancel, courseid, universityid }: Props) {
+function EditinfoModal({ isVisible, onCancel, courseid, universityid,placedStudentId }: Props) {
   // Ensure that the number of hooks remains constant between renders
   if (!isVisible) return null;
 
@@ -24,13 +26,16 @@ function EditinfoModal({ isVisible, onCancel, courseid, universityid }: Props) {
           <Button onClick={onCancel}>X</Button>
         </div>
 
-        {
-          courseid ? (               
-            <AdminCourseinfoFormComponent id={courseid} />
-          ) : (
-            <AdminUniversityinfoFormComponent id={universityid}/>
-          )
-        }
+        {courseid ? (
+          <AdminCourseinfoFormComponent id={courseid} />
+        ) : universityid ? (
+          <AdminUniversityinfoFormComponent id={universityid} />
+        ) : placedStudentId ? (
+          <AddPlacedStudents id={placedStudentId} /> // Handle placed student case
+        ) : (
+          <p>No valid ID provided</p> // Fallback message
+        )}
+
 
       </div>
     </div>

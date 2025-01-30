@@ -39,7 +39,7 @@ function CourseCard({ title, text, duration, universityName,affilitatedWith, ima
 
           <h2 className='font-bold break-words '>{title}</h2>
 
-          <p className=' line-clamp-6 text-sm text-justify'>{text}</p>
+          <p className='  text-sm text-justify'>{text.slice(0,150)}.. <span className='text-slate-400'>see more</span></p>
 
           <div className='flex'>
             <p className='text-sm font-semibold'>Duration : {duration}  |   Affiliated with {affilitatedWith}</p>

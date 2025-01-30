@@ -43,6 +43,7 @@ function AdminUniversityinfoFormComponent({ id }: any) {
       const response = await axios.get(`/api/update-universitybyid?id=${id}`)
       if (response.data.success) {
         const parsedData = JSON.parse(response.data.message); // Parse the JSON string to a JS object
+        
         setUniversityData(parsedData); // Set the parsed object in state
         setimagename(parsedData.cloudinaryImageName);
         form.reset(parsedData);  // setting the form field with its info (prefilling) 

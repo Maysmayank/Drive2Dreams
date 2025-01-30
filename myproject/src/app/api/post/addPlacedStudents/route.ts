@@ -4,7 +4,7 @@ import { UniversityInfoModel } from "@/models/UniversityModel";
 import { cloudinary } from "@/utils/cloudinary";
 import { NextResponse } from "next/server";
 
-interface CloudinaryProp {
+export interface CloudinaryProp {
     secure_url: string;
     display_name: string;
 }
