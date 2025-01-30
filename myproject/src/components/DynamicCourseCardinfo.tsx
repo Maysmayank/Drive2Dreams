@@ -54,6 +54,7 @@ type DynamicCourseCardinfoProps = {
   aboutUniversity: string;
   universityName: string;
   Brochure?: string;
+  admissionProcess:String;
   ageOfUniversity?:number;
   industryConnections:number;
   highestPackageOffered:number;
@@ -65,6 +66,7 @@ type DynamicCourseCardinfoProps = {
 export default function DynamicCourseCardinfo({
   courseInfo,
   eligibilityCriteria,
+  admissionProcess,
   aboutUniversity,
   title,
   specializationOffered,
@@ -155,16 +157,14 @@ export default function DynamicCourseCardinfo({
         </div>
 
 
-        {/* course OverView
         <div className="w-full structure-container my-10 ">
 
           <div className="flex flex-col gap-3  mb-5">
             <h1 className=" mb-2 md:mb-5 text-3xl font-semibold md:course-title-dynamic">
-              Course Overview
-            </h1>
-            <p className="text-justify nunito-para">{courseInfo}</p>
+Admission Process            </h1>
+            <p className="text-justify nunito-para">{admissionProcess}</p>
           </div>
-        </div> */}
+        </div>
 
         {/* Eligibility Criteria */}
         <div className="w-full">

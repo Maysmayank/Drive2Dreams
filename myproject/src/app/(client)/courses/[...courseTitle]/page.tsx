@@ -21,6 +21,7 @@ type CourseData = {
   _id: string;
   university: UniversityInfoType; // Full university object
   title: string;
+  admissionProcess:string;
   specializationOffered:string[];
   courseInfo: string;
   courseOverview: string;
@@ -51,7 +52,6 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
           const universityName = response.data.courseData[0].university.universityName;
 
           // Fetch placed students based on universityName
-          console.log(universityName);
           
           const placedStudentsResponse = await axios.get(`/api/get-placedStudents?universityName=${universityName}`);
           setPlacedStudentsData(placedStudentsResponse.data.placedStudentsData);
@@ -85,7 +85,7 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
             courseInfo={course.courseInfo}
             eligibilityCriteria={course.eligibilityCriteria}
             image={course.university.cloudinaryImageUrl}
-
+          admissionProcess={course.admissionProcess}
             aboutUniversity={course.university.aboutUniversity}
             industryConnections={course.university.industryConnections}
             highestPackageOffered={course.university.highestPackageOffered}
