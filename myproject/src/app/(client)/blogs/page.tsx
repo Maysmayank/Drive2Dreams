@@ -1,5 +1,4 @@
 'use client'
-import { Blog } from '@/models/Blog'
 import { Edit2, SquarePlus } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
@@ -19,7 +18,7 @@ const blognav = [
   }
 ]
 
-function page() {
+function Page() {
   const { data: session } = useSession()
   const [blogPosts,setBlogPosts]=useState<BlogType[]>([])
   const [loading,setLoading]=useState(false);
@@ -133,6 +132,6 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
   )
 }
 
-export default page
+export default Page
 
 

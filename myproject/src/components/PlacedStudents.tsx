@@ -53,7 +53,7 @@ function StudentCard({ studentImg, studentName, companyName, companyLogo }:Stude
         <Image
           src={studentImg|| ''}
           alt={studentName}
-          className="object-cover"
+          className="object-contain"
           fill
         />
       </div>
