@@ -14,12 +14,16 @@ export interface CourseInfo extends Document {
     duration?: string; // Duration of the course
     Brochure?: string; // Optional field for storing file path or URL to PDF
     courseRating:number;
+    features: {
+        heading: string; // Main heading
+        subheadings: string[]; // Array of subheadings for each heading
+    }[];
 }
 
 const CourseInfoSchema: Schema = new mongoose.Schema<CourseInfo>({
     university: {
         type: Schema.Types.ObjectId,
-        ref: UniversityInfoModel,  // Use the model name as a string
+        ref: UniversityInfoModel,  
         required: true,
     },
     universityName:{
@@ -68,6 +72,12 @@ const CourseInfoSchema: Schema = new mongoose.Schema<CourseInfo>({
         type: String, // URL or path to the PDF file
         default:''
     },
+    features: [
+        {
+          Heading: { type: String, required: true },
+          subHeadings: { type: [String], required: true, default: [] },
+        },
+    ],
     
 });
 

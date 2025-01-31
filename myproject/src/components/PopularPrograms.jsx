@@ -4,7 +4,7 @@ import Image from "next/image";
 import { motion } from "motion/react"
 import React, { useEffect, useRef } from "react";
 const imageArray = [
-  "/colleges/Accurate College.webp",
+  "/colleges/AccurateCollege.jpg",
   "/colleges/Gn Group.jpeg.jpg",
   "/colleges/Amity University.png",
   "/colleges/Amry Institute.webp",

@@ -16,7 +16,7 @@ interface CourseInfo{
 export async function POST(request: Request,response:NextResponse) {
     await dbConnect();
     try {
-        const{universityName,title,duration,courseInfo,admissionProcess,brochure,eligibilityCriteria,videoUrl,specializationOffered,courseRating,affilitatedWith}=await request.json();
+        const{universityName,title,duration,courseInfo,admissionProcess,brochure,eligibilityCriteria,videoUrl,specializationOffered,courseRating,affilitatedWith,feature}=await request.json();
         
         // console.log(courseRating);
         
@@ -53,14 +53,14 @@ export async function POST(request: Request,response:NextResponse) {
                 admissionProcess,
                 courseInfo,
                 brochure,
-                eligibilityCriteria // array of string
+                eligibilityCriteria, // array of string
+                features:feature
             
             })
             await newCourse.save();
-            // console.log(newCourse);
+            console.log(newCourse);
             
             
-            await CourseInfoModel.findById(newCourse._id)
 
             return Response.json({
                 success: true,

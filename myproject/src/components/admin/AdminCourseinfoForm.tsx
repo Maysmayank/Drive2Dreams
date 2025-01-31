@@ -25,6 +25,8 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import TagInputComponent from "@/utils/TagInputComponent";
 import { useFormState } from "react-dom";
+import AddFeatureForm from "./AddFeatureForm";
+import { features } from "process";
 
 type CourseData = {
   university: string;
@@ -35,12 +37,18 @@ type CourseData = {
   Brochure?: string;
 };
 
+interface FormField {
+  Heading: string;
+  subHeadings: string[];
+}
 interface Payload {
   [key: string]: any; // Other properties in 'data'
   specializationOffered: string[];
   eligibilityCriteria: string[]; // Specify eligibilityCriteria as an array of strings
   videoUrl: string;
+  feature:FormField[]
 }
+
 
 function AdminCourseinfoFormComponent({ id }: any) {
   // got id  from EDitCourseInfoModal
@@ -55,6 +63,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
   const { toast } = useToast();
   const router = useRouter();
   const [Loading, setIsLoading] = useState(false);
+  const [formValues, setFormValues] = useState<FormField[]>([{ Heading: "", subHeadings: [""] }]);
 
 
   const form = useForm<z.infer<typeof courseInfoSchema>>({
@@ -62,18 +71,22 @@ function AdminCourseinfoFormComponent({ id }: any) {
   });
 
   useEffect(() => {
+    
+    
     async function FetchCourseData() {
       try {
         const response = await axios.get(`/api/update-coursebyid?id=${id}`);
+        
         const parsedData = JSON.parse(response.data.message); // Parse the JSON string to a JS object
         setCourseData(parsedData); // Set the parsed object in state
-        // console.log(parsedData);
+        console.log(parsedData);
 
         form.reset(parsedData);  // setting the form field with its info (prefilling) 
 
         settags(parsedData.eligibilityCriteria || []); // Set tags to eligibilityCriteria
         setSpecialization(parsedData.specializationOffered || []) // set the specialization 
         setVideoUrl(parsedData.videoUrl)
+        setFormValues(parsedData.features)
 
       } catch (error) {
         console.error("Error fetching course data:", error);
@@ -91,6 +104,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
       specializationOffered: [],
       eligibilityCriteria: [],
       videoUrl, // Include videoUrl here
+      feature:[],
     };
 
 
@@ -106,6 +120,16 @@ function AdminCourseinfoFormComponent({ id }: any) {
       })
     }
 
+    if (formValues.length > 0) {
+      formValues.forEach((item) => {
+        payload.feature.push({
+          Heading: item.Heading,
+          subHeadings: item.subHeadings, // Include subHeadings
+        });
+      });
+    }
+  
+
     return payload;
 
   }
@@ -117,7 +141,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
     try {
 
       let payloadedData = createPayload(data);
-      console.log(payloadedData);
+      console.log("ddd",payloadedData);
 
       setIsLoading(true);
 
@@ -188,6 +212,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
               </FormItem>
             )}
           />
+          
           <FormField
             control={form.control}
             name="universityName"
@@ -279,8 +304,8 @@ function AdminCourseinfoFormComponent({ id }: any) {
             )}
           />
 
-          
-<FormField
+
+          <FormField
             control={form.control}
             name="affilitatedWith"
             render={({ field }) => (
@@ -321,8 +346,13 @@ function AdminCourseinfoFormComponent({ id }: any) {
             setState={setSpecialization}
           />
 
+          
+          <AddFeatureForm formValues={formValues} setFormValues={setFormValues}/>
+
 
           <CloudinaryUploader setVideoUrl={setVideoUrl} videoUrl={videoUrl} />
+
+
           {Loading ? (
             <Loader2 className=" m-auto  animate-spin"></Loader2>
           ) : (
@@ -335,6 +365,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
           )}
         </form>
       </Form>
+
     </div>
   );
 }

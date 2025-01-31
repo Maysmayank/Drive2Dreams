@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { CourseInfo, CourseInfoModel } from "@/models/courseInfo";
+import { features } from "process";
 
 
 
@@ -12,8 +13,9 @@ export async function PATCH(request: Request) {
         }
         const updateId = queryParam.id
         
-        const { university, title,courseInfo, admissionProcess, duration, Brochure,eligibilityCriteria ,videoUrl,courseRating,specializationOffered,affilitatedWith}:CourseInfo = await request.json()
+        const { university, title,courseInfo, admissionProcess, duration, Brochure,eligibilityCriteria ,videoUrl,courseRating,specializationOffered,affilitatedWith,feature} = await request.json()
         
+        console.log("features:::::",features);
         
         const isUpdated = await CourseInfoModel.updateOne(
             { _id: updateId },
@@ -30,6 +32,7 @@ export async function PATCH(request: Request) {
                     specializationOffered,
                     courseRating,
                     eligibilityCriteria ,//aaray of strings
+                    features:feature
                 }
             }
         )
@@ -79,7 +82,7 @@ export async function GET(request: Request) {
         let {universityName}=data.university;
 
         let payload={
-            universityName,...data._doc    // geeting universityName from university object and pushing rest data to the payload 
+            universityName,...data._doc    // getting universityName from university object and pushing rest data to the payload 
         }        
         let pay=delete payload.university   /// removing the university object {} containg all univerdsty info
         console.log("payload" ,payload);

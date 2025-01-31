@@ -13,7 +13,7 @@ export default function AuthLayout({
 }>) {
   return (
     <html lang="en">      
-      <body className="mt-[120px]">
+      <body className="">
       <AuthProvider>
       {children}
       <Toaster/>

@@ -60,6 +60,10 @@ type DynamicCourseCardinfoProps = {
   highestPackageOffered:number;
   placementRatio:number;
   placedStudentData:PlacedStudent[];
+  features: {
+    heading: string; // Main heading
+    subheadings: string[]; // Array of subheadings for each heading
+  }[];
 };
 
 
@@ -78,7 +82,7 @@ export default function DynamicCourseCardinfo({
   highestPackageOffered,
   industryConnections,
   placementRatio,
-
+  features,
   placedStudentData
   
 }: DynamicCourseCardinfoProps) {
@@ -88,7 +92,7 @@ export default function DynamicCourseCardinfo({
       
       <ProofWidget ageOfUniversity={ageOfUniversity?? 0} highestPackageOffered={highestPackageOffered} placementRatio={placementRatio} industryConnections={industryConnections}/>
 
-      <div className=" flex flex-col-reverse gap-10  md:flex-row  md:max-w-[85%] m-auto md:mt-10 justify-between " style={{ boxShadow: " rgba(0, 0, 0, 0.15) 10px 5px 30px, rgba(0, 0, 0, 0.23) 0px 6px 6px" }}>
+      <div className=" flex my-4 md:my-0 flex-col-reverse gap-10  md:flex-row  md:max-w-[85%] m-auto md:mt-10 justify-between " style={{ boxShadow: " rgba(0, 0, 0, 0.15) 10px 5px 30px, rgba(0, 0, 0, 0.23) 0px 6px 6px" }}>
         
         <div className="left-container ml-8  pb-5 flex flex-col gap-5 ">
 
@@ -161,7 +165,8 @@ export default function DynamicCourseCardinfo({
 
           <div className="flex flex-col gap-3  mb-5">
             <h1 className=" mb-2 md:mb-5 text-3xl font-semibold md:course-title-dynamic">
-Admission Process            </h1>
+            Admission Process  
+            </h1>
             <p className="text-justify nunito-para">{admissionProcess}</p>
           </div>
         </div>
@@ -228,7 +233,6 @@ Admission Process            </h1>
 }
 
 function StatCard({ icon: Icon, value, label, color }: { icon: any; value:  number; label: string; color: string }) {
-  console.log(label);
   
   return (
     <div className="flex flex-col gap-2 items-center p-4 bg-white rounded-xl hover:scale-105 transition-all shadow-md">

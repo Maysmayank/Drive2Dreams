@@ -51,13 +51,14 @@ const navItems = [
     label: 'Dashboard',
     role: 'admin',
     isUser: false
-  },{
-    icon:<Paperclip/>,
-    path:'/blogs',
-    label:'Blogs',
-    role:'both'
+  },
+  // {
+  //   icon:<Paperclip/>,
+  //   path:'/blogs',
+  //   label:'Blogs',
+  //   role:'both'
 
-  }
+  // }
 
 
 ]
@@ -166,7 +167,8 @@ const Navbar = () => {
   
 
   return (
-    <div id="navbar" className="relative z-40 flex text-black pt-4 md:pt-1  md:px-5 items-center justify-between">
+    <div id="navbar" className="relative z-40 flex text-black pt-4 md:pt-2  md:px-5 items-center justify-evenly">
+      
       <div className="flex items-center md:gap-3 " >
         <div className="flex flex-col opacity-80 w-[58%] md:w-[80%]">
           <p className="font-extrabold ml-4 text-2xl  md:text-4xl md:ml-8 text-black">CareerWay</p>
@@ -174,13 +176,15 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex ">
+      <div className="hidden md:flex  ">
 
-        <ul className=" flex gap-2  text-[12px] items-center">
+        <ul className=" flex gap-4  text-[13px] items-center">
           {
             navItems.slice(0, navItems.length).map((item, index) => {
               return (
-                <li key={index} className={` flex  items-center`}>
+                <li key={index}
+                          className={`${isAdmin && (item.role === 'admin' || item.role === 'user'||item.role==='both') || isUser && (item.role === 'user'|| item.role==='both') ? 'flex items-center' : 'hidden'
+                            }`}>
 
                   <Link
                     className={pathname === item.path ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'}
@@ -197,8 +201,8 @@ const Navbar = () => {
 
       </div>
 
-      <div className="hidden md:flex ">
-        <div className="relative md:w-[300px]">
+      <div className="hidden md:flex  ">
+        <div className="relative md:w-[280px]">
 
           <Input value={value} placeholder="Search Courses" onChange={HandleSearchChange} className="pr-[35px] md:block" />
 

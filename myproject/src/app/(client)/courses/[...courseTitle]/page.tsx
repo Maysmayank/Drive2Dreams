@@ -7,7 +7,7 @@ import { Loader2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { UniversityInfoType } from '../../../../../ModelTypes/ModelTypes';
 
-type UniversityData = {
+export type UniversityData = {
   _id: string;
   universityName: string;
   aboutUniversity: string;
@@ -17,7 +17,7 @@ type UniversityData = {
   cloudinaryImageName?: string;
 };
 
-type CourseData = {
+export type CourseData = {
   _id: string;
   university: UniversityInfoType; // Full university object
   title: string;
@@ -30,6 +30,11 @@ type CourseData = {
   eligibilityCriteria: string[];
   Brochure?: string;
   videoUrl:string;
+  features: {
+    heading: string; // Main heading
+    subheadings: string[]; // Array of subheadings for each heading
+  }[];
+
 };
 
 export default function CoursePage({ params }: { params: { courseTitle: string } }) {
@@ -37,7 +42,9 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
   const [loading, setLoading] = useState(true); // Initialize loading as true
   const [courseData, setCourseData] = useState<CourseData[]>([]); // Initialize state for course data
   const [placedStudents,setPlacedStudentsData]=useState<PlacedStudent[]>([]);
+  
   const decodedCourseTitle = decodeURIComponent(courseTitle);
+  
 
   useEffect(() => {
     
@@ -69,6 +76,8 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
     fetchdataCourse(); // Call the function to fetch data
   }, [decodedCourseTitle]); // Add decodedCourseTitle to the dependency array
 
+    console.log(courseData);
+    
 
   
   return (
@@ -85,7 +94,7 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
             courseInfo={course.courseInfo}
             eligibilityCriteria={course.eligibilityCriteria}
             image={course.university.cloudinaryImageUrl}
-          admissionProcess={course.admissionProcess}
+            admissionProcess={course.admissionProcess}
             aboutUniversity={course.university.aboutUniversity}
             industryConnections={course.university.industryConnections}
             highestPackageOffered={course.university.highestPackageOffered}
@@ -96,6 +105,7 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
             videoUrl={course.videoUrl}
             specializationOffered={course.specializationOffered}
             placedStudentData={placedStudents}
+            features={course.features}
           />
         ))
       )}
