@@ -3,6 +3,8 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 
 function SalientFeaturesCard({ features, universityName, courseTitle, courseInfo }) {
+  console.log(courseInfo);
+  
   return (
     <div className="flex flex-col-reverse md:flex-row gap-6 md:w-[90%] m-auto overflow-hidden rounded-lg  md:shadow-lg">
       {/* Left Section (Salient Features) */}
@@ -13,7 +15,7 @@ function SalientFeaturesCard({ features, universityName, courseTitle, courseInfo
           {features.map((feature, index) => (
             <li key={index} className="bg-white  p-4 rounded-lg shadow-md">
               <h2 className="text-lg font-semibold text-gray-900">{feature.Heading}</h2>
-              <ul className="list-disc list-inside text-gray-700 mt-2 space-y-1">
+              <ul className="space-x-1  text-gray-700 mt-2 space-y-1">
                 {feature.subHeadings.map((sub, i) => (
                   <li key={i} className="text-sm">{sub}</li>
                 ))}
@@ -27,7 +29,7 @@ function SalientFeaturesCard({ features, universityName, courseTitle, courseInfo
       <div className="p-6 w-full flex flex-col gap-4 bg-white">
         <div>
           <h3 className="font-bold mb-4 text-3xl text-gray-900">{`${courseTitle} @ ${universityName}`}</h3>
-          <p className="text-gray-700 leading-relaxed text-justify">{courseInfo}</p>
+          <pre className="text-gray-700 font-medium text-wrap leading-relaxed nunito-para text-justify">{courseInfo}</pre>
         </div>
 
         <Link href={"/contact"}>
