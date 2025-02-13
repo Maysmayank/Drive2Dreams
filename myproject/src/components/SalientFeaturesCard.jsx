@@ -1,21 +1,26 @@
 import React from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { TimelineDemo } from "./TimelineDemo";
 
 function SalientFeaturesCard({ features, universityName, courseTitle, courseInfo }) {
-  console.log(courseInfo);
+  console.log(features);
   
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-6 md:w-[90%] m-auto overflow-hidden rounded-lg  md:shadow-lg">
+    <>
+    <div className="flex flex-col-reverse md:flex-row gap-6 md:w-[90%] md:items-center m-auto overflow-hidden rounded-lg  bg-white">
       {/* Left Section (Salient Features) */}
-      <div className="md:w-[40%] p-6 bg-[#ffd665]  md:py-0 shadow-lg border-r border-gray-300">
+      {/* <div className="md:w-[40%]  p-6 bg-gradient-to-b from-yellow-400 to-yellow-500 md:pb-5 border-r border-gray-300">
         <h3 className="text-2xl font-bold mb-4 md:mt-5 text-gray-900">Salient Features</h3>
 
-        <ul className=" flex gap-4 flex-col mb-4 text-md text-gray-800">
+        <ul className="flex flex-col gap-5 text-md text-gray-800">
           {features.map((feature, index) => (
-            <li key={index} className="bg-white  p-4 rounded-lg shadow-md">
+            <li 
+              key={index} 
+              className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-transform transform hover:scale-[1.03]"
+            >
               <h2 className="text-lg font-semibold text-gray-900">{feature.Heading}</h2>
-              <ul className="space-x-1  text-gray-700 mt-2 space-y-1">
+              <ul className="mt-3 list-disc pl-5 space-y-2 text-gray-700">
                 {feature.subHeadings.map((sub, i) => (
                   <li key={i} className="text-sm">{sub}</li>
                 ))}
@@ -23,22 +28,27 @@ function SalientFeaturesCard({ features, universityName, courseTitle, courseInfo
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
+    <TimelineDemo features={features} />
 
       {/* Right Section (Course Info) */}
-      <div className="p-6 w-full flex flex-col gap-4 bg-white">
+      <div className="p-6 w-full flex flex-col gap-6 bg-white">
         <div>
-          <h3 className="font-bold mb-4 text-3xl text-gray-900">{`${courseTitle} @ ${universityName}`}</h3>
-          <pre className="text-gray-700 font-medium text-wrap leading-relaxed nunito-para text-justify">{courseInfo}</pre>
+          <h3 className="font-bold text-3xl text-gray-900">{`${courseTitle} @ ${universityName}`}</h3>
+          <pre className="mt-4 text-gray-700 text-justify leading-relaxed text-wrap font-serif ">{courseInfo}</pre>
         </div>
 
-        <Link href={"/contact"}>
-          <Button className="w-full md:w-[40%] mt-5 py-3 text-lg bg-blue-600 hover:bg-blue-800 hover:scale-105 transition-all">
+        <Link href="/contact">
+          <Button className="w-full md:w-[40%] mt-5 py-3 text-lg bg-blue-600 hover:bg-blue-800 hover:scale-105 transition-all shadow-md">
             Apply Now
           </Button>
         </Link>
       </div>
     </div>
+
+
+    </>
+    
   );
 }
 

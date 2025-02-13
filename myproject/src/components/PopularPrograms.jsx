@@ -10,8 +10,11 @@ const imageArray = [
   "/colleges/Amry Institute.webp",
   "/colleges/GNIOT.jpg",
   "/colleges/JIIMSGNjpg.jpg",
+  "/colleges/glbajaj.jpg",
+
   "/colleges/llyod.jpg",
   "/colleges/GIMS.avif",
+  "/colleges/iimt.jpg",
 
 ];
 

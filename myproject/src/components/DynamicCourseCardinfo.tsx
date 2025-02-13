@@ -130,7 +130,7 @@ export default function DynamicCourseCardinfo({
       </div>
 
 
-      <section className="my-12 md:my-20 md:py-10 ">
+      <section className="my-12 bg-re md:my-20 md:py-10 ">
         <SalientFeaturesCard features={features} courseInfo={courseInfo} universityName={universityName} courseTitle={title} />
 
       </section>
