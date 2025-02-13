@@ -5,11 +5,11 @@ export function TimelineDemo({ features = [] }: { features?: { Heading: string; 
     const data = features.map((feature) => ({
       title: feature.Heading, // Use "Heading" instead of "heading"
       content: (
-        <div className="space-y-2 text-neutral-800 dark:text-neutral-200 text-sm">
+        <ul className="space-y-2 list-disc text-neutral-800 dark:text-neutral-200 text-sm">
           {feature.subHeadings.map((sub, i) => (
-            <p key={i}>{sub}</p>
+            <li key={i} > {sub}</li>
           ))}
-        </div>
+        </ul>
       ),
     }));
   
