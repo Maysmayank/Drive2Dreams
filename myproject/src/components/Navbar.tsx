@@ -164,16 +164,23 @@ const Navbar = () => {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  
+
 
   return (
-    <div id="navbar" className="relative z-40 flex text-black pt-4 md:pt-2  md:px-5 items-center justify-between  px-2 md:justify-evenly">
-      
-      <div className="flex items-center md:gap-3 " >
-        <div className="flex flex-col opacity-80 w-[58%] md:w-[80%]">
-          <p className="font-extrabold ml-4 text-2xl  md:text-4xl md:ml-8 text-black">CareerWay</p>
-          <span className="text-sm ml-4 text-black font-bold md:text-md md:ml-8 text-left opacity-80">Drive2Dreams</span>
+    <div id="navbar" className="relative z-40 flex text-black pt-4 mr-2 md:pt-2  md:px-2 items-center justify-between  px-2 md:justify-evenly">
+
+      <div className="flex items-center md:gap-3" >
+        <div className="flex items-center relative">
+          <Image src={'/CareerWayLOGO.jpg'} className="relative md:left-5" width={100} alt="logo" height={100}></Image>
+          
+          <div className="flex relative -left-5 md:left-0 flex-col opacity-80 ">
+            <p className="font-extrabold  ml-4 text-2xl  md:text-3xl  text-black">CareerWay</p>
+            <span className="text-sm ml-4 text-black font-bold md:text-md md:ml-8 text-left opacity-80">Drive2Dreams</span>
+          </div>
         </div>
+
+
+
       </div>
 
       <div className="hidden md:flex  ">
@@ -183,8 +190,8 @@ const Navbar = () => {
             navItems.slice(0, navItems.length).map((item, index) => {
               return (
                 <li key={index}
-                          className={`${isAdmin && (item.role === 'admin' || item.role === 'user'||item.role==='both') || isUser && (item.role === 'user'|| item.role==='both') ? 'flex items-center' : 'hidden'
-                            }`}>
+                  className={`${isAdmin && (item.role === 'admin' || item.role === 'user' || item.role === 'both') || isUser && (item.role === 'user' || item.role === 'both') ? 'flex items-center' : 'hidden'
+                    }`}>
 
                   <Link
                     className={pathname === item.path ? 'active rounded p-2 scale-110 text-black' : 'hover:scale-110  rounded p-2 transition duration-100 delay-50 ease-in'}
@@ -227,7 +234,7 @@ const Navbar = () => {
         <button ref={searchIconRef} className=" md:hidden rounded-sm   hover:bg-white hover:text-black" onClick={() => {
           setShowinputBoxInMobile((prev) => (prev === "none" ? "block" : "none"));
         }}  >
-          {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon size={30}  />}
+          {isLoading ? <Loader2Icon className="animate-spin" /> : <SearchIcon size={30} />}
         </button>
 
         <div className=" md:hidden relative right-1">
@@ -245,7 +252,7 @@ const Navbar = () => {
                     navItems.map((item, index) => {
                       return (
                         <li key={index}
-                          className={`${isAdmin && (item.role === 'admin' || item.role === 'user'||item.role==='both') || isUser && (item.role === 'user'|| item.role==='both') ? 'flex items-center' : 'hidden'
+                          className={`${isAdmin && (item.role === 'admin' || item.role === 'user' || item.role === 'both') || isUser && (item.role === 'user' || item.role === 'both') ? 'flex items-center' : 'hidden'
                             }`}>
 
                           <Link

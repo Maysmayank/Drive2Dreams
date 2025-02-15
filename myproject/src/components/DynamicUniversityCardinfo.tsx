@@ -74,11 +74,9 @@ export default function DynamicUniversityCardinfo({
             </p>
           </div>
 
-          
-
           {/* Admission Process */}
           <div className="flex  w-full flex-col  gap-8">
-            <h1 className="font-semibold text-2xl md:m-auto md:text-5xl text-center ">
+            <h1 className="font-semibold text-3xl md:m-auto md:text-5xl text-center ">
               Admission Process
             </h1>
             <p className="text-justify nunito-para">{cutoffs}</p>
@@ -86,9 +84,9 @@ export default function DynamicUniversityCardinfo({
 
           {/* PlacedStudents */}
           {
-            placedStudentData.length!==0&&<div className="flex flex-col gap-20">
-            <h1 className="text-2xl md:text-5xl font-bold text-center">Placed Students</h1>
-            <div className="grid grid-cols-1 md:grid-cols-4">
+            placedStudentData.length!==0&&<div className="flex flex-col mb-10 gap-10">
+            <h1 className="text-3xl md:text-5xl font-bold text-center">Placed Students</h1>
+            <div className="flex flex-col md:flex-row gap-8 md:gap-4  justify-center items-center">
               {
                 placedStudentData.map((student,index)=>{
                   return<StudentCard 

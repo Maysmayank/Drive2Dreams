@@ -19,9 +19,11 @@ function Footer() {
             <h1 className='text-3xl open-sans-paragraph inline'>Socials <Link1Icon className='inline translate-y h-6 w-5'/></h1>
             
             <div className='flex flex-row w-full items-center justify-center  gap-5  font-semibold' >
-                <Link href={"https://www.linkedin.com/company/drive2dreams/posts/?feedView=all"}> <LinkedInLogoIcon className='hover:scale-110' height={40} width={35}/>
+                <Link target="_blank" rel="noopener noreferrer" href={"https://www.linkedin.com/company/drive2dreams/"} passHref > <LinkedInLogoIcon className='hover:scale-110' height={40} width={35}/>
                 </Link>
-                <InstagramLogoIcon className='hover:scale-110' height={40} width={35}/>
+                <Link target="_blank" rel="noopener noreferrer" href={"https://www.instagram.com/careerway.official?igsh=cTBuZTRzcGE2MHJo"} passHref > <InstagramLogoIcon className='hover:scale-110' height={40} width={35}/>
+                </Link>
+                
                 
                 
             </div>

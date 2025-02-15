@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/context/Authprovider";
 import { Toaster } from "@/components/ui/toaster";
+import WhatsappIcon from "@/components/WhatsappIcon";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   title: "Drive2Dreams",
   description: "Drive2Dreams",
   icons: {
-    icon: "/LOGOFINAL.png",
+    icon: "/CareerWayLOGO.jpg",
   },
 };
 
@@ -27,7 +28,7 @@ export default function RootLayout({
 
         <AuthProvider>
           <Navbar></Navbar>
-
+          <WhatsappIcon/>
         {children}
         </AuthProvider>
 

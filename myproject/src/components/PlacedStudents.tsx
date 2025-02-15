@@ -47,9 +47,9 @@ type StudentCardProps = {
 
 function StudentCard({ studentImg, studentName, companyName, companyLogo }:StudentCardProps) {
   return (
-    <div className="bg-white shadow-md rounded-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-lg">
+    <div className="bg-white h-[340px] w-[230px] md:w-[300px] shadow-md rounded-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-lg">
       {/* Student Image */}
-      <div className="w-full h-48 relative">
+      <div className="w-full h-40 relative">
         <Image
           src={studentImg|| ''}
           alt={studentName}

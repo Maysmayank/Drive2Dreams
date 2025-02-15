@@ -8,6 +8,7 @@ import { signIn } from 'next-auth/react';
 import { useToast } from "@/components/ui/use-toast";
 import { loginSchema } from '@/schema/loginschema';
 import { HiEye, HiEyeOff } from 'react-icons/hi';
+import Image from 'next/image';
 
 export default function Login() {
   const [email, SetEmail] = useState('');
@@ -83,7 +84,7 @@ export default function Login() {
     <div className='flex flex-col md:flex-row h-screen items-center justify-center'>
       {/* Left Side - Image (Hidden on Mobile) */}
       <div className='hidden md:flex w-[40%] h-full'>
-        <img src="/login-banner.jpg" alt="Login" className="w-full h-full object-cover rounded-l-xl" />
+        <Image height={100} width={100} src={'/login-banner.jpg'} alt="Login" className="w-full h-full object-cover rounded-l-xl" />
       </div>
 
       {/* Right Side - Login Form */}

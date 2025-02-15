@@ -10,6 +10,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useToast } from '@/components/ui/use-toast';
 import { signUpSchema } from '@/schema/signUpSchema';
+import Image from 'next/image';
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -58,10 +59,9 @@ export default function Signup() {
 
   return (
     <div className='flex flex-col md:flex-row h-screen items-center justify-center'>
-      <div className='hidden md:flex w-[40%] h-full'>
-        <img src="/signupImage.jpg" alt="Signup" className="w-full h-full object-cover rounded-l-xl" />
+      <div className='hidden md:flex w-[60%] h-full relative left-2'>
+        <Image src="https://tryshine.ai/wp-content/uploads/2024/04/signup.svg" alt="Signup" width={200} height={500} className="w-full h-full object-cover rounded-l-xl" />
       </div>
-      <div className='w-full md:w-[60%] flex justify-center'>
         <div className='bg-white rounded-xl p-8 flex flex-col items-center gap-6 w-full max-w-md shadow-lg'>
           <h2 className='text-2xl font-semibold text-gray-800'>Sign Up</h2>
           <div className='flex flex-col gap-4 w-full'>
@@ -81,6 +81,5 @@ export default function Signup() {
           <Bottomwarning label={"Already have an account?"} to={'/login'} buttontext={'Login'} />
         </div>
       </div>
-    </div>
   );
 }
