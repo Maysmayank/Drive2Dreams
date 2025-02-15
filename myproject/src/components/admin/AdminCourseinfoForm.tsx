@@ -46,6 +46,7 @@ interface Payload {
   specializationOffered: string[];
   eligibilityCriteria: string[]; // Specify eligibilityCriteria as an array of strings
   videoUrl: string;
+  brochureUrl:string;
   feature:FormField[]
 }
 
@@ -64,7 +65,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
   const router = useRouter();
   const [Loading, setIsLoading] = useState(false);
   const [formValues, setFormValues] = useState<FormField[]>([{ Heading: "", subHeadings: [""] }]);
-
+   const [brochureUrl,setBrochureUrl]=useState<string>('')
 
   const form = useForm<z.infer<typeof courseInfoSchema>>({
     resolver: zodResolver(courseInfoSchema),
@@ -86,6 +87,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
         settags(parsedData.eligibilityCriteria || []); // Set tags to eligibilityCriteria
         setSpecialization(parsedData.specializationOffered || []) // set the specialization 
         setVideoUrl(parsedData.videoUrl)
+        setBrochureUrl(parsedData.Brochure)
         setFormValues(parsedData.features)
 
       } catch (error) {
@@ -104,6 +106,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
       specializationOffered: [],
       eligibilityCriteria: [],
       videoUrl, // Include videoUrl here
+      brochureUrl,
       feature:[],
     };
 
@@ -129,6 +132,8 @@ function AdminCourseinfoFormComponent({ id }: any) {
       });
     }
   
+    console.log(payload);
+    
 
     return payload;
 
@@ -150,6 +155,8 @@ function AdminCourseinfoFormComponent({ id }: any) {
       if (id) {
 
         response = await axios.patch(`/api/update-coursebyid?id=${id}`, payloadedData); // updating
+
+        
       } else {
 
         response = await axios.post("/api/post/courseinfo", payloadedData)
@@ -268,26 +275,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="Brochure"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Brochure</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled
-                    placeholder="Enter the Brochure in pdf (optional)"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription className="text-red-600">
-                  It is is not supported yet
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          
 
           <FormField
             control={form.control}
@@ -349,8 +337,9 @@ function AdminCourseinfoFormComponent({ id }: any) {
           
           <AddFeatureForm formValues={formValues} setFormValues={setFormValues}/>
 
+          <CloudinaryUploader setUrl={setBrochureUrl} url={brochureUrl} label={'Upload Brochure'} type={'pdf'}/>
 
-          <CloudinaryUploader setVideoUrl={setVideoUrl} videoUrl={videoUrl} />
+          <CloudinaryUploader setUrl={setVideoUrl} url={videoUrl} label={'Upload Video'} type={'video'}/>
 
 
           {Loading ? (

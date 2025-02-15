@@ -13,10 +13,10 @@ export async function PATCH(request: Request) {
         }
         const updateId = queryParam.id
         
-        const { university, title,courseInfo, admissionProcess, duration, Brochure,eligibilityCriteria ,videoUrl,courseRating,specializationOffered,affilitatedWith,feature} = await request.json()
+        const { university, title,courseInfo, admissionProcess, duration, brochureUrl,eligibilityCriteria ,videoUrl,courseRating,specializationOffered,affilitatedWith,feature} = await request.json()
         
-        console.log("features:::::",features);
-        
+        // console.log(brochureUrl);
+                
         const isUpdated = await CourseInfoModel.updateOne(
             { _id: updateId },
             {
@@ -26,7 +26,7 @@ export async function PATCH(request: Request) {
                     courseInfo,
                     admissionProcess,
                     duration,
-                    Brochure,
+                    Brochure:brochureUrl,
                     affilitatedWith,
                     videoUrl,
                     specializationOffered,

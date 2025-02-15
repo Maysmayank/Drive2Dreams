@@ -12,7 +12,12 @@ export const courseInfoSchema = z.object({
   duration: z.string().min(1, { message: "Duration is required" }).optional(),
   courseRating:z.coerce.number().max(5,{message:"the maximum rating can be 5"}),
   
-  Brochure: z.string().optional(), // Optional field for syllabus
+  Brochure: z
+        .any()
+        .refine((files) => Array.from(files).every((file) => file instanceof File), {
+          message: "Expected a file",
+        })
+        .optional(), // Optional field for syllabus
   affilitatedWith:z.string().optional(),
   
 })

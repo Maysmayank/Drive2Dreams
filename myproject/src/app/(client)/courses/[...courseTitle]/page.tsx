@@ -90,6 +90,7 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
         courseData.map((course, index) => (
           <DynamicCourseCardinfo
             key={index}
+            Brochure={course.Brochure}
             title={course.title}
             courseInfo={course.courseInfo}
             eligibilityCriteria={course.eligibilityCriteria}
@@ -101,7 +102,6 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
             placementRatio={course.university.placementRatio}
             ageOfUniversity={course.university.ageOfUniversity}
             universityName={course.university.universityName}
-            Brochure={course.Brochure}
             videoUrl={course.videoUrl}
             specializationOffered={course.specializationOffered}
             placedStudentData={placedStudents}

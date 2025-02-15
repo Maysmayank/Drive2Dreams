@@ -10,40 +10,9 @@ import { GraduationCap } from "lucide-react";
 import SalientFeaturesCard from '@/components/SalientFeaturesCard'
 import { Button } from "./ui/button";
 import { PlacedStudent } from "@/models/PlacedStudents";
-const Specialization = [
-  'MArketing',
-  'OB and HRM',
-  "Fianance",
-  "Business Analytics",
-  "International Business",
-  "Logistics and Supply Chain",
-  "New Age and StartUps"
-]
-const features = {
-  "Certifications": [
-    "Power BI",
-    "Digital and Social Media Marketing",
-    "Statistical Package for the Social Sciences (SPSS)",
-    "Foreign Language (French/German)",
-    "Blockchain",
-    "Marketing Analytics",
-    "Business Analytics",
-    "HR Analytics",
-    "Yellow Belt Six Sigma"
-  ],
-  "Talk Series": [
-    "The Chanakya Talk Series (CTS)",
-    "The Prabodhan Talk Series (PTS)",
-    "Samreek Leadership Talks (SLT)"
-  ],
+import { useRouter } from "next/navigation";
 
-  "Programs": [
-    "Employability Skills Enhancement Programme (ESEP)",
-    "Self Directed Learning (SDL)",
-    "Outbound Training Programme",
-    "Corporate Awareness Programme"
-  ]
-};
+
 type DynamicCourseCardinfoProps = {
   title: string;
   courseInfo: string;
@@ -86,7 +55,16 @@ export default function DynamicCourseCardinfo({
   placedStudentData
   
 }: DynamicCourseCardinfoProps) {
+  const router=useRouter()
 
+  const handleBrochureClick = () => {
+    if (Brochure && typeof Brochure === 'string') {
+      const encodedUrl = encodeURI(Brochure);
+      window.open(encodedUrl, '_blank'); // Open in a new tab
+    } else {
+      console.error("Invalid Brochure URL");
+    }
+  };
   return (
     <div className="md:pt-[85px] min-h-[100vh]">
       
@@ -118,11 +96,11 @@ export default function DynamicCourseCardinfo({
 
           </ul>
 
-          <Button className="bg-blue-500 w-[40%] text-center hover:bg-blue-700 ml-2 mt-2 md:mb-0 mb-10">Get Brochure</Button>
+          <Button className="bg-blue-500 w-[40%] text-center hover:bg-blue-700 ml-2 mt-2 md:mb-0 mb-10" onClick={handleBrochureClick} >Get Brochure</Button>
         </div>
 
 
-        <div className="right-container flex flex-col justify-center m-auto h-[240px] md:h-[400px]">
+        <div className="right-container flex flex-col justify-center m-auto max-h-[240px] md:max-h-[400px]">
           <video controls width={550} height={500} muted autoPlay loop>
           <source src={videoUrl} type="video/mp4"/>
           </video>
