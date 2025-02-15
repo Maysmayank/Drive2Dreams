@@ -66,32 +66,47 @@ async function DashboardView() {
           </div>
         </div>
 
-        <div className="overflow-x-hidden flex flex-col gap-8 mt-10">
-          <h1 className='m-auto text-2xl'>Placed Students</h1>
-          <table className="w-full text-white shadow-md rounded-lg">
-            <thead>
-              <tr className="bg-gray-200 text-gray-700 uppercase text-sm">
-                <th className="py-2 px-4 text-left">University Name</th>
-                <th className="py-2 px-4 text-left">Student Name</th>
-                <th className="py-2 px-4 text-left">Company Name</th>
-                <th className="py-2 px-4 text-left">Edit</th>
-                <th className="py-2 px-4 text-left">Delte</th>
-              </tr>
-            </thead>
-            
-            <tbody>
-              {placedStudentData.map((student, index) => (
-                <UniversityTable
-                  key={index}
-                  studentId={student._id?.toString()}
-                  universityName={student.universityName}
-                  studentName={student.studentName}
-                  companyName={student.companyName}
-                />
-              ))}
-            </tbody>
-          </table>
-        </div>
+       <div className="overflow-x-hidden flex flex-col gap-8 mt-10">
+  <h1 className="m-auto text-2xl">Placed Students</h1>
+
+  {/* Table - Visible only on medium screens and above */}
+  <table className="hidden md:table text-white  shadow-md rounded-lg">
+    <thead>
+      <tr className="bg-gray-200 text-gray-700 uppercase text-sm">
+        <th className="py-2 px-4 text-left">University Name</th>
+        <th className="py-2 px-4 text-left">Student Name</th>
+        <th className="py-2 px-4 text-left">Company Name</th>
+        <th className="py-2 px-4 text-left">Edit</th>
+        <th className="py-2 px-4 text-left">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {placedStudentData.map((student, index) => (
+        <UniversityTable
+          key={index}
+          studentId={student._id?.toString()}
+          universityName={student.universityName}
+          studentName={student.studentName}
+          companyName={student.companyName}
+        />
+      ))}
+    </tbody>
+  </table>
+
+  {/* Card/List View - Visible only on small screens */}
+  <div className="md:hidden flex flex-col gap-4">
+    {placedStudentData.map((student, index) => (
+      <UniversityTable
+      key={index}
+      studentId={student._id?.toString()}
+      universityName={student.universityName}
+      studentName={student.studentName}
+      companyName={student.companyName}
+    />
+    ))}
+  </div>
+</div>
+
 
       </div>
 
