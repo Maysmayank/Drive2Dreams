@@ -14,7 +14,7 @@ function Footer() {
 
               <FooterBox heading={"Popular Links"} item1={"Contact"} item2={"Student HelpDesk"} item3={""}/>
 
-            <div className='flex flex-col gap-4 mt-10'>
+            <div className='flex flex-col gap-4  mb-8'>
             
             <h1 className='text-3xl open-sans-paragraph inline'>Socials <Link1Icon className='inline translate-y h-6 w-5'/></h1>
             

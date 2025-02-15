@@ -55,7 +55,7 @@ export default function DynamicCourseCardinfo({
   placedStudentData
   
 }: DynamicCourseCardinfoProps) {
-  const router=useRouter()
+ 
 
   const handleBrochureClick = () => {
     if (Brochure && typeof Brochure === 'string') {
@@ -96,11 +96,11 @@ export default function DynamicCourseCardinfo({
 
           </ul>
 
-          <Button className="bg-blue-500 w-[40%] text-center hover:bg-blue-700 ml-2 mt-2 md:mb-0 mb-10" onClick={handleBrochureClick} >Get Brochure</Button>
+          <Button className="bg-blue-500 w-[40%] text-center hover:bg-blue-700 ml-4 md:ml-8 mt-7 md:mb-5 mb-10" onClick={handleBrochureClick} >Get Brochure</Button>
         </div>
 
 
-        <div className="right-container flex flex-col justify-center m-auto max-h-[240px] md:max-h-[400px]">
+        <div className="right-container mx-2 flex flex-col justify-center m-auto max-h-[240px] md:max-h-[420px]">
           <video controls width={550} height={500} muted autoPlay loop>
           <source src={videoUrl} type="video/mp4"/>
           </video>

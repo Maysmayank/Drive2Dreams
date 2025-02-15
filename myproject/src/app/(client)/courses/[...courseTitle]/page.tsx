@@ -76,7 +76,7 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
     fetchdataCourse(); // Call the function to fetch data
   }, [decodedCourseTitle]); // Add decodedCourseTitle to the dependency array
 
-    console.log(courseData);
+    // console.log(courseData);
     
 
   
