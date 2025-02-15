@@ -31,7 +31,7 @@ const Contact = () => {
           </div>  
 
         </div>
-        <FormComponent classname='max-w-[40%]'/>
+        <FormComponent classname='max-w-[95%] md:max-w-[40%]'/>
       </div>
 
       

@@ -32,14 +32,14 @@ function SalientFeaturesCard({ features, universityName, courseTitle, courseInfo
     <TimelineDemo features={features} />
 
       {/* Right Section (Course Info) */}
-      <div className="p-6 w-full flex flex-col gap-6 bg-white">
+      <div className="p-6 w-full flex flex-col gap-6 bg-white" style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px" }}>
         <div>
-          <h3 className="font-bold text-3xl text-gray-900">{`${courseTitle} @ ${universityName}`}</h3>
+          <h3 className="font-bold text-3xl pb-4 text-gray-900">{`${courseTitle} @ ${universityName}`}</h3>
           <pre className="mt-4 text-gray-700 text-justify leading-relaxed text-wrap font-serif ">{courseInfo}</pre>
         </div>
 
         <Link href="/contact">
-          <Button className="w-full md:w-[40%] mt-5 py-3 text-lg bg-blue-600 hover:bg-blue-800 hover:scale-105 transition-all shadow-md">
+          <Button className=" w-[40%] md:w-[40%] mt-5 py-3 text-lg bg-blue-600 hover:bg-blue-800 hover:scale-105 transition-all shadow-md">
             Apply Now
           </Button>
         </Link>

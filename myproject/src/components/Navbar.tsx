@@ -167,7 +167,7 @@ const Navbar = () => {
   
 
   return (
-    <div id="navbar" className="relative z-40 flex text-black pt-4 md:pt-2  md:px-5 items-center justify-evenly">
+    <div id="navbar" className="relative z-40 flex text-black pt-4 md:pt-2  md:px-5 items-center justify-between  px-2 md:justify-evenly">
       
       <div className="flex items-center md:gap-3 " >
         <div className="flex flex-col opacity-80 w-[58%] md:w-[80%]">

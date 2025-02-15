@@ -148,7 +148,7 @@ export default function DynamicCourseCardinfo({
             </p>
           </div>
 
-          <div className="right-container  h-[200px] md:h-[280px] hover:scale-105 transition-all" style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px" }}>
+          <div className="right-container hidden md:block h-[200px] md:h-[280px] hover:scale-105 transition-all" style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px" }}>
             <Image
               src={image|| ''}
               alt="image"
