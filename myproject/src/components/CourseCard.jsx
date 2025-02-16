@@ -22,22 +22,21 @@ const labels = {
 
 
 function CourseCard({ title, text, duration, universityName,affilitatedWith, image, rating }) {
-  console.log("course card",affilitatedWith);
   
   return (
-    <div className=' mb-[300px]  md:mb-[300px] relative flex flex-col items-center'>
+    <div className=' mb-[350px] md:mb-[400px] relative border flex flex-col items-center'>
 
       <Image src={image} alt="image"
         className={`relative z-10 w-[95%] md:w-[345px] h-[220px] hover:scale-105 transition-transform duration-300`}
         width={300} height={300}  ></Image>
 
       <div
-        className=' absolute border w-[100%]  md:w-[110%]  flex flex-col justify-end  min-h-[450px] md:min-h-[460px] md:p-2 top-[85px] md:top-[80px]'
+        className=' absolute border w-[100%]  md:w-[110%]  flex flex-col   md:p-2 top-[85px] md:top-[80px]'
         style={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px' }}
       >
-        <div className=' px-4 md:px-1 justify-between  md:pt-0 flex flex-col h-[300px] gap-4'>
+        <div className='px-4 md:px-1 justify-evenly flex flex-col mt-[145px] min-h-[350px] gap-4'>
 
-          <h2 className='font-bold break-words '>{title}</h2>
+          <h2 className='font-bold break-words'>{title}</h2>
 
           <p className='  text-sm text-justify'>{text.slice(0,150)}.. <span className='text-slate-400'>see more</span></p>
 

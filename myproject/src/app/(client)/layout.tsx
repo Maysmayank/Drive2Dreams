@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Drive2Dreams",
   description: "Drive2Dreams",
   icons: {
-    icon: "/CareerWayLOGO.jpg",
+    icon: "/CareerWayLogo2.png",
   },
 };
 

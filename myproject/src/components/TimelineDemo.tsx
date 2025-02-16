@@ -14,9 +14,7 @@ export function TimelineDemo({ features = [] }: { features?: { Heading: string; 
     }));
   
     return (
-      <div className="w-full">
         <Timeline data={data} />
-      </div>
     );
   }
   

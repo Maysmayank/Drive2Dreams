@@ -100,7 +100,7 @@ export default function DynamicCourseCardinfo({
         </div>
 
 
-        <div className="right-container mx-2 flex flex-col justify-center m-auto max-h-[240px] md:max-h-[420px]">
+        <div className="right-container md:mr-20 flex flex-col justify-center m-auto max-h-[240px] md:max-h-[420px]">
           <video controls width={550} height={500} muted autoPlay loop>
           <source src={videoUrl} type="video/mp4"/>
           </video>

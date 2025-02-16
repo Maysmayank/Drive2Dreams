@@ -52,15 +52,15 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
       try {
         setLoading(true);
         let response = await axios.post(`/api/get-courseinfo?`,{title:decodedCourseTitle});
-        
         setCourseData(response.data.courseData); 
         
         if (response.data.courseData.length > 0) {
           const universityName = response.data.courseData[0].university.universityName;
-
+          // console.log(universityName);
+          
           // Fetch placed students based on universityName
           
-          const placedStudentsResponse = await axios.get(`/api/get-placedStudents?universityName=${universityName}`);
+          const placedStudentsResponse = await axios.get(`/api/get-placedStudents?universityName=${encodeURIComponent(universityName)}`);
           setPlacedStudentsData(placedStudentsResponse.data.placedStudentsData);
 
         }
@@ -76,7 +76,6 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
     fetchdataCourse(); // Call the function to fetch data
   }, [decodedCourseTitle]); // Add decodedCourseTitle to the dependency array
 
-    // console.log(courseData);
     
 
   

@@ -16,7 +16,7 @@ export default function OurCourses({initialCourseData,initialTotalPages}:OurCour
   const [currentpage, setcurrentPage] = useState(1);
   const [paginatedData, setPaginatedData] = useState<CourseInfoType[]>(initialCourseData)
   const [totalPages, setTotalPages] = useState<number>(initialTotalPages);  
-
+  
 
   useEffect(() => {
     async function fetch() {

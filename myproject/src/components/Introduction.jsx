@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function Introduction() {
 
   const router = useRouter();
-  
+
 
   return (
     <>
@@ -28,8 +28,9 @@ export default function Introduction() {
               <h1 className='font-black text-4xl md:text-7xl'>Dream Campus</h1>
 
               <Link href={'/contact'}>
-                <Button className='bg-[#3B80E8] text-[12px] md:text-xl hover:bg-[#3e7cd9] hover:scale-105 transition-all mt-4 md:mt-10 md:w-[30%] ml-2'>Get Started</Button>
-
+                <button className="px-8 py-1 md:py-2 rounded-md mt-5 md:mt-10 md:w-[35%] bg-blue-600 text-white font-bold transition duration-200 hover:bg-white hover:text-black border-2 border-transparent hover:border-teal-500">
+                  Get Started
+                </button>
               </Link>
             </div>
 
@@ -41,7 +42,7 @@ export default function Introduction() {
 
         </div>
       </div>
-     
+
 
     </>
 

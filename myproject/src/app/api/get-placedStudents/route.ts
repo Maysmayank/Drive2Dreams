@@ -7,6 +7,8 @@ export async function GET(request: NextRequest) {
 
     try {
         const searchParams = request.nextUrl.searchParams;
+        console.log(searchParams);
+        
         const universityName = searchParams.get('universityName');
         const studentId = searchParams.get('id');
         console.log(studentId);

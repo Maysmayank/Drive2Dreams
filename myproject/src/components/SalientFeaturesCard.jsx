@@ -5,50 +5,33 @@ import { TimelineDemo } from "./TimelineDemo";
 
 function SalientFeaturesCard({ features, universityName, courseTitle, courseInfo }) {
   console.log(features);
-  
+
   return (
     <>
-    <div className="flex flex-col-reverse md:flex-row gap-6 md:w-[90%] md:items-center m-auto overflow-hidden rounded-lg  bg-white">
-      {/* Left Section (Salient Features) */}
-      {/* <div className="md:w-[40%]  p-6 bg-gradient-to-b from-yellow-400 to-yellow-500 md:pb-5 border-r border-gray-300">
-        <h3 className="text-2xl font-bold mb-4 md:mt-5 text-gray-900">Salient Features</h3>
+      <div className="flex flex-col-reverse md:flex-row md:gap-0 md:w-[90%] md:items-center m-auto overflow-hidden rounded-lg  bg-white">
+        
+        <TimelineDemo features={features} />
 
-        <ul className="flex flex-col gap-5 text-md text-gray-800">
-          {features.map((feature, index) => (
-            <li 
-              key={index} 
-              className="bg-white p-5 rounded-xl shadow-md hover:shadow-lg transition-transform transform hover:scale-[1.03]"
-            >
-              <h2 className="text-lg font-semibold text-gray-900">{feature.Heading}</h2>
-              <ul className="mt-3 list-disc pl-5 space-y-2 text-gray-700">
-                {feature.subHeadings.map((sub, i) => (
-                  <li key={i} className="text-sm">{sub}</li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </div> */}
-    <TimelineDemo features={features} />
+        <div className="p-6 w-full flex flex-col gap-6 bg-white" style={{boxShadow: "rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px"}}>
+          <div>
+            <h3 className="font-bold text-3xl pb-4 text-gray-900">{`${courseTitle} @ ${universityName}`}</h3>
+            <pre className="mt-4 text-gray-700 text-justify leading-relaxed text-wrap font-serif ">{courseInfo}</pre>
+          </div>
 
-      {/* Right Section (Course Info) */}
-      <div className="p-6 w-full flex flex-col gap-6 bg-white" style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 50px" }}>
-        <div>
-          <h3 className="font-bold text-3xl pb-4 text-gray-900">{`${courseTitle} @ ${universityName}`}</h3>
-          <pre className="mt-4 text-gray-700 text-justify leading-relaxed text-wrap font-serif ">{courseInfo}</pre>
+          <Link href="/contact">
+          <button className="p-[3px] relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg" />
+              <div className="px-8 py-2 bg-blue-400 rounded-[6px] relative group transition duration-200 text-white hover:bg-transparent">
+                Apply Now
+              </div>
+            </button>
+          </Link>
         </div>
-
-        <Link href="/contact">
-          <Button className=" w-[40%] md:w-[40%] mt-5 py-3 text-lg bg-blue-600 hover:bg-blue-800 hover:scale-105 transition-all shadow-md">
-            Apply Now
-          </Button>
-        </Link>
       </div>
-    </div>
 
 
     </>
-    
+
   );
 }
 
