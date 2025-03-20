@@ -8,19 +8,30 @@ export async function POST(req: NextRequest) {
     try {
         const { username, email, phone_number, program } = await req.json();
 
-        // Get current date and time
+        // Get current date and time in local timezone
         const date = new Date();
+        const localDate = new Intl.DateTimeFormat("en-US", {
+            timeZone: "Asia/Kolkata",  // Set to your desired timezone
+            day: "2-digit",
+            month: "2-digit",
+            year: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true,
+        }).formatToParts(date);
+
+        // Extract formatted values
+        let day = localDate.find((p) => p.type === "day")?.value;
+        let month = localDate.find((p) => p.type === "month")?.value;
+        let year = localDate.find((p) => p.type === "year")?.value;
+        let hours = localDate.find((p) => p.type === "hour")?.value;
+        let minutes = localDate.find((p) => p.type === "minute")?.value;
+        let seconds = localDate.find((p) => p.type === "second")?.value;
+        let amPm = localDate.find((p) => p.type === "dayPeriod")?.value;
 
         // Format timestamp as dd-mm-yy hh:mm:ss AM/PM
-        let hours = date.getHours();
-        const minutes = date.getMinutes().toString().padStart(2, "0");
-        const seconds = date.getSeconds().toString().padStart(2, "0");
-        const amPm = hours >= 12 ? "PM" : "AM";
-
-        // Convert 24-hour format to 12-hour format
-        hours = hours % 12 || 12; // Convert 0 to 12 for midnight
-
-        const formattedTimestamp = `${date.getDate().toString().padStart(2, "0")}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getFullYear().toString().slice(-2)} ${hours.toString().padStart(2, "0")}:${minutes}:${seconds} ${amPm}`;
+        const formattedTimestamp = `${day}-${month}-${year} ${hours}:${minutes}:${seconds} ${amPm}`;
 
         // Prepare Google Auth
         const auth = new google.auth.GoogleAuth({
@@ -40,7 +51,7 @@ export async function POST(req: NextRequest) {
             valueInputOption: "USER_ENTERED",
             requestBody: {
                 values: [
-                    [username, email, phone_number, program, formattedTimestamp] // Using formatted date and time with AM/PM
+                    [username, email, phone_number, program, formattedTimestamp] // Using fixed timezone timestamp
                 ]
             }
         });
