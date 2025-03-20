@@ -81,14 +81,17 @@ export default function Login() {
   };
 
   return (
-    <div className='flex flex-col md:flex-row h-screen items-center justify-center'>
+    <div className='flex flex-col md:flex-row h-screen  items-center justify-center'>
       {/* Left Side - Image (Hidden on Mobile) */}
-      <div className='hidden md:flex w-[40%] h-full'>
-        <Image height={100} width={100} src={'/login-banner.jpg'} alt="Login" className="w-full h-full object-cover rounded-l-xl" />
+      <div className='hidden md:flex w-[60%] h-full relative left-2'>
+        <div className='absolute bg-white mt-[295px] px-5 py-1 right-20'>
+          <span className='font-semibold text-2xl'>Login</span>
+        </div>
+        <Image height={100} width={100} src={'https://tryshine.ai/wp-content/uploads/2024/04/signup.svg'} alt="Login" className="w-full h-full object-cover rounded-l-xl" />
       </div>
 
       {/* Right Side - Login Form */}
-      <div className='w-full md:w-[60%] flex justify-center'>
+      <div className='w-full md:w-[40%] flex justify-center'>
         <div className='bg-white rounded-xl p-8 flex flex-col items-center gap-6 w-full max-w-md shadow-lg'>
           <h2 className='text-2xl font-semibold text-gray-800'>Login</h2>
 
@@ -100,14 +103,14 @@ export default function Login() {
                 onChange={(e: any) => SetPassword(e.target.value)} 
                 label={"Password"} 
                 placeholder={"Enter your password"} 
-                type={showPassword ? "text" : "password"} // Toggle between text and password input type
+                type={showPassword ? "password" : "text"} // Toggle between text and password input type
               />
               
               <div 
                 onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
-                className='absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer'
+                className='absolute top-12 right-4 transform -translate-y-1/2 cursor-pointer'
               >
-                {showPassword ? <HiEyeOff className='text-gray-500' /> : <HiEye className='text-gray-500' />}
+                {showPassword ? <HiEyeOff size={22} className='text-gray-500' /> : <HiEye size={22} className='text-gray-500' />}
               </div>
             </div>
           </div>

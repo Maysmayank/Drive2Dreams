@@ -28,6 +28,7 @@
     "clsx": "^2.1.1",
     "emblor": "^1.4.6",
     "formidable": "^3.5.1",
+    "googleapis": "^146.0.0",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.435.0",
     "mongoose": "^8.9.5",

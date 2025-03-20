@@ -6,7 +6,7 @@ import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { PopoverDemo } from '@/components/PopoverDemo'
 import Image from "next/image";
-import { Headset, HeadsetIcon, House, HouseIcon, LayoutDashboard, Loader2, Loader2Icon, Menu, MessageSquareText, Paperclip, Search, SearchIcon, Shield, User, UserRound, UsersRound, X } from "lucide-react";
+import { Headset, HeadsetIcon, House, HouseIcon, LayoutDashboard, Loader2, Loader2Icon, Menu, MessageSquareText, Paperclip, Search, SearchIcon, Shield, User, User2, UserRound, UsersRound, X } from "lucide-react";
 import { Input } from "./ui/input";
 import ResponsiveDropDown from '@/components/ResponsiveDropdown'
 import axios from "axios";
@@ -362,7 +362,11 @@ const Navbar = () => {
           :
 
           (
-            <Link href='/signup' className="hover:bg-green-600 p-2   rounded-sm  transition duration-200 delay-75 ease-in">Signup</Link>
+            <div className="flex items-center hover:bg-green-400 px-2">
+              <User2 size={20}/>
+                          <Link href='/signup' className=" p-2   rounded-sm  transition duration-200 delay-75 ease-in">Signup</Link>
+
+            </div>
           )
 
         }

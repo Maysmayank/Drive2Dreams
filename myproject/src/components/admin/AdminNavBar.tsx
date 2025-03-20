@@ -27,7 +27,7 @@ function AdminNavBar() {
   return (
     <div className="flex flex-col justify-between p-6 min-h-screen bg-black  text-white fixed w-64">
       <div className="logo mt-10 mb-10 text-center">
-        <h1 className="text-white font-bold text-3xl opacity-80">Drive2Dreams</h1>
+        <h1 className="text-white font-bold text-3xl opacity-80">CarrerWay</h1>
       </div>
 
        

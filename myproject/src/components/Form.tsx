@@ -19,7 +19,6 @@ import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
-
 export default function FormComponent({ classname }: { classname?: string }) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -34,7 +33,7 @@ export default function FormComponent({ classname }: { classname?: string }) {
             username: "",
             email: "",
             phone_number: "",
-            program: "PGDM"
+            program: "PGDM",
         },
     })
     const programOptions = formSchema.shape.program.options;
@@ -50,6 +49,8 @@ export default function FormComponent({ classname }: { classname?: string }) {
                 email: data.email,
                 phone_number: data.phone_number,
                 program: data.program,
+                timeStamp: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
+
             })
 
             if (response.data.success) {
