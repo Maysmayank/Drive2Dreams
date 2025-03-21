@@ -45,11 +45,11 @@ export default function OurCourses({initialCourseData,initialTotalPages}:OurCour
   
   return (
     <div className=' mt-10 md:mt-20'>
-      <div className='mt-2 flex flex-col items-center pb-5 px-3'>
+      <div className='mt-2 flex flex-col items-center pb-0 px-3'>
         <h1 className='font-bold mb-20 text-2xl md:rubik-homepage-title md:text-4xl'>Top MBA/PGDM Programs</h1>
 
         {/* Grid for courses */}
-        <div className='flex flex-col md:flex-row flex-wrap  justify-center gap-16 space-x-1 md:ml-28 md:mr-28'>
+        <div className='flex flex-col md:flex-row flex-wrap justify-center gap-10 space-x-1 md:ml-28 md:mr-28'>
 
           {paginatedData.length === 0 ? (
             <p className='text-center  items-center flex flex-col text-lg col-span-full'>

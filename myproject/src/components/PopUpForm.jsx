@@ -8,9 +8,8 @@ function PopUpForm() {
     const [isVisible, setIsVisible] = useState(true); // Controls modal visibility
     const [isFadingOut, setIsFadingOut] = useState(false); // Tracks fade-out animation
 
-    const handleClose = () => {
+    const handleClose = () => {        
         setIsFadingOut(true); // Trigger fade-out animation
-            
         setTimeout(() => { 
             setIsVisible(false); // Wait for animation to finish, then hide modal
             setIsFadingOut(false); // Reset fade-out state
@@ -50,7 +49,7 @@ function PopUpForm() {
                                 <h1 className="font-bold ">Let&apos;s Talk</h1>
                                 <span>Explore Colleges with us</span>
                             </div>
-                            <FormComponent classname="text-sm px-10" />
+                            <FormComponent classname="text-sm px-10" onClose={handleClose}/>
                         </div>
                         <div className="hidden md:block">
                             <Image

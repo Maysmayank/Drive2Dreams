@@ -19,7 +19,11 @@ import { useToast } from '@/components/ui/use-toast';
 import axios from 'axios';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
-export default function FormComponent({ classname }: { classname?: string }) {
+interface FormComponentProps {
+    classname?: string;
+    onClose?: () => void; // Accept the function as a prop
+  }
+export default function FormComponent({ classname,onClose}:FormComponentProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { toast } = useToast()
@@ -58,8 +62,13 @@ export default function FormComponent({ classname }: { classname?: string }) {
                 await axios.post('/api/post/update-submitcount') // update the submission count by 1 and is showed to admin in dashboard
                 toast({
                     title: "Response Submitted",
-                    description: "Your response has been successfully submitted!",
+                    description: "Your response has been successfully submited!",
                 });
+                
+                if(onClose){
+
+                    onClose()
+                }
             }
             else {
                 toast({
