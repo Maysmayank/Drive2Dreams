@@ -26,7 +26,6 @@ function Page() {
   const { data: session } = useSession();
   const [blogPosts, setBlogPosts] = useState<BlogType[]>([]);
   const [loading, setLoading] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const router = useRouter();
 
   let isAdmin = session?.user.role === "admin";
@@ -45,7 +44,7 @@ function Page() {
     }
 
     fetchAllBlogs();
-  }, [refresh]);
+  });
 
   return (
     <>
