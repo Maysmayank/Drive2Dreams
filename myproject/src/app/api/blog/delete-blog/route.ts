@@ -6,15 +6,15 @@ export async function DELETE(request: Request) {
         await dbConnect();
         const {searchParams}=new URL(request.url);
         const queryParam={
-            id:searchParams.get('blogId'),
+            title:searchParams.get('title'),
             role:searchParams.get('role')
         }
         
-        const deleteId=queryParam.id
+        const deleteTitle=queryParam.title
         const role=queryParam.role
 
         if(role==='admin' ){
-            const blogExists=await BlogModel.findOne({_id:deleteId});
+            const blogExists=await BlogModel.findOne({title:deleteTitle});
             console.log(blogExists);
             
             if(!blogExists){
@@ -26,7 +26,7 @@ export async function DELETE(request: Request) {
                 })
             }
 
-            const isDeleted= await BlogModel.deleteOne({_id:deleteId})
+            const isDeleted= await BlogModel.deleteOne({title:deleteTitle})
 
             if(isDeleted){
                 return Response.json({
