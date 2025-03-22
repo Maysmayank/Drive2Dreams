@@ -6,9 +6,9 @@ import "react-quill/dist/quill.snow.css"; // Add this line
 import axios from "axios";
 import { toast } from "../ui/use-toast";
 import CloudinaryImageUploader from "../CloudinaryImageUploader";
-import Image from "next/image";
 import { revalidatePath } from "next/cache";
 import { revalidateCourseData } from "@/lib/action";
+import { Router, useRouter } from "next/router";
 const Editor = dynamic(() => import("../admin/Editor"), { ssr: false });
 
 interface Payload {
@@ -65,6 +65,8 @@ function CreateBlog() {
 
             revalidateCourseData();
             revalidatePath('/blogs')
+    
+
             
             console.log('revalidation the path /blogs')
         } else {
