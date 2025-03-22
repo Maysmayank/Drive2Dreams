@@ -63,8 +63,13 @@ function CreateBlog() {
                 variant:'constructive',
                 description: "blog published"
             })
-
-            await revalidateCourseData();
+            
+            const revalidateResponse = await axios.post("/api/revalidate");
+            if (revalidateResponse.data.success) {
+                console.log("Paths revalidated successfully");
+            } else {
+                console.error("Failed to revalidate paths");
+            }
     
 
             
