@@ -64,7 +64,6 @@ function CreateBlog() {
             })
 
             revalidateCourseData();
-            revalidatePath('/blogs')
     
 
             
