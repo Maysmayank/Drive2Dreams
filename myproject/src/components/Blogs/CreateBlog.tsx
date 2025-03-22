@@ -62,7 +62,7 @@ function CreateBlog() {
             toast({
                 description:"blog published"
             })
-            revalidatePath('/blogs')
+revalidateCourseData()
             console.log('revalidation the path /blogs')
  }else{
             toast({
