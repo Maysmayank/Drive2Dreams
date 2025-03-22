@@ -38,14 +38,10 @@ type CourseInfoType = {
 }
 
 type BlogType={
-  _id:string;
     title: string;
-      metadata:string;
-      blogImage:string;
       description: string;
       author: User;
       content: string;
       thumbnail:string;
-      publishedDate:string;
 }
 export type {CourseInfoType,UniversityInfoType,PlacedStudentsType,BlogType}

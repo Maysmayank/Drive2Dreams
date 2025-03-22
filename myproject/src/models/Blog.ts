@@ -17,11 +17,11 @@ const BlogSchema = new mongoose.Schema<Blog>(
   {
     author: { type: Schema.Types.ObjectId, ref: UserModel, required: true },
     title: { type: String, required: true },
-    description: { type: String, required: true },
-    content: { type: String, required: true },
-    metadata:{type:[String],required:true},
-    thumbnail:{type:String,required:true},
-    blogImage:{type:[String],required:true},
+    description: { type: String, required: false },
+    content: { type: String, required:false },
+    metadata:{type:[String],required:false},
+    thumbnail:{type:String,required:false},
+    blogImage:{type:[String],required:false},
     publishedDate:{
       type:Date,
       default:Date.now

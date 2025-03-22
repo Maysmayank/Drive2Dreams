@@ -52,13 +52,13 @@ const navItems = [
     role: 'admin',
     isUser: false
   },
-  // {
-  //   icon:<Paperclip/>,
-  //   path:'/blogs',
-  //   label:'Blogs',
-  //   role:'both'
+  {
+    icon:<Paperclip/>,
+    path:'/blogs',
+    label:'Blogs',
+    role:'both'
 
-  // }
+  }
 
 
 ]

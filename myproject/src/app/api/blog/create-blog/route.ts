@@ -5,8 +5,16 @@ import { UserModel } from "@/models/user";
 export async function POST(request: Request) {
     dbConnect();
     try {
-        const {title,metadata,blogImage,description,content,userEmail,role,thumbnail}=await request.json();
-        
+        const data=await request.json();
+        const {
+            title,
+            description,
+            content,
+            thumbnail,
+            role,
+            userEmail
+          } =data;
+
         const userExists=await UserModel.findOne({email:userEmail});
         
         if(!userExists){
@@ -25,8 +33,6 @@ export async function POST(request: Request) {
                 author:userExists._id,
                 title,
                 thumbnail,
-                metadata,
-                blogImage,
                 description,
                 content,
 

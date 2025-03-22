@@ -2,9 +2,7 @@
 import { CldUploadButton } from 'next-cloudinary';
 
 const cloudPresetName = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
-const openPdf = () => {
-  window.open("https://res.cloudinary.com/diht8xvzr/image/upload/v1739639412/xdsvmelggdwgggdh1iwn.pdf", "_blank");
-};
+
 
 
 const CloudinaryUploader = ({ url, setUrl,label,type }) => {
@@ -25,7 +23,7 @@ const CloudinaryUploader = ({ url, setUrl,label,type }) => {
         options={{ multiple: true, resourceType:`${type==='pdf'?'raw':'video'}`}}
         uploadPreset={cloudPresetName}
         
-        onSuccess={handleSuccess} // Use onSuccess instead of onUpload
+        onSuccess={handleSuccess} 
         className={`${url?'bg-green-500 ':'bg-red-500'} py-2 px-3 rounded border mt-4 text-white
          transition ease-in-out delay-200`}
       >
