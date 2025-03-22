@@ -7,6 +7,8 @@ import axios from "axios";
 import { toast } from "../ui/use-toast";
 import CloudinaryImageUploader from "../CloudinaryImageUploader";
 import Image from "next/image";
+import { revalidatePath } from "next/cache";
+import { revalidateCourseData } from "@/lib/action";
 const Editor = dynamic(() => import("../admin/Editor"), { ssr: false });
 
 interface Payload {
@@ -60,7 +62,9 @@ function CreateBlog() {
             toast({
                 description:"blog published"
             })
-        }else{
+            revalidatePath('/blogs')
+            console.log('revalidation the path /blogs')
+ }else{
             toast({
                 description:"not published"
             })
@@ -83,7 +87,7 @@ function CreateBlog() {
             {/* descrioption Input */}
             <input
                 type="text"
-                placeholder="Description"
+                placeholder="Write Description about the blog (max 3-4 lines)"
                 value={payload.description}
                 onChange={(e) => handleChange("description", e.target.value)}
                 className="w-full p-3 text-lg text-gray-500 border-b outline-none"
@@ -112,8 +116,8 @@ function CreateBlog() {
 
             {/* Preview Modal */}
             {isPreviewOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full">
+                <div className="fixed  inset-0 bg-black bg-opacity-50  flex items-center justify-center p-4">
+                    <div className="bg-white overflow-y-scroll p-6 rounded-lg shadow-lg max-w-4xl py-20 h-full w-full">
                         <h2 className="text-3xl font-bold">{payload.title}</h2>
                         <h3 className="text-lg text-gray-500 mt-2">{payload.description}</h3>
                         <div className="mt-4 border-t pt-4 text-gray-700">
