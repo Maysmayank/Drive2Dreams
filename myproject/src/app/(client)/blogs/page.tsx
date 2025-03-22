@@ -4,7 +4,6 @@ import { Edit2, Loader2, SquarePlus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { BlogType } from "../../../../ModelTypes/ModelTypes";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -28,28 +27,33 @@ function Page() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  let isAdmin = session?.user.role === "admin";
+  let isAdmin = session?.user?.role === "admin";
 
   useEffect(() => {
     async function fetchAllBlogs() {
       setLoading(true);
       try {
-        const response = await axios.get(`/api/blog/get-allblogs`,{
+        const response = await fetch(`/api/blog/get-allblogs`, {
+          method: "GET",
           headers: {
             "Cache-Control": "no-store",
           },
+          cache: "no-store", // Ensures the request is not cached
         });
+
+        const res = await response.json(); // Await the JSON response
+        console.log(res);
         
-        setBlogPosts(response.data.data);
+        setBlogPosts(res?.data || []); // Ensure valid data before setting state
       } catch (error: any) {
-        console.error("Error fetching Blogs", error.response?.data?.message);
+        console.error("Error fetching Blogs", error.message);
       } finally {
         setLoading(false);
       }
     }
 
     fetchAllBlogs();
-  },[]);
+  }, []);
 
   return (
     <>
@@ -69,29 +73,39 @@ function Page() {
                 </li>
               ))}
             </ul>
-            <span className="text-gray-700 font-semibold">Hi, {session?.user.name}!</span>
+            <span className="text-gray-700 font-semibold">
+              Hi, {session?.user?.name}!
+            </span>
           </div>
         </div>
       )}
 
       {/* Blog Listing Section */}
       <div className="flex flex-col gap-5 md:my-20 my-10 mb-10 w-[95%] md:w-[85%] mx-auto">
-        <h1 className="text-3xl md:text-4xl md:my-5 my-4  font-bold text-gray-900 text-center">
+        <h1 className="text-3xl md:text-4xl md:my-5 my-4 font-bold text-gray-900 text-center">
           KNOW MORE THROUGH BLOGS
         </h1>
 
         {loading ? (
-          <p className="text-center text-gray-600 items-center m-auto"><Loader2 className="animate-spin"/></p>
+          <p className="text-center text-gray-600 items-center m-auto">
+            <Loader2 className="animate-spin" />
+          </p>
+        ) : blogPosts.length === 0 ? (
+          <div className="text-center">
+            <span>Blog will be added soon</span>
+          </div>
         ) : (
-         blogPosts.length===0?(<div className="text-center">
-          <span>Blog will be added Soon</span>
-          </div>):( <div className="grid grid-cols-1 gap-6">
-          {blogPosts.map((blog, index) => (
-            <Link key={index} href={`/blogs/${encodeURIComponent(blog.title)}`} className="w-full">
-              <BlogCard blog={blog} />
-            </Link>
-          ))}
-        </div>)
+          <div className="grid grid-cols-1 gap-6">
+            {blogPosts.map((blog, index) => (
+              <Link
+                key={index}
+                href={`/blogs/${encodeURIComponent(blog.title)}`}
+                className="w-full"
+              >
+                <BlogCard blog={blog} />
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </>
@@ -107,7 +121,7 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
         <Image
           width={380}
           height={200}
-          src={blog.thumbnail}
+          src={blog.thumbnail || "/default-thumbnail.jpg"} // Use a proper fallback image
           alt={blog.title}
           className="w-full h-full object-cover"
         />
@@ -115,8 +129,12 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
 
       {/* Blog Content */}
       <div className="flex flex-col justify-between p-4 w-full">
-        <h2 className="text-xl md:text-2xl font-semibold text-gray-800">{blog.title}</h2>
-        <p className="text-gray-600 text-sm md:text-base">{blog.description.slice(0, 200)}...</p>
+        <h2 className="text-xl md:text-2xl font-semibold text-gray-800">
+          {blog.title}
+        </h2>
+        <p className="text-gray-600 text-sm md:text-base">
+          {blog.description.slice(0, 200)}...
+        </p>
 
         {/* Blog Meta Information */}
         <div className="flex justify-between items-center mt-4 text-gray-500 text-sm">

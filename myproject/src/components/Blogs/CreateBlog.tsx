@@ -31,10 +31,12 @@ function CreateBlog() {
         role: "",
         userEmail: "",
     });
-    // 🔧 Fix: Properly updating `thumbnail` in `payload`
-    useEffect(() => {
-        setPayload((prev: Payload) => ({ ...prev, thumbnail: thumbnailUrl }));
-    }, [thumbnailUrl]);
+    const handleThumbnailUpload = (url: string) => {
+        setThumbnailUrl(url);
+        setPayload((prev) => ({ ...prev, thumbnail: url }));
+    };
+
+    // In the JSX:
 
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
@@ -60,19 +62,19 @@ function CreateBlog() {
         const response = await axios.post("/api/blog/create-blog", payload)
         if (response.data.success) {
             toast({
-                variant:'constructive',
+                variant: 'constructive',
                 description: "blog published"
             })
-            
+
+            // Call the revalidation API
             const revalidateResponse = await axios.post("/api/revalidate");
             if (revalidateResponse.data.success) {
                 console.log("Paths revalidated successfully");
             } else {
                 console.error("Failed to revalidate paths");
             }
-    
 
-            
+
             console.log('revalidation the path /blogs')
         } else {
             toast({
@@ -84,7 +86,7 @@ function CreateBlog() {
     return (
         <div className="max-w-4xl mx-auto p-6 flex flex-col gap-4 bg-white shadow-md rounded-lg">
             {/* Title Input */}
-            <CloudinaryImageUploader label={"upload thumbnail"} setUrl={setThumbnailUrl} />
+            <CloudinaryImageUploader label={"Upload thumbnail"} setUrl={handleThumbnailUpload} />
             {thumbnailUrl}
             <input
                 type="text"
