@@ -64,6 +64,7 @@ function CreateBlog() {
                 description: "blog published"
             })
 
+            revalidateCourseData();
     
 
             
