@@ -35,7 +35,7 @@ function ShowBlogs({ blogs }: DisplayProps) {
 
     const isAdmin = session?.user?.role === "admin";
     console.log(blogs);
-    
+
     return (
         <>
             {/* Admin Navigation */}
@@ -91,31 +91,44 @@ function ShowBlogs({ blogs }: DisplayProps) {
 const BlogCard = ({ blog }: { blog: BlogType }) => {
     const { data: session } = useSession();
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-    const router=useRouter()
+    const router = useRouter()
 
-    const handleDeletion = async() => {
+    const handleDeletion = async () => {
         try {
-            const response = await axios.delete(`/api/blog/delete-blog?title=${blog.title}&role=${session?.user.role==="admin"?"admin":"user"}`)
-            if(response.data.success){
+            const response = await axios.delete(`/api/blog/delete-blog?title=${blog.title}&role=${session?.user.role === "admin" ? "admin" : "user"}`)
+            if (response.data.success) {
                 toast({
-                    description:"Blog Deleted",
-                    variant:"constructive"
+                    description: "Blog Deleted",
+                    variant: "constructive"
+                })
+
+                try {
+                    // Call the revalidation API
+                    const revalidateResponse = await axios.post("/api/revalidate");
+                    if (revalidateResponse.data.success) {
+                        console.log("Paths revalidated successfully");
+                    } else {
+                        console.error("Failed to revalidate paths");
+                    }
+                } catch (error) {
+                    console.log("error occured",error);
+                    
+                }
+            }
+            else {
+                toast({
+                    description: "Trouble Deleting Blog",
+                    variant: "destructive"
                 })
             }
-            else{
-                toast({
-                    description:"Trouble Deleting Blog",
-                    variant:"destructive"
-                })
-            }
-        } catch (error:any) {
+        } catch (error: any) {
             console.log(error);
-            
+
             toast({
-                description:error.message.response.data.message,
-                variant:"destructive"
+                description: error.message.response.data.message,
+                variant: "destructive"
             })
-        }finally{
+        } finally {
             setShowConfirmationModal(false)
             router.refresh()
         }
