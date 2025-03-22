@@ -13,7 +13,7 @@ const Editor = dynamic(() => import("../admin/Editor"), { ssr: false });
 
 interface Payload {
     title: string;
-    thumbnail:string;
+    thumbnail: string;
     description: string;
     content: string;
     role: string;
@@ -22,19 +22,19 @@ interface Payload {
 
 function CreateBlog() {
     const { data: session } = useSession();
-    const [thumbnailUrl,setThumbnailUrl]=useState("");
+    const [thumbnailUrl, setThumbnailUrl] = useState("");
     const [payload, setPayload] = useState<Payload>({
         title: "",
-        thumbnail:"",
+        thumbnail: "",
         description: "",
         content: "",
         role: "",
         userEmail: "",
     });
-     // 🔧 Fix: Properly updating `thumbnail` in `payload`
-  useEffect(() => {
-    setPayload((prev:Payload) => ({ ...prev, thumbnail: thumbnailUrl }));
-  }, [thumbnailUrl]);
+    // 🔧 Fix: Properly updating `thumbnail` in `payload`
+    useEffect(() => {
+        setPayload((prev: Payload) => ({ ...prev, thumbnail: thumbnailUrl }));
+    }, [thumbnailUrl]);
 
     const [isPreviewOpen, setIsPreviewOpen] = useState(false);
 
@@ -54,19 +54,22 @@ function CreateBlog() {
     };
 
     // Submit Function
-    
+
     const handleSubmit = async () => {
         console.log(payload);
-        const response = await axios.post("/api/blog/create-blog",payload)
-        if(response.data.success){
+        const response = await axios.post("/api/blog/create-blog", payload)
+        if (response.data.success) {
             toast({
-                description:"blog published"
+                description: "blog published"
             })
-revalidateCourseData()
+
+            revalidateCourseData();
+            revalidatePath('/blogs')
+            
             console.log('revalidation the path /blogs')
- }else{
+        } else {
             toast({
-                description:"not published"
+                description: "not published"
             })
         }
     };
