@@ -60,10 +60,10 @@ function CreateBlog() {
         const response = await axios.post("/api/blog/create-blog", payload)
         if (response.data.success) {
             toast({
+                variant:'constructive',
                 description: "blog published"
             })
 
-            revalidateCourseData();
     
 
             

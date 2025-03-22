@@ -44,7 +44,7 @@ function Page() {
     }
 
     fetchAllBlogs();
-  });
+  },[]);
 
   return (
     <>
