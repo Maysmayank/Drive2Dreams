@@ -34,7 +34,12 @@ function Page() {
     async function fetchAllBlogs() {
       setLoading(true);
       try {
-        const response = await axios.get(`/api/blog/get-allblogs`);
+        const response = await axios.get(`/api/blog/get-allblogs`,{
+          headers: {
+            "Cache-Control": "no-store",
+          },
+        });
+        
         setBlogPosts(response.data.data);
       } catch (error: any) {
         console.error("Error fetching Blogs", error.response?.data?.message);
