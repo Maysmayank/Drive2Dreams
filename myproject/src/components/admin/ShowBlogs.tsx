@@ -1,8 +1,8 @@
 "use client";
 
-import { Edit2, Loader2, SquarePlus, Trash2 } from "lucide-react";
+import { Edit2, Loader2, SquarePlus, Trash2, X } from "lucide-react";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BlogType } from "../../../ModelTypes/ModelTypes";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +10,10 @@ import { useRouter } from "next/navigation";
 import ConfirmationModal from "../ConfirmationModal";
 import axios from "axios";
 import { toast } from "../ui/use-toast";
+import { title } from "process";
+import { Button } from "../ui/button";
+import Editor from "./Editor";
+import CloudinaryImageUploader from "../CloudinaryImageUploader";
 
 const blognav = [
     {
@@ -17,11 +21,7 @@ const blognav = [
         icon: <SquarePlus />,
         path: "/admin/create-blog",
     },
-    {
-        label: "Edit",
-        icon: <Edit2 />,
-        path: "/admin/edit-blog",
-    },
+
 ];
 
 interface DisplayProps {
@@ -40,7 +40,7 @@ function ShowBlogs({ blogs }: DisplayProps) {
         <>
             {/* Admin Navigation */}
             {isAdmin && (
-                <div className="absolute right-5 mt-5">
+                <div className="absolute md:right-5 right-0  md:mt-5">
                     <div className="flex gap-4 items-center">
                         <ul className="flex gap-4">
                             {blognav.map((item, index) => (
@@ -62,8 +62,8 @@ function ShowBlogs({ blogs }: DisplayProps) {
             )}
 
             {/* Blog Listing Section */}
-            <div className="flex flex-col gap-5 md:my-20 my-10 mb-10 w-[95%] md:w-[85%] mx-auto">
-                <h1 className="text-3xl md:text-4xl md:my-5 my-4 font-bold text-gray-900 text-center">
+            <div className="flex flex-col  gap-5 md:my-20 my-14 mb-10 w-[95%] md:w-[85%] mx-auto">
+                <h1 className="text-3xl md:text-4xl  md:my-5  font-bold text-gray-900 text-center">
                     KNOW MORE THROUGH BLOGS
                 </h1>
 
@@ -92,7 +92,7 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
     const { data: session } = useSession();
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const router = useRouter()
-
+    const [showEditModal, setShowEditModal] = useState(false)
     const handleDeletion = async () => {
         try {
             const response = await axios.delete(`/api/blog/delete-blog?title=${blog.title}&role=${session?.user.role === "admin" ? "admin" : "user"}`)
@@ -111,8 +111,8 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
                         console.error("Failed to revalidate paths");
                     }
                 } catch (error) {
-                    console.log("error occured",error);
-                    
+                    console.log("error occured", error);
+
                 }
             }
             else {
@@ -177,20 +177,24 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
 
                     {/* Trash Icon */}
                     <div
-                        onClick={(e) => {
-                            e.stopPropagation(); // Prevent BlogCard click
-                            e.preventDefault(); // Prevent Link navigation
-                            setShowConfirmationModal(true);
-                        }}
+
                     >
                         {session?.user.role === "admin" && (
-                            <div className="hover:scale-110 absolute right-5">
-                                <Trash2 size={25} />
+                            <div className=" flex items-center gap-4 absolute right-0">
+                                <Edit2 className="hover:scale-110" onClick={() => setShowEditModal(true)} />
+
+
+                                <Trash2 className="hover:scale-110" onClick={(e) => {
+                                    e.stopPropagation(); // Prevent BlogCard click
+                                    e.preventDefault(); // Prevent Link navigation
+                                    setShowConfirmationModal(true);
+                                }} size={25} />
                             </div>
                         )}
                     </div>
 
                     {/* Confirmation Modal */}
+
                     {showConfirmationModal && (
                         <ConfirmationModal
                             isVisible={showConfirmationModal}
@@ -198,6 +202,13 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
                             onCancel={() => setShowConfirmationModal(false)}
                         />
                     )}
+
+
+                    {
+                        showEditModal &&session?.user.email&& (
+                            <EditinfoModal title={blog.title} onCancel={() => setShowEditModal(false)} email={session?.user.email} role={session?.user.role} />
+                        )
+                    }
                 </div>
             </div>
         </div>
@@ -205,3 +216,211 @@ const BlogCard = ({ blog }: { blog: BlogType }) => {
 };
 
 export default ShowBlogs;
+
+function EditinfoModal({ title, onCancel, email, role }: { title: string; onCancel: () => void, email: string, role: string }) {
+    console.log(email, role);
+
+    const [blogData, setBlogData] = useState<BlogType | null>(null);
+    const [thumbnailUrl, setThumbnailUrl] = useState("");
+
+    const handleThumbnailUpload = (url: string) => {
+        setThumbnailUrl(url);
+        setUpdatedBlog((prev) => ({ ...prev, thumbnail: url }));
+    };
+
+    const [updatedBlog, setUpdatedBlog] = useState({
+        title: "",
+        content: "",
+        thumbnail: "",
+        description: "",
+        userEmail: email, // Initialize with email
+        role: role, // Initialize with role
+    });
+
+    useEffect(() => {
+        setUpdatedBlog((prev) => ({
+            ...prev,
+            userEmail: email, // Update userEmail
+            role: role, // Update role
+        }));
+    }, [email, role]); // Ensure role is also included in dependencies
+
+    // Fetch blog data when the component mounts or when the title changes
+    useEffect(() => {
+        async function getBlog(title: string) {
+            try {
+                const response = await axios.get(`/api/blog/get-blog?title=${title}`);
+                if (response.data.success) {
+                    setBlogData(response.data.data);
+                    setUpdatedBlog((prev) => ({
+                        ...prev,
+                        ...response.data.data, // Merge fetched data with existing state
+                    }));
+                    console.log(blogData);
+
+                    toast({
+                        description: "You can now Edit the content",
+                        variant: "constructive"
+                    })
+                }
+                else {
+                    toast(
+                        {
+                            description: "the content is not fetched correctly",
+                            variant: "destructive"
+                        }
+                    )
+                }
+
+            } catch (error) {
+                console.error("Error fetching blog data:", error);
+                toast({
+                    description: "error Occured",
+                    variant: "destructive"
+                })
+            }
+        }
+
+        getBlog(title);
+    }, [title]); // Ensure `title` is included in the dependency array
+
+    // Loading state
+    if (!blogData) {
+        return (
+            <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="m-4 bg-white h-[100%] flex flex-col text-black w-[98%] md:w-[80%] p-7 rounded-md shadow-lg">
+                    <p className="text-black text-center">Loading...</p>
+                    <Button onClick={onCancel} className="text-black absolute right-40">
+                        <X />
+                    </Button>
+                </div>
+            </div>
+        );
+    }
+
+    // Handle input changes
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setUpdatedBlog((prev) => ({
+            ...prev,
+            [name]: value, // Update the specific field in the state object
+        }));
+    };
+
+    const handleApplyChanges = async () => {
+        try {
+            console.log(updatedBlog);
+
+            const response = await axios.patch(`/api/blog/update-blog?blogTitle=${blogData.title}`, updatedBlog);
+            if (response.data.success) {
+
+                try {
+                    const revalidateResponse = await axios.post("/api/revalidate");
+                    if (revalidateResponse.data.success) {
+                        window.location.reload();
+                        console.log("revalidatation done");
+
+                    } else {
+                        console.error("Failed to revalidate paths");
+                    }
+
+                } catch (error) {
+                    console.error("Failed to revalidate paths");
+
+                }
+                toast({
+                    description: "Blog updated successfully",
+                    variant: "constructive",
+                });
+
+                onCancel(); // Close the modal after successful update
+            } else {
+                toast({
+                    description: "Failed to update blog",
+                    variant: "destructive",
+                });
+            }
+        } catch (error) {
+            console.error("Error updating blog:", error);
+            toast({
+                description: "An error occurred while updating the blog",
+                variant: "destructive",
+            });
+        }
+    }
+
+    return (
+        <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="m-4 bg-white h-[100vh]  overflow-y-scroll flex flex-col text-black w-[98%] md:w-[80%] p-7 rounded-md shadow-lg">
+                {/* Input for the title */}
+                <p>USer:{updatedBlog.userEmail}</p>
+                <p>role: {updatedBlog.role}</p>
+                <div className="flex flex-col mt-10 gap-2">
+                    <label htmlFor="title">Title</label>
+                    <input
+                        name="title"
+                        id="title"
+                        value={updatedBlog.title} // Use updatedBlog.title as the value
+                        onChange={handleInputChange} // Update updatedBlog.title on change
+                        className="w-full p-2 mb-4 border  border-gray-300 rounded-md"
+                        placeholder="Enter title"
+                    />
+                </div>
+
+                {/* Input for the description */}
+                <div className="gap-2 flex flex-col">
+                    <label htmlFor="description">Description</label>
+                    <textarea
+                        name="description"
+                        id="description"
+                        value={updatedBlog.description} // Use updatedBlog.description as the value
+                        onChange={handleInputChange} // Update updatedBlog.description on change
+                        className="w-full p-5 mb-4 border border-gray-300 rounded-md"
+                        placeholder="Enter description"
+                        rows={4}
+                    />
+                </div>
+
+                {/* Editor for the content */}
+                <Editor
+                    setState={(content) =>
+                        setUpdatedBlog((prev) => ({
+                            ...prev,
+                            content, // Update the content field in the state object
+                        }))
+                    }
+                    defaultValue={updatedBlog.content}
+                />
+
+                {/* Input for the thumbnail */}
+                <CloudinaryImageUploader setUrl={handleThumbnailUpload} label={"Select Thumbnail"} />
+
+                <div className="flex md:flex-row flex-col items-center">
+                    {
+                        blogData.thumbnail === "" ? (<p className="bg-red-400 p-4 my-5">No thumbnail is uploaded previously</p>) : (
+                            <Image src={blogData.thumbnail} alt="Previous blog Image" height={200} width={200}></Image>
+
+                        )
+                    }
+                    {
+                        blogData.thumbnail && <span>previous Image already uploaded</span>
+
+                    }
+                </div>
+
+                <Button onClick={onCancel} className="bg-white text-black  absolute right-40">
+                    <X />
+                </Button>
+
+                <div className="flex  gap-4">
+                    <Button
+                        className="bg-blue-500 text-white"
+                        onClick={handleApplyChanges}
+                    >
+                        Apply changes
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
+}

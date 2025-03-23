@@ -7,12 +7,15 @@ export async function PATCH(request: Request) {
         dbConnect();
         const { searchParams } = new URL(request.url);
         const queryParam = {
-            id: searchParams.get('blogId')
+            title: searchParams.get('blogTitle')
         }
-        const updateId = queryParam.id;
+        const updateTitle = queryParam.title;
 
-        const {title,metadata,blogImage,description,content,userEmail,role,thumbnail}=await request.json();
-        const userExists=await UserModel.findOne({email:userEmail});
+        const data=await request.json();
+        const {title,description,content,userEmail,role,thumbnail}=data;
+        
+        
+        const userExists=await UserModel.findOne({email:userEmail,role:role});
         
 
         if(!userExists){
@@ -25,7 +28,7 @@ export async function PATCH(request: Request) {
         }
         if(role==='admin'&& userExists){
 
-            const blogExists=await BlogModel.findOne({_id:updateId});
+            const blogExists=await BlogModel.findOne({title:updateTitle});
             if(!blogExists){
                 return Response.json({
                     success: false,
@@ -36,12 +39,10 @@ export async function PATCH(request: Request) {
             }
 
             const isUpdated=await BlogModel.updateOne(
-                { _id: updateId },
+                { title: updateTitle },
                 {
                     $set:{  
                         title,
-                        metadata,
-                        blogImage,
                         description,
                         content,
                         thumbnail

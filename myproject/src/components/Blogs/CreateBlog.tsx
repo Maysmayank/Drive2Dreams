@@ -8,7 +8,8 @@ import { toast } from "../ui/use-toast";
 import CloudinaryImageUploader from "../CloudinaryImageUploader";
 import { revalidatePath } from "next/cache";
 import { revalidateCourseData } from "@/lib/action";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 const Editor = dynamic(() => import("../admin/Editor"), { ssr: false });
 
 interface Payload {
@@ -23,6 +24,7 @@ interface Payload {
 function CreateBlog() {
     const { data: session } = useSession();
     const [thumbnailUrl, setThumbnailUrl] = useState("");
+    const router=useRouter();
     const [payload, setPayload] = useState<Payload>({
         title: "",
         thumbnail: "",
@@ -70,6 +72,7 @@ function CreateBlog() {
             const revalidateResponse = await axios.post("/api/revalidate");
             if (revalidateResponse.data.success) {
                 console.log("Paths revalidated successfully");
+                router.push('/blogs')
             } else {
                 console.error("Failed to revalidate paths");
             }
@@ -87,7 +90,6 @@ function CreateBlog() {
         <div className="max-w-4xl mx-auto p-6 flex flex-col gap-4 bg-white shadow-md rounded-lg">
             {/* Title Input */}
             <CloudinaryImageUploader label={"Upload thumbnail"} setUrl={handleThumbnailUpload} />
-            {thumbnailUrl}
             <input
                 type="text"
                 placeholder="Title"

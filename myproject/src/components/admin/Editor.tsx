@@ -48,25 +48,25 @@ const formats = [
 
 interface EditorProps {
     setState: (content: string) => void;
+    defaultValue?: string; // Add a defaultValue prop
 }
 
-const Editor: React.FC<EditorProps> = ({ setState }) => {
-    const [content, setContent] = useState("");
+const Editor: React.FC<EditorProps> = ({ setState, defaultValue = "" }) => {
+    const [content, setContent] = useState(defaultValue); // Initialize with defaultValue
 
     useEffect(() => {
         setState(content);
     }, [content]); // Update parent state when content changes
 
     return (
-            <ReactQuill
-                value={content}
-                onChange={setContent}
-                modules={modules}
-                formats={formats}
-                theme="snow"
-                style={{height:"500px"}}
-            />
-            
+        <ReactQuill
+            value={content}
+            onChange={setContent}
+            modules={modules}
+            formats={formats}
+            theme="snow"
+            style={{ height: "500px" }}
+        />
     );
 };
 
