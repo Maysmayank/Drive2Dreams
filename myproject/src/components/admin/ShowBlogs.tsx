@@ -353,7 +353,7 @@ function EditinfoModal({ title, onCancel, email, role }: { title: string; onCanc
         <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="m-4 bg-white h-[100vh]  overflow-y-scroll flex flex-col text-black w-[98%] md:w-[80%] p-7 rounded-md shadow-lg">
                 {/* Input for the title */}
-                <p>USer:{updatedBlog.userEmail}</p>
+                <p>Editor:{updatedBlog.userEmail}</p>
                 <p>role: {updatedBlog.role}</p>
                 <div className="flex flex-col mt-10 gap-2">
                     <label htmlFor="title">Title</label>
@@ -393,9 +393,12 @@ function EditinfoModal({ title, onCancel, email, role }: { title: string; onCanc
                 />
 
                 {/* Input for the thumbnail */}
+                <div className="p-4 mt-20">
+
+                </div>
                 <CloudinaryImageUploader setUrl={handleThumbnailUpload} label={"Select Thumbnail"} />
 
-                <div className="flex md:flex-row flex-col items-center">
+                <div className="flex md:flex-row  flex-col items-center">
                     {
                         blogData.thumbnail === "" ? (<p className="bg-red-400 p-4 my-5">No thumbnail is uploaded previously</p>) : (
                             <Image src={blogData.thumbnail} alt="Previous blog Image" height={200} width={200}></Image>

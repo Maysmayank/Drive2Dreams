@@ -22,8 +22,9 @@ import { usePathname } from 'next/navigation';
 interface FormComponentProps {
     classname?: string;
     onClose?: () => void; // Accept the function as a prop
+    setBlackoutScreen?:(blackoutScreen:boolean)=>void;
   }
-export default function FormComponent({ classname,onClose}:FormComponentProps) {
+export default function FormComponent({ classname,onClose,setBlackoutScreen}:FormComponentProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { toast } = useToast()
@@ -45,9 +46,18 @@ export default function FormComponent({ classname,onClose}:FormComponentProps) {
     async function onSubmit(data: z.infer<typeof formSchema>) {
         setIsSubmitting(true)
 
+        if(setBlackoutScreen){
+            setBlackoutScreen(true)
+        }
         try {
             // console.log(data);
-
+            new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve("Resolved after 10 minutes!");
+                }, 50000); // 10 minutes in milliseconds
+            });
+            
+            
             const response = await axios.post('/api/form', {
                 username: data.username,
                 email: data.email,
@@ -86,6 +96,7 @@ export default function FormComponent({ classname,onClose}:FormComponentProps) {
 
         } finally {
             setIsSubmitting(false)
+            if(setBlackoutScreen) setBlackoutScreen(false)
 
         }
 
@@ -185,6 +196,7 @@ export default function FormComponent({ classname,onClose}:FormComponentProps) {
                     Your response has been submitted!
                 </div>
             )}
+           
         </div>
     )
 

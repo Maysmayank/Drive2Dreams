@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import FormComponent from './Form';
 import { Button } from './ui/button';
 import Image from 'next/image';
+import { Loader2 } from 'lucide-react';
 
 function PopUpForm() {
     const [isVisible, setIsVisible] = useState(true); // Controls modal visibility
     const [isFadingOut, setIsFadingOut] = useState(false); // Tracks fade-out animation
-
+    const [blackoutScreen,setBlackoutScreen]=useState(false)
     const handleClose = () => {        
         setIsFadingOut(true); // Trigger fade-out animation
         setTimeout(() => { 
@@ -31,6 +32,15 @@ function PopUpForm() {
 
     return (
         <>
+         {/* Blackout screen */}
+         {blackoutScreen && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50 ">
+                    <div className='flex items-center gap-2'>
+                        <Loader2 size={40} className='animate-spin' color='white'/>
+                        <span className='text-white font-semibold text-xl'>Processing</span>
+                    </div>
+                </div>
+            )}
             <div
                 id="modal-container"
                 onClick={handleOutsideClick}
@@ -49,7 +59,7 @@ function PopUpForm() {
                                 <h1 className="font-bold ">Let&apos;s Talk</h1>
                                 <span>Explore Colleges with us</span>
                             </div>
-                            <FormComponent classname="text-sm px-10" onClose={handleClose}/>
+                            <FormComponent classname="text-sm px-10" setBlackoutScreen={setBlackoutScreen} onClose={handleClose}/>
                         </div>
                         <div className="hidden md:block">
                             <Image

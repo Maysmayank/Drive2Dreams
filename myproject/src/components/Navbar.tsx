@@ -171,7 +171,7 @@ const Navbar = () => {
 
       <div className="flex items-center md:gap-3" >
         <div className="flex items-center relative">
-          <Image src={'/CareerWayLOGO.jpg'} className="relative md:left-5" width={100} alt="logo" height={100}></Image>
+          <Image src={'/CareerWayLOGO.jpg'} className="relative md:left-5" width={100} height={100} alt="LOGO"></Image>
           
           <div className="flex relative -left-5 md:left-0 flex-col opacity-80 ">
             <p className="font-extrabold  ml-4 text-2xl  md:text-3xl  text-black">CareerWay</p>
