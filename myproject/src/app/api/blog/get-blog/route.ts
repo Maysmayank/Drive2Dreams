@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
     await dbConnect();
 
     const searchParams = request.nextUrl.searchParams;
+    
     const title = searchParams.get("title") || "";
     
     const blog = await BlogModel.findOne({ title });
