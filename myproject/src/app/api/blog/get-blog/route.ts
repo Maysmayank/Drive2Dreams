@@ -1,18 +1,17 @@
 import dbConnect from "@/lib/dbConnect";
 import BlogModel from "@/models/Blog";
+import { NextRequest } from "next/server";
 
-export async function GET(request: Request) {
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: NextRequest) {
   try {
     await dbConnect();
 
-    const { searchParams } = new URL(request.url);
-
-    const queryParam = {
-      searchName: searchParams.get("title") || "",
-    };
-    const fetchTitle=queryParam.searchName
+    const searchParams = request.nextUrl.searchParams;
+    const title = searchParams.get("title") || "";
     
-    const blog = await BlogModel.findOne({ title: fetchTitle });
+    const blog = await BlogModel.findOne({ title });
 
     if (!blog) {
       return Response.json(

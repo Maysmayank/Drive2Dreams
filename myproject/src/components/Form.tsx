@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useState, Dispatch, SetStateAction } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from 'zod'
@@ -23,8 +23,10 @@ interface FormComponentProps {
     classname?: string;
     onClose?: () => void; // Accept the function as a prop
     setBlackoutScreen?:(blackoutScreen:boolean)=>void;
+    completeForm?:boolean;
+    setCompleteForm?:Dispatch<SetStateAction<boolean>>;
   }
-export default function FormComponent({ classname,onClose,setBlackoutScreen}:FormComponentProps) {
+export default function FormComponent({ classname,onClose,setBlackoutScreen,completeForm,setCompleteForm}:FormComponentProps) {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { toast } = useToast()
@@ -69,6 +71,10 @@ export default function FormComponent({ classname,onClose,setBlackoutScreen}:For
 
             if (response.data.success) {
                 setIsSubmitted(true);
+                if(completeForm){
+                    setCompleteForm?.(true);
+                }
+
                 await axios.post('/api/post/update-submitcount') // update the submission count by 1 and is showed to admin in dashboard
                 toast({
                     title: "Response Submitted",

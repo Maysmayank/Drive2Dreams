@@ -14,6 +14,7 @@ export interface CourseInfo extends Document {
     duration?: string; // Duration of the course
     Brochure?: string; // Optional field for storing file path or URL to PDF
     courseRating:number;
+    Ebook?:string;
     features: {
         heading: string; // Main heading
         subheadings: string[]; // Array of subheadings for each heading
@@ -70,6 +71,10 @@ const CourseInfoSchema: Schema = new mongoose.Schema<CourseInfo>({
     },
     Brochure: {
         type: String, // URL or path to the PDF file
+        default:''
+    },
+    Ebook:{
+        type:String,
         default:''
     },
     features: [

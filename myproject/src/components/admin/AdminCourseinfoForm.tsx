@@ -1,352 +1,87 @@
 "use client";
-import React, { Suspense, useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Textarea } from "@/components/ui/textarea";
-import CloudinaryUploader from '@/components/CloudinaryUploader'
-import { Button } from "@/components/ui/button";
-
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import axios from "axios";
 import { courseInfoSchema } from "@/schema/CourseinfoSchema";
-import { revalidateCourseData } from "@/lib/action";
+import { useCourseForm } from "@/hooks/useCourseForm";
+import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import TagInputComponent from "@/utils/TagInputComponent";
-import { useFormState } from "react-dom";
-import AddFeatureForm from "./AddFeatureForm";
-import { features } from "process";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import CourseBasicInfo from "../../components/admin/CourseBasicInfo";
+import CourseAdditionalInfo from "../../components/admin/CourseAdditionalInfo";
 
-type CourseData = {
-  university: string;
-  title: string;
-  courseInfo: string;
-  admissionProcess?: string;
-  duration?: string;
-  Brochure?: string;
-};
+import CourseMediaUploads from "../../components/admin/CourseMediaUploads";
+import CourseFeatures from "../../components/admin/CourseFeatures";
 
-interface FormField {
-  Heading: string;
-  subHeadings: string[];
-}
-interface Payload {
-  [key: string]: any; // Other properties in 'data'
-  specializationOffered: string[];
-  eligibilityCriteria: string[]; // Specify eligibilityCriteria as an array of strings
-  videoUrl: string;
-  brochureUrl:string;
-  feature:FormField[]
+interface AdminCourseinfoFormProps {
+  id?: string;
 }
 
-
-function AdminCourseinfoFormComponent({ id }: any) {
-  // got id  from EDitCourseInfoModal
-  // this form create and update course info
-  const [courseData, setCourseData] = useState<CourseData | null>(null); // the state will be in object
-  // if there is courseData then we fetch it using useffect then conditionally handle the sent requests
-
-
-  const [tags, settags] = useState<string[]>([]);
-  const [specialization, setSpecialization] = useState<string[]>([]);
-  const [videoUrl, setVideoUrl] = useState<string>('')
+export default function AdminCourseinfoFormComponent({ id }: AdminCourseinfoFormProps) {
   const { toast } = useToast();
   const router = useRouter();
-  const [Loading, setIsLoading] = useState(false);
-  const [formValues, setFormValues] = useState<FormField[]>([{ Heading: "", subHeadings: [""] }]);
-   const [brochureUrl,setBrochureUrl]=useState<string>('')
-
   const form = useForm<z.infer<typeof courseInfoSchema>>({
     resolver: zodResolver(courseInfoSchema),
   });
 
-  useEffect(() => {
-    
-    
-    async function FetchCourseData() {
-      try {
-        const response = await axios.get(`/api/update-coursebyid?id=${id}`);
-        
-        const parsedData = JSON.parse(response.data.message); // Parse the JSON string to a JS object
-        setCourseData(parsedData); // Set the parsed object in state
-        console.log(parsedData);
-
-        form.reset(parsedData);  // setting the form field with its info (prefilling) 
-
-        settags(parsedData.eligibilityCriteria || []); // Set tags to eligibilityCriteria
-        setSpecialization(parsedData.specializationOffered || []) // set the specialization 
-        setVideoUrl(parsedData.videoUrl)
-        setBrochureUrl(parsedData.Brochure)
-        setFormValues(parsedData.features)
-
-      } catch (error) {
-        console.error("Error fetching course data:", error);
-      }
-    }
-    if (id) {    //if edit id is present then fetch data from api
-      FetchCourseData();
-    }
-  }, [id, form]);
-
-
-  function createPayload(data: z.infer<typeof courseInfoSchema>) {
-    let payload: Payload = {
-      ...data,
-      specializationOffered: [],
-      eligibilityCriteria: [],
-      videoUrl, // Include videoUrl here
-      brochureUrl,
-      feature:[],
-    };
-
-
-    if (tags.length !== 0) {
-      tags.forEach((tag: string) => {
-        payload.eligibilityCriteria.push(tag); // Push each tag into the array
-      });
-    }
-
-    if (specialization.length !== 0) {
-      specialization.forEach((item: string) => {
-        payload.specializationOffered.push(item);
-      })
-    }
-
-    if (formValues.length > 0) {
-      formValues.forEach((item) => {
-        payload.feature.push({
-          Heading: item.Heading,
-          subHeadings: item.subHeadings, // Include subHeadings
-        });
-      });
-    }
-  
-    console.log(payload);
-    
-
-    return payload;
-
-  }
-
-
-
-  async function onSubmit(data: z.infer<typeof courseInfoSchema>) {
-
-    try {
-
-      let payloadedData = createPayload(data);
-      console.log("ddd",payloadedData);
-
-      setIsLoading(true);
-
-      let response;
-
-      if (id) {
-
-        response = await axios.patch(`/api/update-coursebyid?id=${id}`, payloadedData); // updating
-
-        
-      } else {
-
-        response = await axios.post("/api/post/courseinfo", payloadedData)
-      }
-
-      if (response?.data?.success) {
-        await revalidateCourseData();
-        router.refresh();
-        toast({
-          title: courseData
-            ? "Updated Course Information Successfully!!"
-            : "Added Course Successfully",
-          variant: "constructive",
-        });
-      } else {
-        toast({
-          description: response?.data.message,
-          variant: "destructive",
-        });
-      }
-    } catch (error: any) {
-      toast({
-        title: "Error While saving Course Info try again later",
-        description: error.response.data.message,
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const {
+    courseData,
+    isLoading,
+    tags,
+    setTags,
+    specialization,
+    setSpecialization,
+    videoUrl,
+    setVideoUrl,
+    brochureUrl,
+    setBrochureUrl,
+    ebookUrl,
+    setEbookUrl,
+    formValues,
+    setFormValues,
+    onSubmit
+  } = useCourseForm(id, form, toast, router);
 
   return (
     <div className="form h-full">
-      {/* {id} */}
-
-      {courseData ? (
-        <p className="text-black">Updating....</p>
-      ) : (
-        <p className="text-white">Status : Adding Course</p>
-      )}
+      <p className={courseData ? "text-black" : "text-white"}>
+        Status: {courseData ? "Updating Course" : "Adding Course"}
+      </p>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Title*</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter the course name or title "
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  for Ex: BBA or BCA or undergrad programmme in BCA..
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <CourseBasicInfo form={form} isEditMode={!!id} />
           
-          <FormField
-            control={form.control}
-            name="universityName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>University*</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={!!id}
-                    placeholder="Enter the university/ college name"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription></FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+          <CourseAdditionalInfo 
+            form={form}
+            tags={tags}
+            setTags={setTags}
+            specialization={specialization}
+            setSpecialization={setSpecialization}
           />
 
-          <FormField
-            control={form.control}
-            name="courseInfo"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>courseInfo*</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Enter all the information regarding course"
-                    {...field}
-                    rows={10} // Adjust the number of rows to display initially
-                    style={{ width: "100%", resize: "vertical" }} // Full width and allow vertical resizing
-                  />
-                </FormControl>
-                <FormDescription></FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="admissionProcess"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>AdmissionProcess*</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Enter the admission process  "
-                    {...field}
-                  />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-
-          <FormField
-            control={form.control}
-            name="duration"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Duration</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter the Course Duration" {...field} />
-                </FormControl>
-                <FormDescription></FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+          <CourseFeatures 
+            formValues={formValues}
+            setFormValues={setFormValues}
           />
 
-
-          <FormField
-            control={form.control}
-            name="affilitatedWith"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Affiliation</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter the Affilation" {...field} />
-                </FormControl>
-                <FormDescription>Ex: AKTU,IPU etc</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
+          <CourseMediaUploads
+            videoUrl={videoUrl}
+            setVideoUrl={setVideoUrl}
+            brochureUrl={brochureUrl}
+            setBrochureUrl={setBrochureUrl}
+            ebookUrl={ebookUrl}
+            setEbookUrl={setEbookUrl}
           />
 
-          <FormField
-            control={form.control}
-            name="courseRating"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Course Rating*</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter the Course rating" max={5}  {...field} />
-                </FormControl>
-                <FormDescription>Maximum Rating should be 5</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <TagInputComponent
-            label={"EligibilityCriteria"}
-            state={tags}
-            setState={settags}
-          />
-
-          <TagInputComponent
-            label={"Specialization Offered*"}
-            state={specialization}
-            setState={setSpecialization}
-          />
-
-          
-          <AddFeatureForm formValues={formValues} setFormValues={setFormValues}/>
-
-          <CloudinaryUploader setUrl={setBrochureUrl} url={brochureUrl} label={'Upload Brochure'} type={'pdf'}/>
-
-          <CloudinaryUploader setUrl={setVideoUrl} url={videoUrl} label={'Upload Video'} type={'video'}/>
-
-
-          {Loading ? (
-            <Loader2 className=" m-auto  animate-spin"></Loader2>
+          {isLoading ? (
+            <Loader2 className="m-auto animate-spin" />
           ) : (
             <Button
-              className="bg-white text-black w-[70%] m-auto flex hover:bg-slate-300 "
+              className="bg-white text-black w-[70%] m-auto flex hover:bg-slate-300"
               type="submit"
             >
               Submit
@@ -354,11 +89,7 @@ function AdminCourseinfoFormComponent({ id }: any) {
           )}
         </form>
       </Form>
-
     </div>
   );
 }
-
-
-export default AdminCourseinfoFormComponent;
 

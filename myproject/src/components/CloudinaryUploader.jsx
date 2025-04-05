@@ -13,7 +13,11 @@ const CloudinaryUploader = ({ url, setUrl,label,type }) => {
     
     if (result.event === 'success') {
       // The URL of the uploaded image is available in result.info.secure_url
-      setUrl(result.info.secure_url);
+      if(type==='pdf'){
+        setUrl(result.info.secure_url.replace("/raw/upload/", "/raw/upload/fl_attachment/"));
+      }else{
+        setUrl(result.info.secure_url);
+      }
     }
   };
 

@@ -26,6 +26,7 @@ export type CourseData = {
   courseInfo: string;
   courseOverview: string;
   courseContent?: string[];
+  Ebook?:string;
   duration?: string;
   eligibilityCriteria: string[];
   Brochure?: string;
@@ -76,7 +77,7 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
     fetchdataCourse(); // Call the function to fetch data
   }, [decodedCourseTitle]); // Add decodedCourseTitle to the dependency array
 
-    
+    console.log(courseData)
 
   
   return (
@@ -92,6 +93,7 @@ export default function CoursePage({ params }: { params: { courseTitle: string }
             Brochure={course.Brochure}
             title={course.title}
             courseInfo={course.courseInfo}
+            Ebook={course.Ebook}
             eligibilityCriteria={course.eligibilityCriteria}
             image={course.university.cloudinaryImageUrl}
             admissionProcess={course.admissionProcess}

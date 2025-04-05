@@ -46,10 +46,13 @@ function CourseCard({ title, text, duration, universityName,affilitatedWith, ima
 
           <div className='bottom-box mt-2 mb-5 flex justify-between  items-center'>
 
-            <Stack spacing={1}>
-              <Rating name="half-rating" readOnly defaultValue={rating} precision={0.5} />
-            </Stack>
+            <div className="flex items-center gap-2">
+              <Stack spacing={1}>
+                <Rating name="half-rating" readOnly defaultValue={rating} precision={0.5} />
+              </Stack>
+              <span className="font-semibold">{rating}</span>
 
+            </div>
 
             <Link href={`courses/${encodeURIComponent(title)}`}>
               <Button className='bg-[#3B80E8] text-white md:mr-2 hover:bg-[#116BF1]'>
