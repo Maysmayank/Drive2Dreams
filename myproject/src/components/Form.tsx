@@ -31,7 +31,6 @@ export default function FormComponent({ classname,onClose,setBlackoutScreen,comp
     const [isSubmitted, setIsSubmitted] = useState(false);
     const { toast } = useToast()
     const pathname = usePathname()
-
     // console.log(formSchema.shape.program.options);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -53,11 +52,7 @@ export default function FormComponent({ classname,onClose,setBlackoutScreen,comp
         }
         try {
             // console.log(data);
-            new Promise((resolve) => {
-                setTimeout(() => {
-                    resolve("Resolved after 10 minutes!");
-                }, 50000); // 10 minutes in milliseconds
-            });
+          
             
             
             const response = await axios.post('/api/form', {
@@ -73,6 +68,10 @@ export default function FormComponent({ classname,onClose,setBlackoutScreen,comp
                 setIsSubmitted(true);
                 if(completeForm){
                     setCompleteForm?.(true);
+                    // Only set form_submitted when submit button is clicked and form is successful
+                    if (isSubmitting) {
+                        localStorage.setItem("form_submitted", "true");
+                    }
                 }
 
                 await axios.post('/api/post/update-submitcount') // update the submission count by 1 and is showed to admin in dashboard

@@ -3,38 +3,40 @@ import React, { useEffect, useState } from 'react';
 import FormComponent from './Form';
 import { Button } from './ui/button';
 import Image from 'next/image';
-import { Loader2 } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
 
 function PopUpForm() {
-    const [isVisible, setIsVisible] = useState(true); // Controls modal visibility
-    const [isFadingOut, setIsFadingOut] = useState(false); // Tracks fade-out animation
-    const [blackoutScreen,setBlackoutScreen]=useState(false)
-    const handleClose = () => {        
-        setIsFadingOut(true); // Trigger fade-out animation
-        setTimeout(() => { 
-            setIsVisible(false); // Wait for animation to finish, then hide modal
-            setIsFadingOut(false); // Reset fade-out state
-            localStorage.setItem('hasSeenPopup', 'true'); // Mark popup as seen
+    const [isVisible, setIsVisible] = useState(false);
+    const [isFadingOut, setIsFadingOut] = useState(false);
+    const [blackoutScreen, setBlackoutScreen] = useState(false);
 
-        }, 1000); // Match the duration of the fadeOut animation (1s)
-    
+    useEffect(() => {
+        const formSubmitted = localStorage.getItem('form_submitted');
+        if (!formSubmitted) {
+            setIsVisible(true);
+        }
+    }, []);
+
+    const handleClose = () => {        
+        setIsFadingOut(true);
+        setTimeout(() => { 
+            setIsVisible(false);
+            setIsFadingOut(false);
+        }, 1000);
     };
 
     const handleOutsideClick = (e) => {
         if (e.target.id === 'modal-container') {
-            handleClose(); // Trigger fade-out when clicking outside the modal
+            handleClose();
         }
     };
 
-
-
-    if (!isVisible) return null; // Don't render modal if `isVisible` is false
+    if (!isVisible) return null;
 
     return (
         <>
-         {/* Blackout screen */}
-         {blackoutScreen && (
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50 ">
+            {blackoutScreen && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50">
                     <div className='flex items-center gap-2'>
                         <Loader2 size={40} className='animate-spin' color='white'/>
                         <span className='text-white font-semibold text-xl'>Processing</span>
@@ -46,30 +48,29 @@ function PopUpForm() {
                 onClick={handleOutsideClick}
                 className={`${
                     isFadingOut ? 'fade-out' : ''
-                } bg-slate-700 fixed flex inset-0 bg-opacity-40 justify-center items-center w-[100%] h-[100%] z-50`}>
+                } fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50`}>
                 <div
                     id="modal"
-                    className={`${isFadingOut?'slide-out':''} absolute rounded-xl flex items-center`}>
-                    <Button className="absolute top-5 right-4" onClick={handleClose}>
-                        X
-                    </Button>
-                    <div className="flex flex-col md:flex-row">
-                        <div className="flex flex-col md:w-[60%] bg-[#1c1c39] rounded-tl-xl rounded-bl-xl text-white">
-                            <div className="flex pt-8 flex-col items-center">
-                                <h1 className="font-bold ">Let&apos;s Talk</h1>
-                                <span>Explore Colleges with us</span>
-                            </div>
-                            <FormComponent classname="text-sm px-10" setBlackoutScreen={setBlackoutScreen} onClose={handleClose}/>
-                        </div>
-                        <div className="hidden md:block">
-                            <Image
-                                src={'/contactform.jpg'}
-                                className="object-fill w-full h-full rounded-tr-xl rounded-br-xl"
-                                height={400}
-                                width={400}
-                                alt=""
-                            />
-                        </div>
+                    className={`${isFadingOut?'slide-out':''} bg-white rounded-md relative flex w-[90%] md:w-[60%]`}>
+                    <X className="absolute top-5 right-4" onClick={handleClose}/>
+                    <div className="w-full md:w-1/2 p-4 items-center justify-center flex flex-col bg-[#1c1c39] text-white">
+                        <h1 className="font-bold mt-4 text-2xl">Let&apos;s Talk</h1>
+                        <span className="text-sm">Explore Colleges with us</span>
+                        <FormComponent 
+                            classname="text-sm px-10" 
+                            setBlackoutScreen={setBlackoutScreen} 
+                            onClose={handleClose}
+                            completeForm={true}
+                        />
+                    </div>
+                    <div className="hidden md:block w-1/2">
+                        <Image
+                            src={'/contactform.jpg'}
+                            className="object-cover w-full h-full rounded-r-md"
+                            height={600}
+                            width={400}
+                            alt="Contact Form"
+                        />
                     </div>
                 </div>
             </div>

@@ -17,7 +17,9 @@ import { PlacedStudents } from "@/components/PlacedStudents";
 import SalientFeaturesCard from "@/components/SalientFeaturesCard";
 import { Button } from "./ui/button";
 import { PlacedStudent } from "@/models/PlacedStudents";
-import { log } from "console";
+
+import { toast } from "./ui/use-toast";
+import { useSession } from "next-auth/react";
 
 type DynamicCourseCardinfoProps = {
   title: string;
@@ -64,56 +66,58 @@ export default function DynamicCourseCardinfo({
   const [showPopUpForm, setShowPopUpForm] = useState(false);
   const [completeForm, setCompleteForm] = useState(false);
   const [downloadedUrl, setDownloadedUrl] = useState("");
-   Ebook=Ebook?.trim().replace(
-    "/raw/upload/",
-    "/raw/upload/fl_attachment/"
-);
-console.log(Ebook);
+
+
+
+  function downlaodBrochureAction(downloadUrl: string) {
+    const anchor = document.createElement("a");
+    anchor.href = downloadUrl;
+    anchor.setAttribute("download", "brochure.pdf");
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    return true;
+  }
 
   useEffect(() => {
-    const alreadySubmitted = localStorage.getItem("ebook_form_submitted");
-  
-    if (completeForm && Ebook && !alreadySubmitted) {
-        try {
-           const downloadUrl = Ebook
-           
+    if (completeForm && Brochure) {
+      try {
+        const isDownloaded = downlaodBrochureAction(Brochure);
 
-            const anchor = document.createElement("a");
-            anchor.href = downloadUrl;
-            anchor.setAttribute("download", "Ebook.pdf");
-            document.body.appendChild(anchor);
-            anchor.click();
-            document.body.removeChild(anchor);
-  
-            localStorage.setItem("ebook_form_submitted", "true");
-            setShowPopUpForm(false);
-            setCompleteForm(false);
-        } catch (error) {
-            console.error("Download failed:", error);
-            // Optionally reset form states or show error to user
+        if (isDownloaded) {
+          localStorage.setItem("form_submitted", "true");
+          setShowPopUpForm(false);
+          setCompleteForm(false);
+
+          toast({
+            title: "Download successful",
+            description: "Please check your downloads",
+            variant: "constructive",
+          });
+        } else {
+          toast({
+            title: "Download failed",
+            description: "Please try again",
+            variant: "destructive",
+          });
         }
+      } catch (error) {
+        console.error("Download failed:", error);
+      }
     }
-}, [completeForm, Ebook]);
-  
-  console.log(downloadedUrl);
-  
-  const handleBrochureClick = () => {
-    if (Brochure) {
-      const encodedUrl = encodeURI(Brochure);
-      window.open(encodedUrl, "_blank");
-    } else {
-      console.error("Invalid Brochure URL");
-    }
-  };
+  }, [completeForm, Brochure]);
 
-  const handleEbookClick = () => {
-    const alreadySubmitted = localStorage.getItem("ebook_form_submitted");
+  const handleBrochureDownload = () => {
+    const formSubmitted = localStorage.getItem("form_submitted");
+    console.log(formSubmitted);
 
-    if (alreadySubmitted && Ebook) {
-      const encodedUrl = encodeURI(Ebook);
-      window.open(encodedUrl, "_blank");
-    } else {
+    if (!formSubmitted) {
       setShowPopUpForm(true);
+      return;
+    }
+
+    if (Brochure) {
+      downlaodBrochureAction(Brochure);
     }
   };
 
@@ -153,12 +157,16 @@ console.log(Ebook);
             ))}
           </ul>
 
-          <Button
-            className="bg-blue-500 w-[40%] text-center hover:bg-blue-700 ml-4 md:ml-8 mt-7 md:mb-5 mb-10"
-            onClick={handleBrochureClick}
-          >
-            Get Brochure
-          </Button>
+          {
+            Brochure && (
+              <Button
+                className="bg-blue-500 w-[40%] text-center hover:bg-blue-700 ml-4 md:ml-8 mt-7 md:mb-5 mb-10"
+                onClick={handleBrochureDownload}
+              >
+                Get Brochure
+              </Button>
+            )
+          }
         </div>
 
         <div className="right-container md:mr-20 flex flex-col justify-center m-auto max-h-[240px] md:max-h-[420px]">
@@ -230,17 +238,6 @@ console.log(Ebook);
           </div>
         </div>
 
-        {
-          Ebook && (
-            <div className="flex justify-center">
-          <button
-            className="bg-blue-500 w-[40%] text-center hover:bg-blue-700 p-2 rounded-md ml-4 md:ml-8 mt-7 md:mb-5 mb-10 text-white"
-            onClick={handleEbookClick}
-          >
-            Download Ebook
-          </button>
-        </div>
-        )}
         {placedStudentData.length !== 0 && (
           <PlacedStudents placedStudentData={placedStudentData} />
         )}
@@ -361,15 +358,99 @@ export function PopUpForm({
 }) {
   return (
     <div className="fixed top-0 left-0 z-50 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-4 md:w-[40%] w-[90%] rounded-md relative">
-        <div
-          onClick={() => setShowPopUpForm(false)}
-          className="absolute top-4 cursor-pointer right-4 p-2 text-black"
-        >
-          <X />
+      <div className="bg-white rounded-md relative flex w-[90%] md:w-[60%]">
+        <X className="absolute top-5 right-4" onClick={() => setShowPopUpForm(false)}   />
+        
+        <div className="w-full md:w-1/2 p-4 items-center justify-center flex flex-col  bg-[#1c1c39] text-white">
+          <h1 className="font-bold mt-4 text-2xl">Let&apos;s Talk</h1>
+          <span className="text-sm">Explore Colleges with us</span>
+          <FormComponent completeForm={true} setCompleteForm={setCompleteForm} />
         </div>
-        <FormComponent completeForm={true} setCompleteForm={setCompleteForm} />
+        <div className="hidden md:block w-1/2">
+          <Image
+            src={'/contactform.jpg'}
+            className="object-cover w-full h-full rounded-r-md"
+            height={600}
+            width={400}
+            alt="Contact Form"
+          />
+        </div>
       </div>
     </div>
+  );
+}
+
+export function EbookDownload({ Ebook }: { Ebook: string }) {
+  const [showPopUpForm, setShowPopUpForm] = useState(false);
+  const [completeForm, setCompleteForm] = useState(false);
+
+  const downloadEbookAction = (downloadUrl: string) => {
+    const anchor = document.createElement("a");
+    anchor.href = downloadUrl;
+    anchor.setAttribute("download", "ebook.pdf");
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor);
+    return true;
+  };
+
+  useEffect(() => {
+    if (completeForm && Ebook) {
+      try {
+        const isDownloaded = downloadEbookAction(Ebook);
+
+        if (isDownloaded) {
+          localStorage.setItem("form_submitted", "true");
+          setShowPopUpForm(false);
+          setCompleteForm(false);
+
+          toast({
+            title: "Download successful",
+            description: "Please check your downloads",
+            variant: "constructive",
+          });
+        } else {
+          toast({
+            title: "Download failed",
+            description: "Please try again",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error("Download failed:", error);
+      }
+    }
+  }, [completeForm, Ebook]);
+
+  const handleEbookDownload = () => {
+    const formSubmitted = localStorage.getItem("form_submitted");
+
+    if (!formSubmitted) {
+      setShowPopUpForm(true);
+      return;
+    }
+
+    if (Ebook) {
+      downloadEbookAction(Ebook);
+    }
+  };
+
+  return (
+    <>
+      {showPopUpForm && (
+        <div className=" top-0 left-0 z-50 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <PopUpForm
+            setCompleteForm={setCompleteForm}
+            setShowPopUpForm={setShowPopUpForm}
+          />
+        </div>
+      )}
+      <button
+        onClick={handleEbookDownload}
+        className="px-8 absolute md:translate-y-[650%] md:translate-x-[18%] py-1 md:py-2 rounded-md mt-5 md:mt-10 bg-purple-700 text-center text-white font-bold transition duration-200 border-2 border-transparent hover:border-teal-500"
+      >
+        Download Ebook
+      </button>
+    </>
   );
 }
