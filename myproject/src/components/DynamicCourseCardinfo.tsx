@@ -447,7 +447,7 @@ export function EbookDownload({ Ebook }: { Ebook: string }) {
       )}
       <button
         onClick={handleEbookDownload}
-        className="px-8 absolute translate-y-[600%] translate-x-[10%] md:translate-y-[650%] md:translate-x-[18%] py-1 md:py-2 rounded-md mt-5 md:mt-10 bg-purple-700 text-center text-white font-bold transition duration-200 border-2 border-transparent hover:border-teal-500"
+        className="px-8 absolute translate-y-[620%] text-sm translate-x-[10%] md:translate-y-[720%] md:translate-x-[18%] py-1 md:py-2 rounded-md mt-5 md:mt-10  bg-purple-600 md:bg-purple-700 text-center text-white font-bold transition duration-200 border-2 border-transparent hover:scale-105"
       >
         Download Ebook
       </button>

@@ -51,9 +51,9 @@ function PopUpForm() {
                 } fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50`}>
                 <div
                     id="modal"
-                    className={`${isFadingOut?'slide-out':''} bg-white rounded-md relative flex w-[90%] md:w-[60%]`}>
-                    <X className="absolute top-5 right-4" onClick={handleClose}/>
-                    <div className="w-full md:w-1/2 p-4 items-center justify-center flex flex-col bg-[#1c1c39] text-white">
+                    className={`${isFadingOut?'slide-out':''} bg-white rounded-md relative text-white flex w-[90%] md:w-[60%]`}>
+                    <X className="absolute top-5 right-4" onClick={handleClose} color='white'/>
+                    <div className="w-full md:w-1/2 p-4  items-center justify-center flex flex-col bg-[#1f1f42] text-white">
                         <h1 className="font-bold mt-4 text-2xl">Let&apos;s Talk</h1>
                         <span className="text-sm">Explore Colleges with us</span>
                         <FormComponent 

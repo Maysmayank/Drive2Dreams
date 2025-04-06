@@ -23,7 +23,7 @@ export default function Introduction() {
           />
 
           <div className='absolute flex items-center inset-0 text-white'>
-            <div className='translate-y-5 md:-translate-y-2 translate-x-6 flex flex-col'>
+            <div className=' md:-translate-y-2 translate-x-6 flex flex-col'>
               <h2 className='font-black text-2xl md:text-[40px]'>Discover Your</h2>
               <h1 className='font-black text-4xl md:text-7xl'>Dream Campus</h1>
              
