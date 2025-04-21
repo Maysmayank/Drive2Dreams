@@ -109,18 +109,7 @@ export default function FormComponent({ classname,onClose,setBlackoutScreen,comp
     return (
 
         <div className={clsx("form-container p-4 flex flex-grow flex-col h-full w-full", classname)}>
-            <p className="mb-4">
-              This Privacy Policy explains how Drive2Dreams collects, uses, stores, and protects your personal data when you visit or use our website: www.drive2dreams.com.
-            </p>
-            <p className="mb-4">
-              www.drive2dreams.com is operated by Drive2Dreams, based in India. We are responsible for handling your personal data securely and act as the &quot;Data Fiduciary&quot; under India’s Digital Personal Data Protection (DPDP) Act, 2023.
-            </p>
-            <p className="mb-4">
-              By accessing and using www.drive2dreams.com (referred to as &quot;the Website&quot;), you agree to the following terms and conditions. If you do not agree to these terms, you must not use the Website or its services.
-            </p>
-            <p className="mb-4">
-              Drive2Dreams provides career guidance, admission assistance, and other services related to students&apos; academic and professional goals. By using our services, you agree to comply with these Terms and Conditions.
-            </p>
+         
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <FormField
