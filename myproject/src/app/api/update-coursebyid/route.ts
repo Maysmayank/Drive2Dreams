@@ -13,7 +13,7 @@ export async function PATCH(request: Request) {
         }
         const updateId = queryParam.id
         
-        const { university,Ebook, title,courseInfo, admissionProcess, duration, brochureUrl,eligibilityCriteria ,videoUrl,courseRating,specializationOffered,affilitatedWith,feature} = await request.json()
+        const { university,Ebook,category, title,courseInfo, admissionProcess, duration, brochureUrl,eligibilityCriteria ,videoUrl,courseRating,specializationOffered,affilitatedWith,feature} = await request.json()
         
                 
         const isUpdated = await CourseInfoModel.updateOne(
@@ -31,6 +31,7 @@ export async function PATCH(request: Request) {
                     specializationOffered,
                     courseRating,
                     Ebook:Ebook,
+                    category:category,
                     eligibilityCriteria ,//aaray of strings
                     features:feature
                 }

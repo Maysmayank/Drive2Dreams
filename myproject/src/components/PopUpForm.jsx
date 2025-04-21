@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import FormComponent from './Form';
 import { Button } from './ui/button';
 import Image from 'next/image';
-import { Loader2, X } from 'lucide-react';
+import { Loader2, X, XIcon } from 'lucide-react';
 
 function PopUpForm() {
     const [isVisible, setIsVisible] = useState(false);
@@ -17,9 +17,9 @@ function PopUpForm() {
         }
     }, []);
 
-    const handleClose = () => {        
+    const handleClose = () => {
         setIsFadingOut(true);
-        setTimeout(() => { 
+        setTimeout(() => {
             setIsVisible(false);
             setIsFadingOut(false);
         }, 1000);
@@ -38,7 +38,7 @@ function PopUpForm() {
             {blackoutScreen && (
                 <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black bg-opacity-50">
                     <div className='flex items-center gap-2'>
-                        <Loader2 size={40} className='animate-spin' color='white'/>
+                        <Loader2 size={40} className='animate-spin' color='white' />
                         <span className='text-white font-semibold text-xl'>Processing</span>
                     </div>
                 </div>
@@ -46,22 +46,24 @@ function PopUpForm() {
             <div
                 id="modal-container"
                 onClick={handleOutsideClick}
-                className={`${
-                    isFadingOut ? 'fade-out' : ''
-                } fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50`}>
+                className={`${isFadingOut ? 'fade-out' : ''
+                    } fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50`}>
                 <div
                     id="modal"
-                    className={`${isFadingOut?'slide-out':''} bg-white rounded-md relative text-white flex w-[90%] md:w-[60%]`}>
-                    <X className="absolute top-5 right-4" onClick={handleClose} color='white'/>
+                    className={`${isFadingOut ? 'slide-out' : ''} bg-white rounded-md relative text-white flex w-[90%] md:w-[60%]`}>
+                    <X className="absolute top-5 right-4" onClick={handleClose} color='white' />
                     <div className="w-full md:w-1/2 p-4  items-center justify-center flex flex-col bg-[#1f1f42] text-white">
                         <h1 className="font-bold mt-4 text-2xl">Let&apos;s Talk</h1>
                         <span className="text-sm">Explore Colleges with us</span>
-                        <FormComponent 
-                            classname="text-sm px-10" 
-                            setBlackoutScreen={setBlackoutScreen} 
+                        <FormComponent
+                            classname="text-sm px-10"
+                            setBlackoutScreen={setBlackoutScreen}
                             onClose={handleClose}
                             completeForm={true}
                         />
+                      
+
+
                     </div>
                     <div className="hidden md:block w-1/2">
                         <Image
@@ -72,7 +74,10 @@ function PopUpForm() {
                             alt="Contact Form"
                         />
                     </div>
+                    <X className="absolute md:block hidden top-5 right-4 cursor-pointer" stroke='black' onClick={handleClose} />
+
                 </div>
+
             </div>
         </>
     );

@@ -7,6 +7,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       onPageChange(currentPage + 1);
     }
   }
+  
   return (
     <div className=" mt-16">
       <Button

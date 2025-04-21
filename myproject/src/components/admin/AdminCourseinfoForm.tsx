@@ -40,6 +40,7 @@ export default function AdminCourseinfoFormComponent({ id }: AdminCourseinfoForm
     setBrochureUrl,
     ebookUrl,
     setEbookUrl,
+    setCategory,category,
     formValues,
     setFormValues,
     onSubmit
@@ -54,7 +55,15 @@ export default function AdminCourseinfoFormComponent({ id }: AdminCourseinfoForm
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <CourseBasicInfo form={form} isEditMode={!!id} />
-          
+          <div className="flex gap-4">
+          <h2>Category</h2>
+
+          <select name="category" id="category" className="text-black px-4 " value={category} onChange={(e:any)=>setCategory(e.target.value)} >
+            <option value="graduation">Graduation</option>
+            <option value="masters">Masters</option>
+          </select>
+
+<span>the courses will show in {category} section</span>          </div>
           <CourseAdditionalInfo 
             form={form}
             tags={tags}

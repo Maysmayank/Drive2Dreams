@@ -32,7 +32,7 @@ const reviewData = [
 function ReviewCard() {
   return (
     <>
-      <h1 className="m-auto text-4xl font-bold  ">Testimonials</h1>
+      <h1 className="m-auto text-4xl mt-14 md:mt-0 font-bold  ">Testimonials</h1>
 
       <div className="grid mb-10 md:w-[88%] m-auto bg-[#dcded] grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-4">
         {reviewData &&

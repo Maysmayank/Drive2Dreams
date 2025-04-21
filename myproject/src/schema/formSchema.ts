@@ -1,9 +1,10 @@
-import * as z from 'zod'
+import * as z from 'zod';
 
 export const formSchema = z.object({
-    username:z.string().min(1,({message:"username is required"})),
+    username: z.string().min(1, { message: "username is required" }),
     email: z.string().email({ message: "Invalid email address" }),
-    phone_number:z.string().min(10,({message:"Phone number required"})),
-    program: z.enum(['PGDM', 'MBA','B.tech']), // Dropdown options
-
+    phone_number: z
+        .string()
+        .length(10, { message: "Phone number must be exactly 10 digits" }),
+    program: z.string(), // Dropdown options
 });

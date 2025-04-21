@@ -25,6 +25,7 @@ type UniversityInfoType = {
 
 type CourseInfoType = {
     _id: string;
+    category:string;
     university: UniversityInfoType; // Full university object
     courseInfo: string;
     eligibilityCriteria:string[];

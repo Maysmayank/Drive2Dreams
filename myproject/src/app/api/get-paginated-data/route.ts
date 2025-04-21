@@ -10,6 +10,8 @@ export async function GET(request: Request) {
 
         let page=searchParams.get('page');
         let limit=searchParams.get('limit');
+        let category=searchParams.get('category');
+
 
         let pageNumber=page?parseInt(page): 1; // default to 1
         let limitNumber=limit?parseInt(limit):3; // default limit is 3 
@@ -19,8 +21,8 @@ export async function GET(request: Request) {
         
         const totalCourses=await CourseInfoModel.countDocuments();
 
-        let paginatedData= await CourseInfoModel.find().skip(startIndex).limit(limitNumber).populate('university');
-
+        let paginatedData= await CourseInfoModel.find({category:category}).skip(startIndex).limit(limitNumber).populate('university');
+        
         if(paginatedData.length>0){
             return Response.json({
                 success:true,
@@ -28,6 +30,11 @@ export async function GET(request: Request) {
                 totalPages:Math.ceil(totalCourses/limitNumber),
                 currentPage:pageNumber,
                 paginatedCourses:paginatedData
+            })
+        }else{
+            return Response.json({
+                success:false,
+                message:"no more courses Found!"
             })
         }
         

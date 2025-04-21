@@ -28,6 +28,7 @@ interface Payload {
   videoUrl: string;
   brochureUrl: string;
   Ebook: string;
+  category:string;
   feature: FormField[];
 }
 
@@ -45,6 +46,7 @@ export const useCourseForm = (
   const [brochureUrl, setBrochureUrl] = useState<string>("");
   const [ebookUrl, setEbookUrl] = useState<string>("");
   const [formValues, setFormValues] = useState<FormField[]>([{ Heading: "", subHeadings: [""] }]);
+  const [category,setCategory]=useState('graduation');
 
   useEffect(() => {
     async function fetchCourseData() {
@@ -62,6 +64,8 @@ export const useCourseForm = (
         setEbookUrl(parsedData.Ebook || "");
         setBrochureUrl(parsedData.Brochure || "");
         setFormValues(parsedData.features || [{ Heading: "", subHeadings: [""] }]);
+        setCategory(parsedData.category|| '');
+
       } catch (error) {
         console.error("Error fetching course data:", error);
         toast({
@@ -83,6 +87,7 @@ export const useCourseForm = (
       videoUrl,
       brochureUrl,
       Ebook: ebookUrl,
+      category:category,
       feature: [],
     };
 
@@ -108,6 +113,7 @@ export const useCourseForm = (
     try {
       setIsLoading(true);
       const payload = createPayload(data);
+      // console.log(payload);
       
       const response = id
         ? await axios.patch(`/api/update-coursebyid?id=${id}`, payload)
@@ -151,6 +157,8 @@ export const useCourseForm = (
     ebookUrl,
     setEbookUrl,
     formValues,
+    category,
+    setCategory,
     setFormValues,
     onSubmit,
   };

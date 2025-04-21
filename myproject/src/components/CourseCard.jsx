@@ -43,7 +43,6 @@ function CourseCard({ title, text, duration, universityName,affilitatedWith, ima
           <div className='flex'>
             <p className='text-sm font-semibold'>Duration : {duration}  |   Affiliated with {affilitatedWith}</p>
           </div>
-
           <div className='bottom-box mt-2 mb-5 flex justify-between  items-center'>
 
             <div className="flex items-center gap-2">

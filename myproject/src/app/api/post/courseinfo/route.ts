@@ -16,14 +16,15 @@ interface CourseInfo{
 export async function POST(request: Request,response:NextResponse) {
     await dbConnect();
     try {
-        let{universityName,Ebook,brochureUrl,title,duration,courseInfo,admissionProcess,eligibilityCriteria,videoUrl,specializationOffered,courseRating,affilitatedWith,feature}=await request.json();
+        let{universityName,category,Ebook,brochureUrl,title,duration,courseInfo,admissionProcess,eligibilityCriteria,videoUrl,specializationOffered,courseRating,affilitatedWith,feature}=await request.json();
         
-        // console.log(courseRating);
+        // console.log(category);
         Ebook=Ebook?.trim().replace(
             "/raw/upload/",
             "/raw/upload/fl_attachment/"
         );
         console.log(Ebook);
+
         const isCourseExisted=await CourseInfoModel.find({title:title}) 
         
         let isUniversityExists= await UniversityInfoModel.findOne({universityName:universityName}) // cehck if university exists for the course to add
@@ -57,6 +58,7 @@ export async function POST(request: Request,response:NextResponse) {
                 duration,
                 admissionProcess,
                 courseInfo,
+                category:category,
                 Brochure:brochureUrl,
                 eligibilityCriteria, // array of string
                 features:feature
